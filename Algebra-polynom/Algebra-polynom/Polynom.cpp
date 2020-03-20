@@ -109,9 +109,14 @@ void Polynom::show() {
 
 
 /*1     operation +       */
-Polynom Polynom::addPoly(Polynom& pol1, Polynom& pol2) {
-    Polynom pol3 = pol1;
-    //pol3.setHead(pol1.getHead());
+Polynom Polynom::addPoly(const Polynom pol1, const Polynom pol2) {
+    Polynom pol3;
+    pol3.setPower(pol1.getPower());
+    PolyTerm* tmp1 = pol2.getHead();
+    while (tmp1) {
+        pol3.addItem(makeItem(tmp1->pow, tmp1->key));
+        tmp1 = tmp1->next;
+    }
     PolyTerm* tmp2 = pol2.getHead();
     while (tmp2) {
         pol3.addItem(makeItem(tmp2->pow,tmp2->key));
@@ -120,16 +125,19 @@ Polynom Polynom::addPoly(Polynom& pol1, Polynom& pol2) {
     return pol3;
 }
 /*1     operation +       */
-Polynom operator+(Polynom& p1, Polynom& p2) {
+Polynom operator+(const Polynom p1, const Polynom p2) {
     Polynom c = c.addPoly(p1, p2);
     return c;
 }
 /*1     operation -       */
-Polynom Polynom::diffPoly(Polynom& pol1, Polynom& pol2) {
-    Polynom pol3 = pol1;
-    //pol3.setHead(pol1.getHead());
-    cout << "pol1 ";
-    pol1.show();
+Polynom Polynom::diffPoly(const Polynom pol1, const Polynom pol2) {
+    Polynom pol3;
+    pol3.setPower(pol1.getPower());
+    PolyTerm* tmp1 = pol2.getHead();
+    while (tmp1) {
+        pol3.addItem(makeItem(tmp1->pow, tmp1->key));
+        tmp1 = tmp1->next;
+    }
     PolyTerm* tmp2 = pol2.getHead();
     while (tmp2) {
         pol3.addItem(makeItem(tmp2->pow, -tmp2->key));
@@ -138,12 +146,12 @@ Polynom Polynom::diffPoly(Polynom& pol1, Polynom& pol2) {
     return pol3;
 }
 /*1     operation -       */
-Polynom operator-(Polynom& p1, Polynom& p2) {
+Polynom operator-(const Polynom p1, const Polynom p2) {
     Polynom c = c.diffPoly(p1, p2);
     return c;
 }
 /*1     operation *       */
-Polynom Polynom::multPoly(Polynom& pol1, Polynom& pol2) {
+Polynom Polynom::multPoly(const Polynom pol1, const Polynom pol2) {
 
     long long pow = pol1.power * pol2.power - 1;
     std::vector<long long> num(pow + 1);
@@ -169,7 +177,7 @@ Polynom Polynom::multPoly(Polynom& pol1, Polynom& pol2) {
     return Polynom(pow, num);
 }
 /*1     operation *       */
-Polynom operator*(Polynom& p1, Polynom& p2) {
+Polynom operator*(const Polynom p1, const Polynom p2) {
     Polynom c = c.multPoly(p1, p2);
     return c;
 }

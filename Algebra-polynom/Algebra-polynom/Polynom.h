@@ -43,6 +43,15 @@ public:
 
     /*Getters and Setters*/
     PolyTerm* getHead() const { return head; }
+    PolyTerm* getTerm(long long pow) const {    //retuns term by its power
+        PolyTerm* tmp = head;
+        if (head == nullptr) return nullptr;
+        while (tmp) {
+            if (tmp->pow == pow) return tmp;
+            tmp = tmp->next;
+        }
+        return nullptr;
+    }
     long long getPower() const { return power; }
     void setHead(PolyTerm* _head) { head = _head; }
     void setPower(long long _power) { power = _power; }
@@ -58,18 +67,18 @@ public:
     /*! #1
     * @brief Adding two polynomials in field
     */
-    Polynom addPoly(Polynom& pol1, Polynom& pol2);
-    friend Polynom operator +(Polynom& p1, Polynom& p2);
+    Polynom addPoly(const Polynom pol1, const Polynom pol2);
+    friend Polynom operator +(const Polynom p1, const Polynom p2);
     /*! #1
     * @brief Difference of two polynomials in field
     */
-    Polynom diffPoly(Polynom& pol1, Polynom& pol2);
-    friend Polynom operator -(Polynom& p1, Polynom& p2);
+    Polynom diffPoly(const Polynom pol1, const Polynom pol2);
+    friend Polynom operator -(const Polynom p1, const Polynom p2);
     /*! #1
     * @brief Multiplication of two polynomials in field
     */
-    Polynom multPoly(Polynom& pol1, Polynom& pol2);
-    friend Polynom operator *(Polynom& p1, Polynom& p2);
+    Polynom multPoly(const Polynom pol1, const Polynom pol2);
+    friend Polynom operator *(const Polynom p1, const Polynom p2);
     
     
     /** #2      @author Darikiva    **/

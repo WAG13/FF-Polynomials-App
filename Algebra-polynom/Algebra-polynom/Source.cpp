@@ -9,7 +9,7 @@ using std::cin;
 int main() {
 	
 	Polynom a(2, { -7, 4, 2 });
-	Polynom b(3, { 1, 1, -3, 4 });
+	Polynom b(3, { 1, 1, -3, 5 });
 	a.show();
 	b.show();
 	cout << "   +" << endl;
