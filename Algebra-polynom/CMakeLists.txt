@@ -12,10 +12,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 include_directories(${SRC_DIR})
 
 set(LIB_NAME ${PROJECT_NAME}core)
+add_library(${LIB_NAME} STATIC Algebra-polynom/Polynom.cpp Algebra-polynom/Matrix.cpp)
 
 option(ENABLE_TESTS "Build tests for project" ON)
 if(ENABLE_TESTS)
     add_subdirectory(${TESTS_DIR})
 endif()
 
-add_executable(main Algebra-polynom/Source.cpp Algebra-polynom/Polynom.cpp)
+add_executable(main Algebra-polynom/Source.cpp Algebra-polynom/Polynom.cpp Algebra-polynom/Matrix.cpp)
