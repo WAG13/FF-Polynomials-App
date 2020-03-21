@@ -3,6 +3,9 @@
 #include <vector>
 #include <cassert>
 
+/**
+ * @brief This class implements matrix representation and some useful methods as rank of matrix
+ */
 class Matrix {
     std::vector<std::vector <long long>> _matrix;
 
@@ -22,5 +25,8 @@ public:
     long long rank();
 
 private:
+    /**
+     * @brief Swapping two rows from 0 column to param column
+     */
     void swapRows(int firstRow, int secondRow, int column);
 };

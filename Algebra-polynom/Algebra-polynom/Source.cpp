@@ -2,6 +2,7 @@
 #include<vector>
 #include<string>
 #include"Polynom.h"
+#include<RootsNumber.hpp>
 using std::cout;
 using std::endl;
 using std::cin;
