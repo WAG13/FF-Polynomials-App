@@ -12,22 +12,29 @@ using std::endl;
 
 Polynom::Polynom() {
     head = nullptr;
-    power = 0;
+    power = 1;
+    prime = 1;
 }
 
-Polynom::Polynom(long long _power, std::vector<long long> keys) {
-    power = _power;
+Polynom::Polynom(long long _prime, long long _power, std::vector<long long> keys) :prime(_prime), power(_power) {
     head = nullptr;
+    if (power == 1) {
+        n1 = true;
+        power = prime;
+    }
     for (int i = 0; i < keys.size(); i++) {
-        addItem(makeItem(i, keys[i]));
+        if (i < power) addItem(makeItem(i, keys[i]));
     }
 }
 
-Polynom::Polynom(long long _power, std::vector<std::pair<long long, long long>> keys) {
-    power = _power;
+Polynom::Polynom(long long _prime, long long _power, std::vector<std::pair<long long, long long>> keys) :prime(_prime), power(_power) {
     head = nullptr;
+    if (power == 1) {
+        n1 = true;
+        power = prime;
+    }
     for (int i = 0; i < keys.size(); i++) {
-        addItem(makeItem(keys[i].first, keys[i].second));
+        if (keys[i].first < power) addItem(makeItem(keys[i].first, keys[i].second));
     }
 }
 
@@ -40,8 +47,8 @@ Polynom::PolyTerm* Polynom::makeItem(long long pow, long long value) {
 }
 
 void Polynom::addItem(Polynom::PolyTerm* el) {
-    el->key = el->key % power;
-    if (el->key < 0)  el->key += power;
+    el->key = el->key % prime;
+    if (el->key < 0)  el->key += prime;
     if (el->key != 0){
     //checks if polinom is empty 
     if (head == nullptr)
@@ -53,7 +60,7 @@ void Polynom::addItem(Polynom::PolyTerm* el) {
     //checks if polinoms head
     if (t->pow == el->pow)
     {
-        t->key = (t->key + el->key) % power;
+        t->key = (t->key + el->key) % prime;
         if (t->key == 0) {
             head = t->next;
             //delete t;
@@ -72,7 +79,7 @@ void Polynom::addItem(Polynom::PolyTerm* el) {
     {
         if (t1->pow == el->pow)
         {
-            t1->key = (t1->key + el->key) % power;
+            t1->key = (t1->key + el->key) % prime;
             if (t1->key == 0) {
                 //delete t->next;
                 t->next = t1->next;
@@ -110,17 +117,11 @@ void Polynom::show() {
 
 /*1     operation +       */
 Polynom Polynom::addPoly(const Polynom pol1, const Polynom pol2) {
-    Polynom pol3;
-    pol3.setPower(pol1.getPower());
-    PolyTerm* tmp1 = pol2.getHead();
-    while (tmp1) {
-        pol3.addItem(makeItem(tmp1->pow, tmp1->key));
-        tmp1 = tmp1->next;
-    }
-    PolyTerm* tmp2 = pol2.getHead();
-    while (tmp2) {
-        pol3.addItem(makeItem(tmp2->pow,tmp2->key));
-        tmp2 = tmp2->next;
+    Polynom pol3 = pol1;
+    PolyTerm* tmp = pol2.getHead();
+    while (tmp) {
+        pol3.addItem(makeItem(tmp->pow,tmp->key));
+        tmp = tmp->next;
     }
     return pol3;
 }
@@ -131,17 +132,11 @@ Polynom operator+(const Polynom p1, const Polynom p2) {
 }
 /*1     operation -       */
 Polynom Polynom::diffPoly(const Polynom pol1, const Polynom pol2) {
-    Polynom pol3;
-    pol3.setPower(pol1.getPower());
-    PolyTerm* tmp1 = pol2.getHead();
-    while (tmp1) {
-        pol3.addItem(makeItem(tmp1->pow, tmp1->key));
-        tmp1 = tmp1->next;
-    }
-    PolyTerm* tmp2 = pol2.getHead();
-    while (tmp2) {
-        pol3.addItem(makeItem(tmp2->pow, -tmp2->key));
-        tmp2 = tmp2->next;
+    Polynom pol3 = pol1;
+    PolyTerm* tmp = pol2.getHead();
+    while (tmp) {
+        pol3.addItem(makeItem(tmp->pow, -tmp->key));
+        tmp = tmp->next;
     }
     return pol3;
 }
@@ -153,6 +148,7 @@ Polynom operator-(const Polynom p1, const Polynom p2) {
 /*1     operation *       */
 Polynom Polynom::multPoly(const Polynom pol1, const Polynom pol2) {
 
+   if (n1) {
     long long pow = pol1.power * pol2.power - 1;
     std::vector<long long> num(pow + 1);
 
@@ -174,7 +170,14 @@ Polynom Polynom::multPoly(const Polynom pol1, const Polynom pol2) {
         j = 0;
     }
 
-    return Polynom(pow, num);
+    return Polynom(pow, 1, num);
+
+   }
+   else {
+   //TODO: mult when n>1
+    return Polynom();
+   }
+    
 }
 /*1     operation *       */
 Polynom operator*(const Polynom p1, const Polynom p2) {
@@ -184,3 +187,23 @@ Polynom operator*(const Polynom p1, const Polynom p2) {
 
 /**/
 
+/*4     Number of roots       */
+long long Polynom::rootsNumber() {
+    long long power = getPower() - 1;
+    Matrix AMatrix(power, power);
+
+    for (long long i = 0, shift = 0; i < power; i++, shift++) {
+        for (long long j = 0; j < power; j++) {
+            auto currTerm = getTerm((j + shift) % power);
+            if (currTerm != nullptr) {
+                AMatrix.setElement(i, j, currTerm->key);
+            }
+            else {
+                AMatrix.setElement(i, j, 0);
+            }
+        }
+    }
+
+    long long matrixRank = AMatrix.rank();
+    return (power - matrixRank);
+}

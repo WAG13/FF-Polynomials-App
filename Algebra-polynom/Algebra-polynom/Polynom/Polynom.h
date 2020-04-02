@@ -11,12 +11,14 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "../Matrix/Matrix.hpp"
 
  /*!
   * @brief class Polynom that describes polynomial
   * @details 
-  * polynomials in field q^n (q - simple)
-  * power of this polinom - q^n (q - simple)
+  * polynomials in field q^n (q - prime)
+  * coefficient             by (mod q)
+  * power of this polinom -         n
   * Every object contains with terms (PolyTerm)
   * Every structure "PolyTerm" have objects that contains fields "key" and "next"
   * key - coefficient of term
@@ -24,7 +26,9 @@
   */
 class Polynom {
 private:
-    long long power;
+    long long prime;    // p
+    long long power;    // n
+    bool n1 = false;    //checks if n=1 
     // Structure that describes term of Polynom
     struct PolyTerm {
         long long key;      // Coefficient of terms of polynomial
@@ -36,8 +40,8 @@ private:
 public:
     /*constructors*/
     Polynom();
-    Polynom(long long _power, std::vector<long long> keys);
-    Polynom(long long _power, std::vector<std::pair<long long, long long>> keys);
+    Polynom(long long _prime, long long _power, std::vector<long long> keys);   //for all terms
+    Polynom(long long _prime, long long _power, std::vector<std::pair<long long, long long>> keys); //for some terms
     /*destructor*/
     ~Polynom() { }
 
@@ -53,8 +57,10 @@ public:
         return nullptr;
     }
     long long getPower() const { return power; }
+    long long getPrime() const { return prime; }
     void setHead(PolyTerm* _head) { head = _head; }
     void setPower(long long _power) { power = _power; }
+    void setPrime(long long _prime) { prime = _prime; }
 
     void show();
     
@@ -81,9 +87,17 @@ public:
     friend Polynom operator *(const Polynom p1, const Polynom p2);
     
     
-    /** #2      @author Darikiva    **/
+    /** #2      @author Darik Ivashyn    **/
     //...
 
-    /** #3      @author karina_masol & yuriy_momotenko     **/
+    /** #3      @author Karina Masol & Yuriy Momotenko     **/
     //...
+
+    /** #4      @author Yana Skyrda    **/
+    /*! #4
+    * @brief This function implements algorithm  for finding number of roots for polynomial
+    *        in accordance with Konig-Rados theorem
+    */
+    long long rootsNumber();
+
 };
