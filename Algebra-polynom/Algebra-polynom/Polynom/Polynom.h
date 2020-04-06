@@ -16,8 +16,8 @@
  /*!
   * @brief class Polynom that describes polynomial
   * @details 
-  * polynomials in field q^n (q - prime)
-  * coefficient             by (mod q)
+  * polynomials in field p^n (p - prime)
+  * coefficient             by (mod p)
   * power of this polinom -         n
   * Every object contains with terms (PolyTerm)
   * Every structure "PolyTerm" have objects that contains fields "key" and "next"
@@ -28,7 +28,6 @@ class Polynom {
 private:
     long long prime;    // p
     long long power;    // n
-    bool n1 = false;    //checks if n=1 
     // Structure that describes term of Polynom
     struct PolyTerm {
         long long key;      // Coefficient of terms of polynomial
@@ -56,14 +55,39 @@ public:
         }
         return nullptr;
     }
-    long long getPower() const { return power; }
+    long long getTermKey(long long pow) const {    //retuns coef of a term by its power
+        PolyTerm* term = getTerm(pow);
+        if (term) return term->key;
+        return 0;
+    }
+    // return power of a field
+    long long getPower() const { return power; } 
     long long getPrime() const { return prime; }
     void setHead(PolyTerm* _head) { head = _head; }
     void setPower(long long _power) { power = _power; }
     void setPrime(long long _prime) { prime = _prime; }
-
+    void copy(const Polynom pol) {
+        prime = pol.getPrime();
+        power = pol.getPower();
+        head = nullptr;
+        PolyTerm* tmp = pol.getHead();
+        while (tmp) {
+            addItem(makeItem(tmp->pow, tmp->key));
+            tmp = tmp->next;
+        }
+    };
     void show();
-    
+    // return power of a polinomial
+    long long getPolyPower() const {
+        long long pow = 0;
+        PolyTerm* tmp = head;
+        if (head == nullptr) return pow;
+        while (tmp) {
+            if (tmp->pow > pow) { pow = tmp->pow; }
+            tmp = tmp->next;
+        }
+        return pow; 
+    }
     // Creates new term (PolyTerm) with coefficient val
     PolyTerm* makeItem(long long pow, long long val);
     // Adding term to the polynom in non-descending order
@@ -73,20 +97,21 @@ public:
     /*! #1
     * @brief Adding two polynomials in field
     */
-    Polynom addPoly(const Polynom pol1, const Polynom pol2);
-    friend Polynom operator +(const Polynom p1, const Polynom p2);
+    friend Polynom operator +(Polynom const& p1, Polynom const& p2);
     /*! #1
     * @brief Difference of two polynomials in field
     */
-    Polynom diffPoly(const Polynom pol1, const Polynom pol2);
-    friend Polynom operator -(const Polynom p1, const Polynom p2);
+    friend Polynom operator -(Polynom const& p1, Polynom const& p2);
     /*! #1
     * @brief Multiplication of two polynomials in field
     */
-    Polynom multPoly(const Polynom pol1, const Polynom pol2);
-    friend Polynom operator *(const Polynom p1, const Polynom p2);
-    
-    
+    friend Polynom operator *(Polynom const& p1, Polynom const& p2);
+    /*! #1
+    * @brief Multiplicates polynomial in field on integer
+    */
+    friend Polynom operator *(Polynom const& p, long long const& number);
+    friend Polynom operator *(long long const &number, Polynom const& p);
+
     /** #2      @author Darik Ivashyn    **/
     //...
 
@@ -100,4 +125,25 @@ public:
     */
     long long rootsNumber();
 
+protected:
+    /*! #1
+    * @brief Adding two polynomials in field
+    */
+    Polynom addPoly(Polynom const& p1, Polynom const& p2);
+    /*! #1
+    * @brief Difference of two polynomials in field
+    */
+    Polynom diffPoly(Polynom const& p1, Polynom const& p2);
+    /*! #1
+    * @brief Multiplication of two polynomials in field
+    */
+    Polynom multPoly(Polynom const& p1, Polynom const& p2);
+    /*! #1
+    * @brief Multiplication of two polynomials in field with power=1
+    */
+    Polynom multSimple(Polynom const& p1, Polynom const& p2);
+    /*! #1
+    * @brief Multiplicates polynomial in field on integer
+    */
+    Polynom multNumber(Polynom const& p, long long const& number);
 };

@@ -18,21 +18,13 @@ Polynom::Polynom() {
 
 Polynom::Polynom(long long _prime, long long _power, std::vector<long long> keys) :prime(_prime), power(_power) {
     head = nullptr;
-    if (power == 1) {
-        n1 = true;
-        power = prime;
-    }
     for (int i = 0; i < keys.size(); i++) {
-        if (i < power) addItem(makeItem(i, keys[i]));
+        addItem(makeItem(i, keys[i]));
     }
 }
 
 Polynom::Polynom(long long _prime, long long _power, std::vector<std::pair<long long, long long>> keys) :prime(_prime), power(_power) {
     head = nullptr;
-    if (power == 1) {
-        n1 = true;
-        power = prime;
-    }
     for (int i = 0; i < keys.size(); i++) {
         if (keys[i].first < power) addItem(makeItem(keys[i].first, keys[i].second));
     }
@@ -114,10 +106,10 @@ void Polynom::show() {
     cout << endl;
 }
 
-
 /*1     operation +       */
-Polynom Polynom::addPoly(const Polynom pol1, const Polynom pol2) {
-    Polynom pol3 = pol1;
+Polynom Polynom::addPoly(Polynom const& pol1, Polynom const& pol2) {
+    Polynom pol3; 
+    pol3.copy(pol1);
     PolyTerm* tmp = pol2.getHead();
     while (tmp) {
         pol3.addItem(makeItem(tmp->pow,tmp->key));
@@ -126,13 +118,14 @@ Polynom Polynom::addPoly(const Polynom pol1, const Polynom pol2) {
     return pol3;
 }
 /*1     operation +       */
-Polynom operator+(const Polynom p1, const Polynom p2) {
-    Polynom c = c.addPoly(p1, p2);
+Polynom operator+(Polynom const& pol1, Polynom const& pol2) {
+    Polynom c = c.addPoly(pol1, pol2);
     return c;
 }
 /*1     operation -       */
-Polynom Polynom::diffPoly(const Polynom pol1, const Polynom pol2) {
-    Polynom pol3 = pol1;
+Polynom Polynom::diffPoly(Polynom const& pol1, Polynom const& pol2) {
+    Polynom pol3;
+    pol3.copy(pol1);
     PolyTerm* tmp = pol2.getHead();
     while (tmp) {
         pol3.addItem(makeItem(tmp->pow, -tmp->key));
@@ -141,69 +134,84 @@ Polynom Polynom::diffPoly(const Polynom pol1, const Polynom pol2) {
     return pol3;
 }
 /*1     operation -       */
-Polynom operator-(const Polynom p1, const Polynom p2) {
-    Polynom c = c.diffPoly(p1, p2);
+Polynom operator-(Polynom const& pol1, Polynom const& pol2) {
+    Polynom c = c.diffPoly(pol1, pol2);
     return c;
 }
 /*1     operation *       */
-Polynom Polynom::multPoly(const Polynom pol1, const Polynom pol2) {
+Polynom Polynom::multPoly(Polynom const& pol1, Polynom const& pol2) {
 
-   if (n1) {
-    long long pow = pol1.power * pol2.power - 1;
-    std::vector<long long> num(pow + 1);
-
-    PolyTerm* tmp1 = pol1.getHead();
-    PolyTerm* tmp2 = pol2.getHead();
-    long long i = 0;
-    long long j = 0;
-
-    while (tmp1) {
-        while (tmp2) {
-            if ((power + 1) > (i + j))
-                num[i + j] = num[i + j] + (tmp1->key * tmp2->key);
-            j++;
-            tmp2 = tmp2->next;
-        }
-        tmp1 = tmp1->next;
-        i++;
-        tmp2 = pol2.head;
-        j = 0;
-    }
-
-    return Polynom(pow, 1, num);
-
+   if (power == 1) {
+        return multSimple(pol1, pol2);
    }
    else {
-   //TODO: mult when n>1
-    return Polynom();
+        //TODO: mult when power>1
+        Polynom result = multSimple(pol1, pol2);
+        // result % irredus pol with power of result pol
+        return result;
    }
     
 }
+/*1     operation * (for n=1)      */
+Polynom Polynom::multSimple(Polynom const& pol1, Polynom const& pol2) {
+    long long pow = pol1.getPolyPower() + pol2.getPolyPower()+1;
+    std::vector<long long> num(pow, 0);
+    PolyTerm* tmp1 = pol1.getHead();
+    PolyTerm* tmp2 = pol2.getHead();
+
+    while (tmp1) {
+        while (tmp2) {
+            num[tmp1->pow + tmp2->pow] = num[tmp1->pow + tmp2->pow] + (tmp1->key * tmp2->key);
+            tmp2 = tmp2->next;
+        }
+        tmp1 = tmp1->next;
+        tmp2 = pol2.getHead();
+    }
+
+    return Polynom(pol1.getPrime(), 1, num);
+}
 /*1     operation *       */
-Polynom operator*(const Polynom p1, const Polynom p2) {
-    Polynom c = c.multPoly(p1, p2);
+Polynom operator*(Polynom const& pol1, Polynom const& pol2) {
+    Polynom c = c.multPoly(pol1, pol2);
     return c;
 }
+/*1     operation * (number)      */
+Polynom Polynom::multNumber(Polynom const& p, long long const &number) {
+    Polynom result;
+    result.setPower(p.getPower());
+    result.setPrime(p.getPrime());
+    PolyTerm* tmp = p.getHead();
+    while (tmp) {
+        result.addItem(makeItem(tmp->pow, (tmp->key * number)));
+        tmp = tmp->next;
+    }
+    return result;
+}
+/*1     operation * (number)      */
+Polynom operator *(Polynom const& p, long long const &number) {
+    Polynom c = c.multNumber(p, number);
+    return c;
+}
+/*1     operation * (number)      */
+Polynom operator *(long long const &number, Polynom const &p) {
+    Polynom c = c.multNumber(p, number);
+    return c;
+}
+
 
 /**/
 
 /*4     Number of roots       */
 long long Polynom::rootsNumber() {
-    long long power = getPower() - 1;
-    Matrix AMatrix(power, power);
+    long long pow = getPolyPower()+1;
+    Matrix AMatrix(pow, pow);
 
-    for (long long i = 0, shift = 0; i < power; i++, shift++) {
-        for (long long j = 0; j < power; j++) {
-            auto currTerm = getTerm((j + shift) % power);
-            if (currTerm != nullptr) {
-                AMatrix.setElement(i, j, currTerm->key);
-            }
-            else {
-                AMatrix.setElement(i, j, 0);
-            }
+    for (long long i = 0, shift = 0; i < pow; i++, shift++) {
+        for (long long j = 0; j < pow; j++) {
+            AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
         }
     }
 
     long long matrixRank = AMatrix.rank();
-    return (power - matrixRank);
+    return (pow - matrixRank);
 }
