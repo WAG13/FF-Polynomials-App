@@ -111,7 +111,18 @@ public:
     */
     friend Polynom operator *(Polynom const& p, long long const& number);
     friend Polynom operator *(long long const &number, Polynom const& p);
-
+	/* #6
+	* @brief == operator
+	*/
+	friend bool operator ==(Polynom const& p1, Polynom const& p2);
+	/* #6
+	* @brief Divides polynomial in field
+	*/
+	friend Polynom operator /(Polynom const& p1, Polynom const& p2);
+	/* #6
+	* @brief Get rest from the divison of polinomials
+	*/
+	friend Polynom operator %(Polynom const& p1, Polynom const& p2);
     /** #2      @author Darik Ivashyn    **/
     //...
 
@@ -146,4 +157,22 @@ protected:
     * @brief Multiplicates polynomial in field on integer
     */
     Polynom multNumber(Polynom const& p, long long const& number);
+
+	/*! #6
+	* @brief Division
+	*/
+	std::pair<Polynom, Polynom> simple_division(Polynom const & p1, Polynom const & p2) const;
+	/*! #6
+	* @brief Inverse for numbers
+	*/
+	long long division_for_numbers(long long a, long long b, long long prime);
+	/*! #6
+	* @brief Inverse for numbers
+	*/
+	long long inverse(long long number, long long prime);
+	/*! #6
+	* @brief Function for inverse
+	*/
+	void decrease(long long& a, long long& b, long long& a_count_in_a, long long& a_count_in_b) const;
+
 };
