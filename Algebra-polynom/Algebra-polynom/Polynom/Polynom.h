@@ -112,10 +112,6 @@ public:
     friend Polynom operator *(Polynom const& p, long long const& number);
     friend Polynom operator *(long long const &number, Polynom const& p);
 	/* #6
-	* @brief == operator
-	*/
-	friend bool operator ==(Polynom const& p1, Polynom const& p2);
-	/* #6
 	* @brief Divides polynomial in field
 	*/
 	friend Polynom operator /(Polynom const& p1, Polynom const& p2);
