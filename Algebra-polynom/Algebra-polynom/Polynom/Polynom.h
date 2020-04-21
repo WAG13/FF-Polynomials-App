@@ -154,6 +154,11 @@ protected:
     */
     Polynom multNumber(Polynom const& p, long long const& number);
 
+
+	/*! #6
+	* @brief Multiplication of two polynomials in field 
+	*/
+	Polynom multPolyforDivide(Polynom const& p1, Polynom const& p2);
 	/*! #6
 	* @brief Division
 	*/

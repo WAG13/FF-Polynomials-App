@@ -188,7 +188,7 @@ Polynom Polynom::multNumber(Polynom const& p, long long const &number) {
 	return result;
 }
 
-
+/*6 divisions for numbers in field*/
 long long Polynom::division_for_numbers(long long a, long long b, long long prime)
 {
 	a *= inverse(b, prime);
@@ -232,6 +232,24 @@ void Polynom::decrease(long long & a, long long & b, long long & a_count_in_a, l
 		a_count_in_b -= a_count_in_a;
 	}
 }
+/*6 operation for division*/
+Polynom Polynom::multPolyforDivide(Polynom const& p1, Polynom const& p2) {
+	long long pow = pol1.getPolyPower() + pol2.getPolyPower() + 1;
+	std::vector<long long> num(pow, 0);
+	PolyTerm* tmp1 = pol1.getHead();
+	PolyTerm* tmp2 = pol2.getHead();
+
+	while (tmp1) {
+		while (tmp2) {
+			num[tmp1->pow + tmp2->pow] = num[tmp1->pow + tmp2->pow] + (tmp1->key * tmp2->key);
+			tmp2 = tmp2->next;
+		}
+		tmp1 = tmp1->next;
+		tmp2 = pol2.getHead();
+	}
+
+	return Polynom(pol1.getPrime(), pow, num);
+}
 /*1     operation * (number)      */
 Polynom operator *(Polynom const& p, long long const &number) {
 	Polynom c = c.multNumber(p, number);
@@ -252,7 +270,7 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const & p1, Polynom
 	while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
 		Polynom multiply(p1.getPrime(), p1.getPower(), std::vector<long long>{0});
 		multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(), temp_1.division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()), temp_2.getTermKey(temp_2.getPolyPower()), p2.getPrime())));
-		temp_2 = temp_2 * multiply;
+		temp_2 = temp_2.multPolyforDivide(temp_2 , multiply);
 		temp_1 = temp_1 - temp_2;
 		temp_2 = p2;
 		result = result + multiply;
