@@ -78,8 +78,8 @@ TEST_CASE("Polynomial", "[Polynom]") {
     }
 
 	SECTION("GCD polynoms") {
-		Polynom pol1(3, 5, { 4,0,3,3,3,1 });
-		Polynom pol2(3, 4, { 1,2,0,1,1 });
+		Polynom pol1(5, 5, { 4,0,3,3,3,1 });
+		Polynom pol2(5, 4, { 1,2,0,1,1 });
 
 		Polynom res = pol1.gcd(pol2);
 
