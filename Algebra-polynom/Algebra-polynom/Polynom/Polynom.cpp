@@ -233,7 +233,7 @@ void Polynom::decrease(long long & a, long long & b, long long & a_count_in_a, l
 	}
 }
 /*6 operation for division*/
-Polynom Polynom::multPolyforDivide(Polynom const& p1, Polynom const& p2) {
+Polynom Polynom::multPolyforDivide(Polynom const& pol1, Polynom const& pol2) {
 	long long pow = pol1.getPolyPower() + pol2.getPolyPower() + 1;
 	std::vector<long long> num(pow, 0);
 	PolyTerm* tmp1 = pol1.getHead();
