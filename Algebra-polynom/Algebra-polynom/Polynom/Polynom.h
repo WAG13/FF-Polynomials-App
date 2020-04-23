@@ -11,7 +11,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "../Matrix/Matrix.hpp"
+#include "../Matrix/Matrix.h"
 
  /*!
   * @brief class Polynom that describes polynomial
@@ -131,6 +131,12 @@ public:
     *        in accordance with Konig-Rados theorem
     */
     long long rootsNumber();
+
+	/** #7      @author Nikita Pupov    **/
+	/*! #7
+	* @brief This method calculates greatest common divisor of two polynoms
+	*/
+	Polynom gcd(Polynom p);
 
 protected:
     /*! #1
