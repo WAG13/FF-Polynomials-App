@@ -306,3 +306,21 @@ long long Polynom::rootsNumber() {
     long long matrixRank = AMatrix.rank();
     return (pow - matrixRank);
 }
+
+Polynom Polynom::gcd(Polynom p2) {
+	Polynom p1(*this);
+	while (p1.getPolyPower() != 0 && p2.getPolyPower() != 0) {
+		if (p1.getPolyPower() > p2.getPolyPower()) {
+			p1 =p1 % p2;
+		}
+		else {
+			p2 =p2 % p1;
+		}
+	}
+	
+	if (p1.getPolyPower() == 0) {
+		return p1;
+	}
+
+	return p2;
+}
