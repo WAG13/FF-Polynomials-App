@@ -193,12 +193,12 @@ protected:
 	*/
 	void decrease(long long& a, long long& b, long long& a_count_in_a, long long& a_count_in_b) const;
 
-    /*! #8
+    /*! #9
     * @brief Function to check if n is prime or not 
     */
     static bool isPrime(int n);
 
-    /*! #8
+    /*! #9
    * @brief Mobius Function
    */
     static int mobius(int N);

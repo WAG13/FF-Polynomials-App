@@ -325,6 +325,7 @@ Polynom operator%(Polynom const& p1, Polynom const& p2)
 	return p1.simple_division(p1, p2).second;
 }
 
+/*9 Equal operator*/
 bool operator==(Polynom const& p1, Polynom const& p2)
 {
 	if (p1.getPolyPower() != p2.getPolyPower()) return false;
