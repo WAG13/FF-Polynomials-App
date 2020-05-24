@@ -176,7 +176,7 @@ Polynom operator*(Polynom const& pol1, Polynom const& pol2) {
 	return c;
 }
 /*1     operation * (number)      */
-Polynom Polynom::multNumber(Polynom const& p, long long const &number) {
+Polynom Polynom::multNumber(Polynom const& p, long long const& number) {
 	Polynom result;
 	result.setPower(p.getPower());
 	result.setPrime(p.getPrime());
@@ -225,13 +225,49 @@ long long Polynom::inverse(long long number, long long prime)
 	}
 	return result;
 }
-void Polynom::decrease(long long & a, long long & b, long long & a_count_in_a, long long & a_count_in_b) const
+void Polynom::decrease(long long& a, long long& b, long long& a_count_in_a, long long& a_count_in_b) const
 {
 	while (b >= a) {
 		b -= a;
 		a_count_in_b -= a_count_in_a;
 	}
 }
+
+/*9 Function to check if n is prime or not*/
+bool Polynom::isPrime(int n)
+{
+	if (n < 2)
+		return false;
+	for (int i = 2; i * i <= n; i++)
+		if (n % i == 0)
+			return false;
+	return true;
+}
+
+/*9 Mobius Function */
+int Polynom::mobius(int N)
+{
+	// Base Case 
+	if (N == 1)
+		return 1;
+	// For a prime factor i check if i^2 is also 
+	// a factor. 
+	int p = 0;
+	for (int i = 1; i <= N; i++) {
+		if (N % i == 0 && isPrime(i)) {
+			// Check if N is divisible by i^2 
+			if (N % (i * i) == 0)
+				return 0;
+			else
+				// i occurs only once, increase p 
+				p++;
+		}
+	}
+	// All prime factors are contained only once 
+	// Return 1 if p is even else -1 
+	return (p % 2 != 0) ? -1 : 1;
+}
+
 /*6 operation for division*/
 Polynom Polynom::multPolyforDivide(Polynom const& pol1, Polynom const& pol2) {
 	long long pow = pol1.getPolyPower() + pol2.getPolyPower() + 1;
@@ -251,17 +287,17 @@ Polynom Polynom::multPolyforDivide(Polynom const& pol1, Polynom const& pol2) {
 	return Polynom(pol1.getPrime(), pow, num);
 }
 /*1     operation * (number)      */
-Polynom operator *(Polynom const& p, long long const &number) {
+Polynom operator *(Polynom const& p, long long const& number) {
 	Polynom c = c.multNumber(p, number);
 	return c;
 }
 /*1     operation * (number)      */
-Polynom operator *(long long const &number, Polynom const &p) {
+Polynom operator *(long long const& number, Polynom const& p) {
 	Polynom c = c.multNumber(p, number);
 	return c;
 }
 
-std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const & p1, Polynom const & p2) const
+std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const& p1, Polynom const& p2) const
 {
 	Polynom result(p1.getPrime(), p1.getPower(), std::vector<long long>{0});
 	Polynom rest;
@@ -270,7 +306,7 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const & p1, Polynom
 	while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
 		Polynom multiply(p1.getPrime(), p1.getPower(), std::vector<long long>{0});
 		multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(), temp_1.division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()), temp_2.getTermKey(temp_2.getPolyPower()), p2.getPrime())));
-		temp_2 = temp_2.multPolyforDivide(temp_2 , multiply);
+		temp_2 = temp_2.multPolyforDivide(temp_2, multiply);
 		temp_1 = temp_1 - temp_2;
 		temp_2 = p2;
 		result = result + multiply;
@@ -279,14 +315,29 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const & p1, Polynom
 	return std::pair<Polynom, Polynom>(result, rest);
 }
 /*1     operation / (number)      */
-Polynom operator/(Polynom const & p1, Polynom const & p2)
+Polynom operator/(Polynom const& p1, Polynom const& p2)
 {
 	return p1.simple_division(p1, p2).first;
 }
 /*1     operation % (number)      */
-Polynom operator%(Polynom const & p1, Polynom const & p2)
+Polynom operator%(Polynom const& p1, Polynom const& p2)
 {
 	return p1.simple_division(p1, p2).second;
+}
+
+bool operator==(Polynom const& p1, Polynom const& p2)
+{
+	if (p1.getPolyPower() != p2.getPolyPower()) return false;
+	Polynom::PolyTerm* cur1 =  p1.getHead();
+	Polynom::PolyTerm* cur2 = p2.getHead();
+	while (cur1!=nullptr&&cur2!=nullptr)
+	{
+		if (cur1->key != cur2->key)
+			return false;
+		cur1 = cur1->next;
+		cur2 = cur2->next;
+	}
+	return true;
 }
 
 
@@ -294,33 +345,63 @@ Polynom operator%(Polynom const & p1, Polynom const & p2)
 
 /*4     Number of roots       */
 long long Polynom::rootsNumber() {
-    long long pow = getPolyPower()+1;
-    Matrix AMatrix(pow, pow);
+	long long pow = getPolyPower() + 1;
+	Matrix AMatrix(pow, pow);
 
-    for (long long i = 0, shift = 0; i < pow; i++, shift++) {
-        for (long long j = 0; j < pow; j++) {
-            AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
-        }
-    }
+	for (long long i = 0, shift = 0; i < pow; i++, shift++) {
+		for (long long j = 0; j < pow; j++) {
+			AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
+		}
+	}
 
-    long long matrixRank = AMatrix.rank();
-    return (pow - matrixRank);
+	long long matrixRank = AMatrix.rank();
+	return (pow - matrixRank);
 }
 
 Polynom Polynom::gcd(Polynom p2) {
 	Polynom p1(*this);
 	while (p1.getPolyPower() != 0 && p2.getPolyPower() != 0) {
 		if (p1.getPolyPower() > p2.getPolyPower()) {
-			p1 =p1 % p2;
+			p1 = p1 % p2;
 		}
 		else {
-			p2 =p2 % p1;
+			p2 = p2 % p1;
 		}
 	}
-	
+
 	if (p1.getPolyPower() == 0) {
 		return p1;
 	}
 
 	return p2;
+}
+
+/*9 This method calculates nth ñyclotomic polynomial*/
+Polynom Polynom::CyclotomicPolynomial(int prime, int n)
+{
+	// if (n % prime == 0) return Polynom();
+	std::vector<long long> keys{ 1 };
+	Polynom result(prime, 1, keys);
+	int mob;
+	if (isPrime(n))
+		return Polynom(prime, 1, std::vector<long long>(n, 1));
+	for (int d = 1; d <= n; d++) {
+		if (n % d == 0 && mobius(n / d) == 1) {
+			std::vector<long long> keys(d + 1, 0);
+			keys[d] = 1;
+			keys[0] = -1;
+			Polynom multiplier(prime, 1, keys);
+			result = result * multiplier;
+		}
+	}
+	for (int d = 1; d <= n; d++) {
+		if (n % d == 0 && mobius(n / d) == -1) {
+			std::vector<long long> keys(d + 1, 0);
+			keys[d] = 1;
+			keys[0] = -1;
+			Polynom divider(prime, 1, keys);
+			result = result / divider;
+		}
+	}
+	return result;
 }

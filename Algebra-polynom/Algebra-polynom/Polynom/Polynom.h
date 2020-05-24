@@ -138,6 +138,17 @@ public:
 	*/
 	Polynom gcd(Polynom p);
 
+    /* #9
+    * @brief Equal operator
+    */
+    friend bool operator ==(Polynom const& p1, Polynom const& p2);
+
+    /** #9      @author Rostyslav Mochulskyi   **/
+    /*! #9
+    * @brief This method calculates nth ñyclotomic polynomial
+    */
+    static Polynom CyclotomicPolynomial(int prime, int n);
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field
@@ -182,4 +193,13 @@ protected:
 	*/
 	void decrease(long long& a, long long& b, long long& a_count_in_a, long long& a_count_in_b) const;
 
+    /*! #8
+    * @brief Function to check if n is prime or not 
+    */
+    static bool isPrime(int n);
+
+    /*! #8
+   * @brief Mobius Function
+   */
+    static int mobius(int N);
 };
