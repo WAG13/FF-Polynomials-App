@@ -1,22 +1,21 @@
-#define CATCH_CONFIG_MAIN
-#include <iostream>
-#include "catch.hpp"
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
+#include "doctest.h"
 #include "../Polynom/Polynom.h"
 #include <vector>
-#include <string>
 
-TEST_CASE("Polynomial", "[Polynom]") {
-    SECTION("Creating polynom") {
+TEST_CASE("Polynomial") {
+    SUBCASE("Creating polynom") {
         Polynom polynomial(3, 2, { 1,2 });
         REQUIRE(polynomial.getHead() != nullptr);
         REQUIRE(polynomial.getTermKey(0) == 1);
         REQUIRE(polynomial.getTermKey(1) == 2);
     }
-    SECTION("Creating empty polynom") {
+    SUBCASE("Creating empty polynom") {
         Polynom polynomial(3, 2, { 3,6 });
         REQUIRE(polynomial.getHead() == nullptr);
     }
-    SECTION("Creating copy of polynom") {
+    SUBCASE("Creating copy of polynom") {
         Polynom polynomial(3, 2, { 1,2 });
         Polynom copy;
         copy.copy(polynomial);
@@ -26,7 +25,7 @@ TEST_CASE("Polynomial", "[Polynom]") {
         REQUIRE(polynomial.getTermKey(0) == copy.getTermKey(0));
         REQUIRE(polynomial.getTermKey(1) == copy.getTermKey(1));
     }
-    SECTION("Power of polynom") {
+    SUBCASE("Power of polynom") {
         Polynom poly1(3, 1, { 1,3,3 });
         REQUIRE(poly1.getPolyPower() == 0);
         Polynom poly2(3, 1, { 1,1 });
@@ -34,7 +33,7 @@ TEST_CASE("Polynomial", "[Polynom]") {
         Polynom poly3(3, 1, { 1,1,1 });
         REQUIRE(poly3.getPolyPower() == 2);
     }
-    SECTION("Adding polynoms") {
+    SUBCASE("Adding polynoms") {
         Polynom poly1(3, 2, { 1,2 });
         Polynom poly2 = poly1 + poly1;
         REQUIRE(poly2.getTermKey(0) == 2);
@@ -43,13 +42,13 @@ TEST_CASE("Polynomial", "[Polynom]") {
         REQUIRE(poly1.getTermKey(1) == 2);
         REQUIRE((poly1 + poly2).getHead() == nullptr);
     }
-    SECTION("Substract polynoms") {
+    SUBCASE("Substract polynoms") {
         Polynom poly1(3, 2, { 1,2 });
         Polynom poly2(3, 2, { 2,2 });
         REQUIRE((poly1 - poly1).getHead() == nullptr);
         REQUIRE((poly1 - poly2).getTermKey(0) == 2);
     }
-    SECTION("Multiplicate polynoms") {
+    SUBCASE("Multiplicate polynoms") {
         Polynom poly1(3, 1, { 1,2 });
         
         REQUIRE(poly1.getTermKey(0) == 1);
@@ -77,7 +76,7 @@ TEST_CASE("Polynomial", "[Polynom]") {
         REQUIRE(polynomial.getHead()==nullptr);
     }
 
-	/*SECTION("GCD polynoms") {
+	/*SUBCASE("GCD polynoms") {
 		Polynom pol1(5, 5, { 4,0,3,3,3,1 });
 		Polynom pol2(5, 4, { 1,2,0,1,1 });
 
@@ -90,64 +89,64 @@ TEST_CASE("Polynomial", "[Polynom]") {
 }
 
 TEST_CASE("Roots amount") {
-    SECTION("First example") {
+    SUBCASE("First example") {
         Polynom polynomial(5, 1, { 1,3,0,2 });
         REQUIRE(polynomial.rootsNumber() == 0);
     }
 
-    SECTION("Second example") {
+    SUBCASE("Second example") {
         Polynom polynomial(5, 1, { 1,1,1,1 });
         REQUIRE(polynomial.rootsNumber() == 3);
     }
 
-    SECTION("Third example") {
+    SUBCASE("Third example") {
         Polynom polynomial(5, 1, { 1,2,2,1 });
         REQUIRE(polynomial.rootsNumber() == 1);
     }
 }
 
 TEST_CASE("Cyclotomic polynomials") {
-    SECTION("n=1") {
+    SUBCASE("n=1") {
         Polynom polynomial(131, 1, { 130,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 1) == polynomial);
     }
-    SECTION("n=2") {
+    SUBCASE("n=2") {
         Polynom polynomial(131, 1, { 1,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 2) == polynomial);
     }
-    SECTION("n=3") {
+    SUBCASE("n=3") {
         Polynom polynomial(131, 1, { 1,1,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 3) == polynomial);
     }
-    SECTION("n=4") {
+    SUBCASE("n=4") {
         Polynom polynomial(131, 1, { 1,0,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 4) == polynomial);
     }
-    SECTION("n=5") {
+    SUBCASE("n=5") {
         Polynom polynomial(131, 1, { 1,1,1,1,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 5) == polynomial);
     }
-    SECTION("n=6") {
+    SUBCASE("n=6") {
         Polynom polynomial(131, 1, { 1,130,1});
         REQUIRE(Polynom::CyclotomicPolynomial(131, 6) == polynomial);
     }
-    SECTION("n=7") {
+    SUBCASE("n=7") {
         Polynom polynomial(131, 1, { 1,1,1,1,1,1,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 7) == polynomial);
     }
-    SECTION("n=8") {
+    SUBCASE("n=8") {
         Polynom polynomial(131, 1, { 1,0,0,0,1});
         REQUIRE(Polynom::CyclotomicPolynomial(131, 8) == polynomial);
     }
-    SECTION("n=9") {
+    SUBCASE("n=9") {
         Polynom polynomial(131, 1, { 1,0,0,1,0,0,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 9) == polynomial);
     }
-    SECTION("n=10") {
+    SUBCASE("n=10") {
         Polynom polynomial(131, 1, { 1,130,1,130,1 });
         REQUIRE(Polynom::CyclotomicPolynomial(131, 10) == polynomial);
     }
-    SECTION("n=105") {
+    SUBCASE("n=105") {
         std::vector<long long> keys(49, 0);
         keys[0] = 1;
         keys[1] = 1;
