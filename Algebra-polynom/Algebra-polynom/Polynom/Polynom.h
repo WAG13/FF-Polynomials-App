@@ -123,7 +123,7 @@ public:
     //...
     Polynom derivative() const;
     long long valueAtPoint(long long x) const;
-
+    void normalization();
     /** #3      @author Karina Masol & Yuriy Momotenko     **/
     //...
 
@@ -214,3 +214,5 @@ protected:
    */
     static int mobius(int N);
 };
+
+std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime);
