@@ -145,9 +145,18 @@ public:
 
     /** #9      @author Rostyslav Mochulskyi   **/
     /*! #9
-    * @brief This method calculates nth ñyclotomic polynomial
+    * @brief This method calculates nth ï¿½yclotomic polynomial
     */
     static Polynom CyclotomicPolynomial(int prime, int n);
+
+
+    /*! #5
+    * @author Yaroslava Levchuk Natalia Makarenko
+    * @brief This function implements algorithm  for finding invers
+    */
+    Polynom inversPoly(long long number, Polynom const& pol1);
+
+    long long gcdforinvers(long long a, long long b, long long* x, long long* y);
 
 protected:
     /*! #1
