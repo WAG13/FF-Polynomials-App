@@ -138,6 +138,14 @@ public:
 	*/
 	Polynom gcd(Polynom p);
 
+    /*! #5
+     * @author Yaroslava Levchuk Natalia Makarenko
+    * @brief This function implements algorithm  for finding invers
+    */
+    Polynom inversPoly(long long number, Polynom const& pol1);
+
+    long long gcdforinvers(long long a, long long b, long long* x, long long* y);
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field

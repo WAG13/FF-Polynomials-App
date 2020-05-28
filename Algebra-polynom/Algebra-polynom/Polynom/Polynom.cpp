@@ -324,3 +324,57 @@ Polynom Polynom::gcd(Polynom p2) {
 
 	return p2;
 }
+
+/*5 Inverse of a polynomial in field
+Знаходження оберненого многочлена*/
+/*
+{
+  Polynom tar;
+  Polynom irr;
+  Polynom div;
+  Polynom rem;
+  Polynom res;
+  int i = 1;
+  tar.copy(pol1);
+  irr.copy(pol2);
+  while (rem == 1)
+  {
+    div = irr / tar;
+    rem = irr % tar;
+    irr.copy(tar);
+    tar.copy(rem);
+    if (i % 2)
+      res = res + div;
+    else
+      res = res + 1;
+  }
+  return res;
+}
+*/
+long long Polynom::gcdforinvers(long long a, long long b, long long* x, long long* y)
+{
+    if (a == 0)
+    {
+        *x = 0, * y = 1;
+        return b;
+    }
+
+    long long x1, y1;
+    long long gcd = gcdExtended(b % a, a, &x1, &y1);
+
+    *x = y1 - (b / a) * x1;
+    *y = x1;
+
+    return gcd;
+}
+
+Polynom Polynom::inversPoly(long long number, Polynom const& pol1)
+{
+    int x, y;
+    int g = gcdforinvers(number, pol1, int & x, int & y);
+
+    if (g != 1)
+        return -1;
+    else
+        return (x % pol1 + pol1) % pol1;
+}
