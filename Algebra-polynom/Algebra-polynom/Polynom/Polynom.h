@@ -76,7 +76,7 @@ public:
             tmp = tmp->next;
         }
     };
-    void show();
+    std::string show() const;
     // return power of a polinomial
     long long getPolyPower() const {
         long long pow = 0;
@@ -121,6 +121,8 @@ public:
 	friend Polynom operator %(Polynom const& p1, Polynom const& p2);
     /** #2      @author Darik Ivashyn    **/
     //...
+    Polynom derivative() const;
+    long long valueAtPoint(long long x) const;
 
     /** #3      @author Karina Masol & Yuriy Momotenko     **/
     //...
