@@ -93,17 +93,22 @@ void Polynom::addItem(Polynom::PolyTerm* el) {
 	}
 }
 
-void Polynom::show() {
+std::string Polynom::show() const {
+    std::string answer;
 	PolyTerm* tmp = head;
 	bool isFirst = true;
 	while (tmp != nullptr) {
-		if (!isFirst) { cout << " + "; }
+		if (!isFirst) { answer += " + "; }
 		else { isFirst = false; }
-		cout << tmp->key;
-		if (tmp->pow != 0) cout << "*x^" << tmp->pow;
+		answer += std::to_string(tmp->key);
+		if (tmp->pow != 0) {
+		    answer += "*x^";
+		    answer += std::to_string(tmp->pow);
+		}
 		tmp = tmp->next;
 	}
-	cout << endl;
+	answer += '\n';
+	return answer;
 }
 
 /*1     operation +       */
@@ -186,6 +191,45 @@ Polynom Polynom::multNumber(Polynom const& p, long long const& number) {
 		tmp = tmp->next;
 	}
 	return result;
+}
+
+/*2    derivative */
+
+Polynom Polynom::derivative() const{
+    Polynom answer;
+    answer.copy(*this);
+    auto node = answer.getHead();
+    if (node->pow == 0) {
+        answer.setHead(node->next);
+        auto tmp = node->next;
+        delete node;
+        node = tmp;
+    }
+    while (node) {
+        node->key *= node->pow;
+        node->key %= answer.getPrime();
+        --node->pow;
+        node = node->next;
+    }
+    return answer;
+
+}
+
+/*2     Define value of polynom at a point */
+long long Polynom::valueAtPoint(long long x) const {
+    long long answer{0};
+    auto node = this->head;
+    while (node) {
+        long long addition{node->key};
+        for(int i = 0; i < node->pow; ++i) {
+            addition *= x;
+            addition %= long(std::pow(this->prime, this->power));
+        }
+        answer += addition;
+        answer %= long(std::pow(this->prime, this->power));
+        node = node->next;
+    }
+    return answer;
 }
 
 /*6 divisions for numbers in field*/
@@ -433,7 +477,7 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n)
   return res;
 }
 */
-long long Polynom::gcdforinvers(long long a, long long b, long long* x, long long* y)
+/*long long Polynom::gcdforinvers(long long a, long long b, long long* x, long long* y)
 {
     if (a == 0)
     {
@@ -448,9 +492,9 @@ long long Polynom::gcdforinvers(long long a, long long b, long long* x, long lon
     *y = x1;
 
     return gcd;
-}
+}*/
 
-Polynom Polynom::inversPoly(long long number, Polynom const& pol1)
+/*Polynom Polynom::inversPoly(long long number, Polynom const& pol1)
 {
     int x, y;
     int g = gcdforinvers(number, pol1, int & x, int & y);
@@ -459,4 +503,5 @@ Polynom Polynom::inversPoly(long long number, Polynom const& pol1)
         return -1;
     else
         return (x % pol1 + pol1) % pol1;
-}
+}*/
+
