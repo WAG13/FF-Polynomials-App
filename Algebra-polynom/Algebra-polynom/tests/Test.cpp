@@ -50,7 +50,7 @@ TEST_CASE("Polynomial") {
     }
     SUBCASE("Multiplicate polynoms") {
         Polynom poly1(3, 1, { 1,2 });
-        
+
         REQUIRE(poly1.getTermKey(0) == 1);
         REQUIRE(poly1.getTermKey(1) == 2);
         REQUIRE(poly1.getTermKey(2) == 0);
@@ -59,14 +59,14 @@ TEST_CASE("Polynomial") {
         REQUIRE(polynomial.getTermKey(0) == 1);
         REQUIRE(polynomial.getTermKey(1) == 1);
         REQUIRE(polynomial.getTermKey(2) == 1);
-        
+
         /*it`s wrong but just for test*/
         Polynom poly2(3, 2, { 1,2 });
         polynomial = poly2 * poly2;
         REQUIRE(polynomial.getTermKey(0) == 1);
         REQUIRE(polynomial.getTermKey(1) == 1);
         REQUIRE(polynomial.getTermKey(2) == 1);
-        
+
         //Polynom poly3(3, 2, { 1,1 });
         //polynomial = poly2 * poly3;
         //REQUIRE(polynomial.getTerm(0)->key == 2);
@@ -86,6 +86,52 @@ TEST_CASE("Polynomial") {
 		REQUIRE(polynomial.getPolyPower() == 0);
 	}*/
 
+}
+
+TEST_CASE("Derivation") {
+    SUBCASE("First example") {
+        Polynom polynom(11, 3, {3, 7, 10, 1, 0, 3, 4});
+        REQUIRE(polynom.derivative().show() == "7 + 9*x^1 + 3*x^2 + 4*x^4 + 2*x^5");
+    }
+    SUBCASE("Second example") {
+        Polynom polynom(23, 2, {1, 2, 3, 4, 5, 6, 7});
+        REQUIRE(polynom.derivative().show() == "2 + 6*x^1 + 12*x^2 + 20*x^3 + 7*x^4 + 19*x^5");
+    }
+    SUBCASE("Third example") {
+        Polynom polynom(93, 1, { 1,3,7, 8, 2, 5, 0, 0, 7});
+        REQUIRE(polynom.derivative().show() == "3 + 14*x^1 + 24*x^2 + 8*x^3 + 25*x^4 + 56*x^7");
+    }
+}
+
+TEST_CASE("Normalization") {
+    SUBCASE("First example") {
+        Polynom polynom(29, 3, {4, 5 ,1 ,3 ,0 ,9});
+        polynom.normalization();
+        REQUIRE(polynom.getTermKey(5) == 1);
+    }
+    SUBCASE("First example") {
+        Polynom polynom(97, 2, {4, 5 ,1 ,3 ,0 ,9, 8, 6, 2, 0, 0, 0, 1, 15, 96});
+        polynom.normalization();
+                REQUIRE(polynom.getTermKey(14) == 1);
+    }
+    SUBCASE("First example") {
+        Polynom polynom(71, 3, {4, 5 ,1 ,3 ,0 ,9, 72});
+        polynom.normalization();
+                REQUIRE(polynom.getTermKey(6) == 1);
+    }
+}
+
+TEST_CASE("Definition valua at a point") {
+    SUBCASE("First example") {
+        Polynom polynom(17, 2, {1, 2, 3, 4, 5});
+        REQUIRE(polynom.valueAtPoint(1) == 15);
+        REQUIRE(polynom.valueAtPoint(-1) == 3);
+        REQUIRE(polynom.valueAtPoint(0) == 1);
+    }
+    SUBCASE("First example") {
+        Polynom polynom(91, 2, {15, 2, 3, 4, 5, 87, 61, 8});
+        REQUIRE(polynom.valueAtPoint(3) == 857);
+    }
 }
 
 TEST_CASE("Roots amount") {
