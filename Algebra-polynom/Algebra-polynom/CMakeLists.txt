@@ -8,5 +8,5 @@ option(BUILD_TESTS "Build tests" ON)
 add_executable(main main.cpp Polynom/Polynom.cpp Matrix/Matrix.cpp)
 
 if (BUILD_TESTS)
-    add_executable(tests tests/Test.cpp Polynom/Polynom.cpp Matrix/Matrix.cpp)
+    add_executable(tests Tests/Test.cpp Polynom/Polynom.cpp Matrix/Matrix.cpp)
 endif()
