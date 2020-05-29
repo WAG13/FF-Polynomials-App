@@ -92,17 +92,17 @@ TEST_CASE("Derivation")
     SUBCASE("First example")
     {
         Polynom polynom(11, 3, {3, 7, 10, 1, 0, 3, 4});
-        REQUIRE(polynom.derivative().show() == "7 + 9*x^1 + 3*x^2 + 4*x^4 + 2*x^5");
+        REQUIRE(polynom.derivative().show() == "7 + 9*x + 3*x^2 + 4*x^4 + 2*x^5");
     }
     SUBCASE("Second example")
     {
         Polynom polynom(23, 2, {1, 2, 3, 4, 5, 6, 7});
-        REQUIRE(polynom.derivative().show() == "2 + 6*x^1 + 12*x^2 + 20*x^3 + 7*x^4 + 19*x^5");
+        REQUIRE(polynom.derivative().show() == "2 + 6*x + 12*x^2 + 20*x^3 + 7*x^4 + 19*x^5");
     }
     SUBCASE("Third example")
     {
         Polynom polynom(93, 1, {1, 3, 7, 8, 2, 5, 0, 0, 7});
-        REQUIRE(polynom.derivative().show() == "3 + 14*x^1 + 24*x^2 + 8*x^3 + 25*x^4 + 56*x^7");
+        REQUIRE(polynom.derivative().show() == "3 + 14*x + 24*x^2 + 8*x^3 + 25*x^4 + 56*x^7");
     }
 }
 

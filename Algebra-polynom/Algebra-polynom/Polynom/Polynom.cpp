@@ -224,7 +224,7 @@ long long Polynom::valueAtPoint(long long x) const {
         }
         answer += addition;
         answer %= long(std::pow(this->prime, this->power));
-        std::cout << answer << std::endl;
+        //std::cout << answer << std::endl;
         node = node->next;
     }
     return answer;
