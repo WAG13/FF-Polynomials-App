@@ -23,11 +23,10 @@ Polynom::Polynom(long long _prime, long long _power, std::vector<long long> keys
     }
 }
 
-Polynom::Polynom(long long _prime, long long _power, std::vector<std::pair<long long, long long>> keys) : prime(_prime),
-                                                                                                          power(_power) {
+Polynom::Polynom(long long _prime, long long _power, std::vector<std::vector<long long>> keys) : prime(_prime), power(_power) {
     head = nullptr;
     for (int i = 0; i < keys.size(); i++) {
-        if (keys[i].first < power) addItem(makeItem(keys[i].first, keys[i].second));
+        addItem(makeItem(keys[i][0], keys[i][1]));
     }
 }
 
@@ -94,13 +93,12 @@ std::string Polynom::show() const {
         if (!isFirst) { answer += " + "; }
         else { isFirst = false; }
         answer += std::to_string(tmp->key);
-        if (tmp->pow != 0) {
-            answer += "*x^";
-            answer += std::to_string(tmp->pow);
-        }
+        if (tmp->pow != 0) 
+            (tmp->pow == 1) 
+            ? answer += "*x" 
+            : answer += "*x^" + std::to_string(tmp->pow);
         tmp = tmp->next;
     }
-    answer += '\n';
     return answer;
 }
 
@@ -472,7 +470,7 @@ Polynom Polynom::gcd(Polynom p2) {
     return p2;
 }
 
-/*9 This method calculates nth �yclotomic polynomial*/
+/*9 This method calculates nth Cyclotomic polynomial*/
 Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
     // if (n % prime == 0) return Polynom();
     std::vector<long long> keys{1};

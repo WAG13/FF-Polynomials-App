@@ -40,7 +40,7 @@ public:
     /*constructors*/
     Polynom();
     Polynom(long long _prime, long long _power, std::vector<long long> keys);   //for all terms
-    Polynom(long long _prime, long long _power, std::vector<std::pair<long long, long long>> keys); //for some terms
+    Polynom(long long _prime, long long _power, std::vector<std::vector<long long>> keys); //for some terms
     /*destructor*/
     ~Polynom() { }
 
