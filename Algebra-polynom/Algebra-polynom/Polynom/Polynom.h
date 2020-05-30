@@ -149,7 +149,7 @@ public:
     /*! #9
     * @brief This method calculates nth �yclotomic polynomial
     */
-    static Polynom CyclotomicPolynomial(int n, int prime);
+    static Polynom CyclotomicPolynomial(int prime, int n);
 
     /*! #10
      * @author Hryshchenko Yurii

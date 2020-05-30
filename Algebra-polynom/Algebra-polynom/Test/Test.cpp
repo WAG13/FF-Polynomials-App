@@ -258,7 +258,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 	{
 		int n = 52;
 		int q = 3;
-		Polynom cyclotomic = Polynom::CyclotomicPolynomial(n, q);
+		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 
 		Polynom product = Polynom(q, 1, std::vector<long long>{ 1 });
@@ -271,7 +271,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 	{
 		int n = 18;
 		int q = 7;
-		Polynom cyclotomic = Polynom::CyclotomicPolynomial(n, q);
+		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 
 		Polynom product = Polynom(q, 1, std::vector<long long>{ 1 });
