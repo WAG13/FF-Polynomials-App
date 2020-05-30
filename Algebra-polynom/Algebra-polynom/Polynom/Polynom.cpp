@@ -477,7 +477,7 @@ Polynom Polynom::gcd(Polynom p2) {
 }
 
 /*9 This method calculates nth Cyclotomic polynomial*/
-Polynom Polynom::CyclotomicPolynomial(int n, int prime) {
+Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
     // if (n % prime == 0) return Polynom();
     std::vector<long long> keys{1};
     Polynom result(prime, 1, keys);
@@ -509,11 +509,13 @@ Polynom Polynom::CyclotomicPolynomial(int n, int prime) {
 std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	//Find number of factors
 	size_t d = 1;
+	size_t dPow = prime;
 	do {
 		//std::cout << "d = " << d << std::endl;
 		//std::cout << ((long long)(std::pow(prime, d)) % n) << std::endl;
 		d++;
-	} while (size_t(std::pow(prime, d)) % n != 1);
+		dPow = (dPow * prime) % n;
+	} while (dPow != 1);
 	
 
 	std::vector<Polynom> factors;
