@@ -267,7 +267,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 		}
 		REQUIRE(product == cyclotomic);
 	}
-	SUBCASE("n = 131, q = 105")
+	SUBCASE("n = 18, q = 7")
 	{
 		int n = 18;
 		int q = 7;
