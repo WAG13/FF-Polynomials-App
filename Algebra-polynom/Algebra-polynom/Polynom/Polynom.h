@@ -149,7 +149,13 @@ public:
     /*! #9
     * @brief This method calculates nth �yclotomic polynomial
     */
-    static Polynom CyclotomicPolynomial(int prime, int n);
+    static Polynom CyclotomicPolynomial(int n, int prime);
+
+    /*! #10
+     * @author Hryshchenko Yurii
+     * @brief Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials
+     */
+    std::vector<Polynom> factorizeCyclotomicRi(size_t n);
 
 
     /*! #5

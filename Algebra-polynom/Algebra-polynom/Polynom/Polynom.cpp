@@ -5,6 +5,8 @@
  */
 
 #include "Polynom.h"
+#include "utils.h"
+#include <list>
 
 using std::cout;
 using std::cin;
@@ -224,7 +226,7 @@ long long Polynom::valueAtPoint(long long x) const {
         }
         answer += addition;
         answer %= long(std::pow(this->prime, this->power));
-        std::cout << answer << std::endl;
+        //std::cout << answer << std::endl;
         node = node->next;
     }
     return answer;
@@ -424,15 +426,18 @@ Polynom operator%(Polynom const &p1, Polynom const &p2) {
 
 /*9 Equal operator*/
 bool operator==(Polynom const &p1, Polynom const &p2) {
-    if (p1.getPolyPower() != p2.getPolyPower()) return false;
     Polynom::PolyTerm *cur1 = p1.getHead();
     Polynom::PolyTerm *cur2 = p2.getHead();
     while (cur1 != nullptr && cur2 != nullptr) {
         if (cur1->key != cur2->key)
             return false;
+	if (cur1->pow != cur2->pow)
+	    return false;
         cur1 = cur1->next;
         cur2 = cur2->next;
     }
+    if (cur1 != nullptr || cur2 != nullptr)
+	    return false;
     return true;
 }
 
@@ -464,15 +469,15 @@ Polynom Polynom::gcd(Polynom p2) {
         }
     }
 
-    if (p1.getPolyPower() == 0) {
-        return p1;
+    if (p1.getPolyPower() == 0 && p1.getTermKey(0) == 0) {
+        return p2;
     }
 
-    return p2;
+    return p1;
 }
 
 /*9 This method calculates nth Cyclotomic polynomial*/
-Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
+Polynom Polynom::CyclotomicPolynomial(int n, int prime) {
     // if (n % prime == 0) return Polynom();
     std::vector<long long> keys{1};
     Polynom result(prime, 1, keys);
@@ -498,6 +503,91 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
         }
     }
     return result;
+}
+
+/* 10 Factorization using Ri */
+std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
+	//Find number of factors
+	size_t d = 1;
+	do {
+		//std::cout << "d = " << d << std::endl;
+		//std::cout << ((long long)(std::pow(prime, d)) % n) << std::endl;
+		d++;
+	} while (size_t(std::pow(prime, d)) % n != 1);
+	
+
+	std::vector<Polynom> factors;
+	std::list<Polynom> polysToFactorize;
+	polysToFactorize.emplace_back();
+	polysToFactorize.back().copy(*this);
+
+	size_t factorsCount = utils::euler(n) / d;	
+	size_t factorPower = getPolyPower() / factorsCount;		
+	if (factorsCount == 1) {
+		factors.emplace_back();
+		factors[0].copy(*this);
+		return factors;
+	}
+	//std::cout << "Factors count: " << factorsCount << std::endl;
+	//std::cout << "Factors power: " << factorPower << std::endl;
+
+	size_t i = 1;
+	while (factors.size() < factorsCount) {
+		//std::cout << "Trying R" << i << std::endl;
+		Polynom riPolynomial = Polynom(prime, 1, std::vector<long long>());
+		long long j = 1;
+
+		PolyTerm* currentTerm = makeItem(i, 1);
+		riPolynomial.head = currentTerm;
+
+		long long mod = n / utils::gcd(n, i);
+		while ((long long)std::pow(prime, j) % mod != 1) {
+			currentTerm->next = makeItem(i * (long long)std::pow(prime, j), 1);
+
+			currentTerm = currentTerm->next;
+			j++;
+		}
+		currentTerm->next = nullptr;
+
+		bool factorized = false;
+		j = 0;
+		while (j < prime) {
+			//std::cout << "====\n";
+			//std::cout << polysToFactorize.front().show() << std::endl;
+			//std::cout << riPolynomial.show() << std::endl;
+
+			Polynom gcdRi = polysToFactorize.front().gcd(riPolynomial);
+
+			//std::cout << gcdRi.show() << std::endl;
+			//std::cout << "====\n";
+
+			//check if Ri = 0 (mod Q)
+			if (j == 0 && gcdRi == polysToFactorize.front()) {
+				factorized = false;
+				break;
+			}
+
+			long long gcdPower = gcdRi.getPolyPower();
+			if (gcdPower == factorPower) {
+				factorized = true;
+				gcdRi.normalization();
+				factors.push_back(gcdRi);
+			} else if (gcdPower % factorPower == 0) {
+				factorized = true;
+				polysToFactorize.push_back(gcdRi);
+			}
+
+			riPolynomial = riPolynomial + Polynom(prime, 1, std::vector<long long>(1, 1));
+			j++;
+		}
+		if (factorized) {
+			polysToFactorize.pop_front();
+		}
+		i++;
+
+	}
+
+	return factors;
 }
 
 /*5 Inverse of a polynomial in field
