@@ -76,15 +76,14 @@ TEST_CASE("Polynomial")
         REQUIRE(polynomial.show() == "");
     }
 
-    /*SUBCASE("GCD polynoms") {
-		Polynom pol1(5, 5, { 4,0,3,3,3,1 });
-		Polynom pol2(5, 4, { 1,2,0,1,1 });
+    SUBCASE("GCD polynoms") {
+	    Polynom pol1(3, 4, { 1,0,0,0,1 });
+	    Polynom pol2(3, 3, { 1,1,0,1 });
 
-		Polynom res = pol1.gcd(pol2);
+	    Polynom res = pol1.gcd(pol2);
 
-		REQUIRE(polynomial.getTermKey(0) == 1);
-		REQUIRE(polynomial.getPolyPower() == 0);
-	}*/
+	    REQUIRE(res.show() == "1 + 2*x + 2*x^2");
+    }
 }
 
 TEST_CASE("Derivation")
@@ -251,4 +250,34 @@ TEST_CASE("Cyclotomic polynomials")
         Polynom polynomial(131, 1, keys);
         REQUIRE(Polynom::CyclotomicPolynomial(131, 105) == polynomial);
     }
+}
+
+TEST_CASE("Factorization of cyclotomic using Ri")
+{
+	SUBCASE("n = 52, q = 3")
+	{
+		int n = 52;
+		int q = 3;
+		Polynom cyclotomic = Polynom::CyclotomicPolynomial(n, q);
+		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
+
+		Polynom product = Polynom(q, 1, std::vector<long long>{ 1 });
+		for (Polynom& factor : factors) {
+			product = product * factor;
+		}
+		REQUIRE(product == cyclotomic);
+	}
+	SUBCASE("n = 131, q = 105")
+	{
+		int n = 18;
+		int q = 7;
+		Polynom cyclotomic = Polynom::CyclotomicPolynomial(n, q);
+		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
+
+		Polynom product = Polynom(q, 1, std::vector<long long>{ 1 });
+		for (Polynom& factor : factors) {
+			product = product * factor;
+		}
+		REQUIRE(product == cyclotomic);
+	}
 }
