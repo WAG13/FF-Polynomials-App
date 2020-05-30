@@ -9,6 +9,6 @@ add_executable(main main.cpp utils.h Polynom/Polynom.cpp Matrix/Matrix.cpp)
 target_include_directories(main PRIVATE ./)
 
 if (BUILD_TESTS)
-    add_executable(tests Tests/Test.cpp utils.h Polynom/Polynom.cpp Matrix/Matrix.cpp)
+    add_executable(tests Test/Test.cpp utils.h Polynom/Polynom.cpp Matrix/Matrix.cpp)
     target_include_directories(tests PRIVATE ./)
 endif()
