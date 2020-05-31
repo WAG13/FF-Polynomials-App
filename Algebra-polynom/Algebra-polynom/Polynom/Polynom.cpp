@@ -288,7 +288,6 @@ void Polynom::normalization() {
         node = node->next;
     }
 }
-
 /*6 divisions for numbers in field*/
 long long Polynom::division_for_numbers(long long a, long long b, long long prime) {
     a *= inverse(b, prime);

@@ -200,11 +200,11 @@ protected:
 	/*! #6
 	* @brief Division for numbers in field
 	*/
-	long long division_for_numbers(long long a, long long b, long long prime);
+	static long long division_for_numbers(long long a, long long b, long long prime);
 	/*! #6
 	* @brief Inverse for numbers
 	*/
-	long long inverse(long long number, long long prime);
+	static long long inverse(long long number, long long prime);
 
     /*! #9
     * @brief Function to check if n is prime or not 
