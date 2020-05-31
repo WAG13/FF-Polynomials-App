@@ -444,14 +444,18 @@ bool operator==(Polynom const &p1, Polynom const &p2) {
 
 /*4     Number of roots       */
 long long Polynom::rootsNumber() {
-    long long pow = getPolyPower() + 1;
-    Matrix AMatrix(pow, pow);
+	long long pow = getPrime() - 1;
+	Matrix AMatrix(pow, pow);
 
-    for (long long i = 0, shift = 0; i < pow; i++, shift++) {
-        for (long long j = 0; j < pow; j++) {
-            AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
-        }
-    }
+	for (long long i = 0, shift = 0; i < pow; i++, shift++) {
+		for (long long j = 0; j < pow; j++) {
+		    if ( (j + shift) % pow == 0) {
+                AMatrix.setElement(i, j, (getTermKey(0) + getTermKey(pow)) % (pow + 1));
+		    } else {
+		        AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
+		    }
+		}
+	}
 
     long long matrixRank = AMatrix.rank();
     return (pow - matrixRank);
@@ -505,12 +509,33 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
 
 /* 10 Factorization using Ri */
 std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
-	if (n == 1) {
+	if (n <= prime) {
 		std::vector<Polynom> result { Polynom() };
 		result[0].copy(*this);
 		return result;
 	}
-	//TODO: handle gcd(n, p) > 1
+	if (utils::gcd((long long)n, prime) > 1) {
+		//Special case
+		//Q(p^m)n (mod p) may be represented as Qn to some power
+		
+		size_t newN = n;
+		while (newN % prime == 0)
+			newN /= prime;
+
+		Polynom newCyclotomic = Polynom::CyclotomicPolynomial(prime, newN);
+
+		std::vector<Polynom> factors = newCyclotomic.factorizeCyclotomicRi(newN);
+		size_t repeat = this->getPolyPower() / newCyclotomic.getPolyPower();
+		size_t count = factors.size();
+
+		for (size_t i = 1; i < repeat; i++) {
+			for (size_t j = 0; j < count; j++) {
+				factors.emplace_back();
+				factors.back().copy(factors[j]);
+			}
+		}
+		return factors;
+	}
 	
 
 	/* MAIN ALGORITHM (n and p are co-prime) */
