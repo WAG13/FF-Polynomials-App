@@ -11,7 +11,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "../Matrix/Matrix.hpp"
+#include "../Matrix/Matrix.h"
 
  /*!
   * @brief class Polynom that describes polynomial
@@ -40,7 +40,7 @@ public:
     /*constructors*/
     Polynom();
     Polynom(long long _prime, long long _power, std::vector<long long> keys);   //for all terms
-    Polynom(long long _prime, long long _power, std::vector<std::pair<long long, long long>> keys); //for some terms
+    Polynom(long long _prime, long long _power, std::vector<std::vector<long long>> keys); //for some terms
     /*destructor*/
     ~Polynom() { }
 
@@ -76,7 +76,7 @@ public:
             tmp = tmp->next;
         }
     };
-    void show();
+    std::string show() const;
     // return power of a polinomial
     long long getPolyPower() const {
         long long pow = 0;
@@ -121,7 +121,9 @@ public:
 	friend Polynom operator %(Polynom const& p1, Polynom const& p2);
     /** #2      @author Darik Ivashyn    **/
     //...
-
+    Polynom derivative() const;
+    long long valueAtPoint(long long x) const;
+    void normalization();
     /** #3      @author Karina Masol & Yuriy Momotenko     **/
     //...
 
@@ -131,6 +133,38 @@ public:
     *        in accordance with Konig-Rados theorem
     */
     long long rootsNumber();
+
+	/** #7      @author Nikita Pupov    **/
+	/*! #7
+	* @brief This method calculates greatest common divisor of two polynoms
+	*/
+	Polynom gcd(Polynom p);
+
+    /* #9
+    * @brief Equal operator
+    */
+    friend bool operator ==(Polynom const& p1, Polynom const& p2);
+
+    /** #9      @author Rostyslav Mochulskyi   **/
+    /*! #9
+    * @brief This method calculates nth �yclotomic polynomial
+    */
+    static Polynom CyclotomicPolynomial(int prime, int n);
+
+    /*! #10
+     * @author Hryshchenko Yurii
+     * @brief Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials
+     */
+    std::vector<Polynom> factorizeCyclotomicRi(size_t n);
+
+
+    /*! #5
+    * @author Yaroslava Levchuk Natalia Makarenko
+    * @brief This function implements algorithm  for finding invers
+    */
+    Polynom inversPoly(long long number, Polynom const& pol1);
+
+    long long gcdforinvers(long long a, long long b, long long* x, long long* y);
 
 protected:
     /*! #1
@@ -176,4 +210,15 @@ protected:
 	*/
 	void decrease(long long& a, long long& b, long long& a_count_in_a, long long& a_count_in_b) const;
 
+    /*! #9
+    * @brief Function to check if n is prime or not 
+    */
+    static bool isPrime(int n);
+
+    /*! #9
+   * @brief Mobius Function
+   */
+    static int mobius(int N);
 };
+
+std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime);
