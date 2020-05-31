@@ -636,3 +636,25 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
         return (x % pol1 + pol1) % pol1;
 }*/
 
+/* 12 Finds all irreducible polynomials by n */
+std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long long n)
+{
+    std::vector<Polynom> result, temp;
+    Polynom cyclotomic;
+
+    // 3.31 Lidl
+    long long num = pow(prime, n) - 1;
+    for (long long m = 1; m <= num; ++m) {
+        if ((num % m) == 0) {
+            cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
+            if (cyclotomic.getPolyPower() < n) continue;
+            temp = cyclotomic.factorizeCyclotomicRi(m);
+            result.insert(result.end(), temp.begin(), temp.end());
+        }
+    }
+    /*// Output
+    for (size_t i = 0; i < result.size(); ++i) {
+        std::cout << result[i].show() << std::endl;
+    }*/
+    return result;
+}
