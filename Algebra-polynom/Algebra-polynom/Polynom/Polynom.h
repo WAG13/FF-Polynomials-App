@@ -16,7 +16,7 @@
  /*!
   * @brief class Polynom that describes polynomial
   * @details 
-  * polynomials in field p^n (p - prime)
+  * polynomials in field p (p - prime)
   * coefficient             by (mod p)
   * power of this polinom -         n
   * Every object contains with terms (PolyTerm)
@@ -27,7 +27,6 @@
 class Polynom {
 private:
     long long prime;    // p
-    long long power;    // n
     // Structure that describes term of Polynom
     struct PolyTerm {
         long long key;      // Coefficient of terms of polynomial
@@ -39,8 +38,8 @@ private:
 public:
     /*constructors*/
     Polynom();
-    Polynom(long long _prime, long long _power, std::vector<long long> keys);   //for all terms
-    Polynom(long long _prime, long long _power, std::vector<std::vector<long long>> keys); //for some terms
+    Polynom(long long _prime, std::vector<long long> keys);   //for all terms
+    Polynom(long long _prime, std::vector<std::vector<long long>> keys); //for some terms
     /*destructor*/
     ~Polynom() { }
 
@@ -61,14 +60,11 @@ public:
         return 0;
     }
     // return power of a field
-    long long getPower() const { return power; } 
     long long getPrime() const { return prime; }
     void setHead(PolyTerm* _head) { head = _head; }
-    void setPower(long long _power) { power = _power; }
     void setPrime(long long _prime) { prime = _prime; }
     void copy(const Polynom pol) {
         prime = pol.getPrime();
-        power = pol.getPower();
         head = nullptr;
         PolyTerm* tmp = pol.getHead();
         while (tmp) {
@@ -168,6 +164,13 @@ public:
     Polynom inversPoly(long long number, Polynom const& pol1);
 
     long long gcdforinvers(long long a, long long b, long long* x, long long* y);
+
+    /*! #12
+     * @author Vladyslav Prokopchuk
+     * @brief Finds all irreducible polynomials of degree n
+     * @return Vector of all irreducible polynomials of degree n
+     */
+    static std::vector<Polynom> allIrreduciblePolynomials(long long prime, long long n);
 
 protected:
     /*! #1
