@@ -40,7 +40,7 @@ public:
     /*constructors*/
     Polynom();
     Polynom(long long _prime, long long _power, std::vector<long long> keys);   //for all terms
-    Polynom(long long _prime, long long _power, std::vector<std::pair<long long, long long>> keys); //for some terms
+    Polynom(long long _prime, long long _power, std::vector<std::vector<long long>> keys); //for some terms
     /*destructor*/
     ~Polynom() { }
 
@@ -76,7 +76,7 @@ public:
             tmp = tmp->next;
         }
     };
-    void show();
+    std::string show() const;
     // return power of a polinomial
     long long getPolyPower() const {
         long long pow = 0;
@@ -121,7 +121,9 @@ public:
 	friend Polynom operator %(Polynom const& p1, Polynom const& p2);
     /** #2      @author Darik Ivashyn    **/
     //...
-
+    Polynom derivative() const;
+    long long valueAtPoint(long long x) const;
+    void normalization();
     /** #3      @author Karina Masol & Yuriy Momotenko     **/
     //...
 
@@ -145,9 +147,24 @@ public:
 
     /** #9      @author Rostyslav Mochulskyi   **/
     /*! #9
-    * @brief This method calculates nth ñyclotomic polynomial
+    * @brief This method calculates nth ï¿½yclotomic polynomial
     */
     static Polynom CyclotomicPolynomial(int prime, int n);
+
+    /*! #10
+     * @author Hryshchenko Yurii
+     * @brief Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials
+     */
+    std::vector<Polynom> factorizeCyclotomicRi(size_t n);
+
+
+    /*! #5
+    * @author Yaroslava Levchuk Natalia Makarenko
+    * @brief This function implements algorithm  for finding invers
+    */
+    Polynom inversPoly(long long number, Polynom const& pol1);
+
+    long long gcdforinvers(long long a, long long b, long long* x, long long* y);
 
 protected:
     /*! #1
@@ -181,17 +198,13 @@ protected:
 	*/
 	std::pair<Polynom, Polynom> simple_division(Polynom const & p1, Polynom const & p2) const;
 	/*! #6
-	* @brief Inverse for numbers
+	* @brief Division for numbers in field
 	*/
 	long long division_for_numbers(long long a, long long b, long long prime);
 	/*! #6
 	* @brief Inverse for numbers
 	*/
 	long long inverse(long long number, long long prime);
-	/*! #6
-	* @brief Function for inverse
-	*/
-	void decrease(long long& a, long long& b, long long& a_count_in_a, long long& a_count_in_b) const;
 
     /*! #9
     * @brief Function to check if n is prime or not 
@@ -203,3 +216,5 @@ protected:
    */
     static int mobius(int N);
 };
+
+std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime);

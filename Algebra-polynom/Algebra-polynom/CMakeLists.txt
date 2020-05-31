@@ -6,7 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 option(BUILD_TESTS "Build tests" ON)
 
 add_executable(main main.cpp Polynom/Polynom.cpp Matrix/Matrix.cpp)
+target_include_directories(main PRIVATE ./)
 
 if (BUILD_TESTS)
-    add_executable(tests tests/Test.cpp Polynom/Polynom.cpp Matrix/Matrix.cpp)
+    add_executable(tests Test/Test.cpp Polynom/Polynom.cpp Matrix/Matrix.cpp)
+    target_include_directories(tests PRIVATE ./)
 endif()
