@@ -14,18 +14,17 @@ using std::endl;
 
 Polynom::Polynom() {
     head = nullptr;
-    power = 1;
     prime = 1;
 }
 
-Polynom::Polynom(long long _prime, long long _power, std::vector<long long> keys) : prime(_prime), power(_power) {
+Polynom::Polynom(long long _prime, std::vector<long long> keys) : prime(_prime) {
     head = nullptr;
     for (int i = 0; i < keys.size(); i++) {
         addItem(makeItem(i, keys[i]));
     }
 }
 
-Polynom::Polynom(long long _prime, long long _power, std::vector<std::vector<long long>> keys) : prime(_prime), power(_power) {
+Polynom::Polynom(long long _prime, std::vector<std::vector<long long>> keys) : prime(_prime) {
     head = nullptr;
     for (int i = 0; i < keys.size(); i++) {
         addItem(makeItem(keys[i][0], keys[i][1]));
@@ -143,14 +142,10 @@ Polynom operator-(Polynom const &pol1, Polynom const &pol2) {
 /*1     operation *       */
 Polynom Polynom::multPoly(Polynom const &pol1, Polynom const &pol2) {
 
-    if (power == 1) {
-        return multSimple(pol1, pol2);
-    } else {
-        //TODO: mult when power>1
-        Polynom result = multSimple(pol1, pol2);
-        // result % irredus pol with power of result pol
-        return result;
-    }
+    //TODO: mult when power>1
+    Polynom result = multSimple(pol1, pol2);
+    // result % irredus pol with power of result pol
+    return result;
 
 }
 
@@ -170,7 +165,7 @@ Polynom Polynom::multSimple(Polynom const &pol1, Polynom const &pol2) {
         tmp2 = pol2.getHead();
     }
 
-    return Polynom(pol1.getPrime(), 1, num);
+    return Polynom(pol1.getPrime(), num);
 }
 
 /*1     operation *       */
@@ -182,7 +177,6 @@ Polynom operator*(Polynom const &pol1, Polynom const &pol2) {
 /*1     operation * (number)      */
 Polynom Polynom::multNumber(Polynom const &p, long long const &number) {
     Polynom result;
-    result.setPower(p.getPower());
     result.setPrime(p.getPrime());
     PolyTerm *tmp = p.getHead();
     while (tmp) {
@@ -222,10 +216,10 @@ long long Polynom::valueAtPoint(long long x) const {
         long long addition{node->key};
         for (int i = 0; i < node->pow; ++i) {
             addition *= x;
-            addition %= long(std::pow(this->prime, this->power));
+            addition %= this->prime;
         }
         answer += addition;
-        answer %= long(std::pow(this->prime, this->power));
+        answer %= this->prime;
         //std::cout << answer << std::endl;
         node = node->next;
     }
@@ -339,7 +333,7 @@ Polynom Polynom::multPolyforDivide(Polynom const &pol1, Polynom const &pol2) {
         tmp2 = pol2.getHead();
     }
 
-    return Polynom(pol1.getPrime(), pow, num);
+    return Polynom(pol1.getPrime(), num);
 }
 
 /*1     operation * (number)      */
@@ -355,12 +349,12 @@ Polynom operator*(long long const &number, Polynom const &p) {
 }
 
 std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom const &p2) const {
-    Polynom result(p1.getPrime(), p1.getPower(), std::vector<long long>{0});
+    Polynom result(p1.getPrime(), std::vector<long long>{0});
     Polynom rest;
     Polynom temp_1 = p1;
     Polynom temp_2 = p2;
     while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
-        Polynom multiply(p1.getPrime(), p1.getPower(), std::vector<long long>{0});
+        Polynom multiply(p1.getPrime(), std::vector<long long>{0});
         multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(),
                                            utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
                                                                        temp_2.getTermKey(temp_2.getPolyPower()),
@@ -444,16 +438,16 @@ Polynom Polynom::gcd(Polynom p2) {
 Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
     // if (n % prime == 0) return Polynom();
     std::vector<long long> keys{1};
-    Polynom result(prime, 1, keys);
+    Polynom result(prime, keys);
     int mob;
     if (isPrime(n))
-        return Polynom(prime, 1, std::vector<long long>(n, 1));
+        return Polynom(prime, std::vector<long long>(n, 1));
     for (int d = 1; d <= n; d++) {
         if (n % d == 0 && mobius(n / d) == 1) {
             std::vector<long long> keys(d + 1, 0);
             keys[d] = 1;
             keys[0] = -1;
-            Polynom multiplier(prime, 1, keys);
+            Polynom multiplier(prime, keys);
             result = result * multiplier;
         }
     }
@@ -462,7 +456,7 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
             std::vector<long long> keys(d + 1, 0);
             keys[d] = 1;
             keys[0] = -1;
-            Polynom divider(prime, 1, keys);
+            Polynom divider(prime, keys);
             result = result / divider;
         }
     }
@@ -531,7 +525,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	size_t i = 1;
 	while (factors.size() < factorsCount) {
 		//std::cout << "Trying R" << i << std::endl;
-		Polynom riPolynomial = Polynom(prime, 1, std::vector<long long>());
+		Polynom riPolynomial = Polynom(prime, std::vector<long long>());
 		long long j = 1;
 
 		PolyTerm* currentTerm = makeItem(i, 1);
@@ -574,7 +568,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 				polysToFactorize.push_back(gcdRi);
 			}
 
-			riPolynomial = riPolynomial + Polynom(prime, 1, std::vector<long long>(1, 1));
+			riPolynomial = riPolynomial + Polynom(prime, std::vector<long long>(1, 1));
 			j++;
 		}
 		if (factorized) {
