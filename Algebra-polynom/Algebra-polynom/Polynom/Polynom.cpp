@@ -514,7 +514,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	}
 	if (utils::gcd((long long)n, prime) > 1) {
 		//Special case
-		//Q(p^m)n (mod m) may be represented as Qn to some power
+		//Q(p^m)n (mod p) may be represented as Qn to some power
 		
 		size_t newN = n;
 		while (newN % prime == 0)
