@@ -254,9 +254,18 @@ TEST_CASE("Cyclotomic polynomials")
 
 TEST_CASE("Factorization of cyclotomic using Ri")
 {
+	SUBCASE("n = 1")
+	{
+		int n = 1;
+		int q = 3;
+		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
+		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
+		REQUIRE(factors.size() == 1);
+		REQUIRE(factors[0] == cyclotomic);
+	}
 	SUBCASE("n = 52, q = 3")
 	{
-		int n = 52;
+		int n = 1;
 		int q = 3;
 		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
@@ -267,6 +276,19 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 		}
 		REQUIRE(product == cyclotomic);
 	}
+	/* SUBCASE("n = 45, q = 3")
+	{
+		int n = 45;
+		int q = 3;
+		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
+		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
+
+		Polynom product = Polynom(q, 1, std::vector<long long>{ 1 });
+		for (Polynom& factor : factors) {
+			product = product * factor;
+		}
+		REQUIRE(product == cyclotomic);
+	} */
 	SUBCASE("n = 18, q = 7")
 	{
 		int n = 18;

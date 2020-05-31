@@ -507,6 +507,16 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
 
 /* 10 Factorization using Ri */
 std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
+	if (n == 1) {
+		std::vector<Polynom> result { Polynom() };
+		result[0].copy(*this);
+		return result;
+	}
+	//TODO: handle gcd(n, p) > 1
+	
+
+	/* MAIN ALGORITHM (n and p are co-prime) */
+
 	//Find number of factors
 	size_t d = 1;
 	size_t dPow = prime;
