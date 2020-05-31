@@ -111,6 +111,15 @@ public:
     */
     friend Polynom operator *(Polynom const& p, long long const& number);
     friend Polynom operator *(long long const &number, Polynom const& p);
+
+    /*! #6
+    * @brief Division for numbers in field
+    */
+    static long long division_for_numbers(long long a, long long b, long long prime);
+    /*! #6
+    * @brief Inverse for numbers
+    */
+    static long long inverse(long long number, long long prime);
 	/* #6
 	* @brief Divides polynomial in field
 	*/
@@ -197,14 +206,7 @@ protected:
 	* @brief Division
 	*/
 	std::pair<Polynom, Polynom> simple_division(Polynom const & p1, Polynom const & p2) const;
-	/*! #6
-	* @brief Division for numbers in field
-	*/
-	static long long division_for_numbers(long long a, long long b, long long prime);
-	/*! #6
-	* @brief Inverse for numbers
-	*/
-	static long long inverse(long long number, long long prime);
+	
 
     /*! #9
     * @brief Function to check if n is prime or not 
