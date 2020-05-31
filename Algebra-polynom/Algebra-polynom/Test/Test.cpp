@@ -232,6 +232,13 @@ TEST_CASE("Roots amount")
         Polynom polynomial(5, 1, {1, 2, 2, 1});
         REQUIRE(polynomial.rootsNumber() == 1);
     }
+
+    SUBCASE("Fourth example") {
+        Polynom polynomial(17, 1, {
+                {0,-2},{1,-1},{2,4},{3,-7},{4,3},{5,-7},{6,1}
+        });
+        REQUIRE(polynomial.rootsNumber() == 4);
+    }
 }
 
 TEST_CASE("Cyclotomic polynomials")

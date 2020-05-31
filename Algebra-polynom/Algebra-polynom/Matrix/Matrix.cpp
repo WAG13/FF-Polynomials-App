@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include "../utils.h"
 
 long long Matrix::getElement(long long row, long long column) const {
     assert(row < _rows);
@@ -11,10 +12,17 @@ void Matrix::setElement(long long row, long long column, long long key) {
     assert(row < _rows);
     assert(column < _columns);
 
-    _matrix[row][column] = key % _prime;
+    if (key < 0) {
+        do {
+            key = key + _prime;
+        } while (key < 0);
+    } else {
+        key = key % _prime;
+    }
+    _matrix[row][column] = key;
 }
 
-void Matrix::swapRows(int firstRow, int secondRow, int column) {
+void Matrix::swapRows(long long firstRow, long long secondRow, long long column) {
     for (long long i = 0; i < column; i++) {
         long long temp = _matrix[firstRow][i];
         _matrix[firstRow][i] = _matrix[secondRow][i];
@@ -22,18 +30,18 @@ void Matrix::swapRows(int firstRow, int secondRow, int column) {
     }
 }
 
-long long Matrix::rank() {
+std::pair<long long, Matrix> Matrix::rank() {
     long long rank = _columns;
     Matrix matrixCopy(*this);
 
-    for (int row = 0; row < rank; row++) {
+    for (long long row = 0; row < rank; row++) {
         if (matrixCopy.getElement(row,row) != 0) {
-            for (int col = 0; col < _rows; col++) {
+            for (long long col = 0; col < _rows; col++) {
                 if (col != row) {
-                    long long multi = matrixCopy.getElement(col,row) /
-                           matrixCopy.getElement(row,row);
+                    long long multi = utils::division_for_numbers(matrixCopy.getElement(col,row),
+                            matrixCopy.getElement(row,row), _prime);
 
-                    for (int i = 0; i < rank; i++) {
+                    for (long long i = 0; i < rank; i++) {
                         matrixCopy.setElement(col,i,
                                               static_cast<long long>(matrixCopy.getElement(col,i) - multi * matrixCopy.getElement(row,i)));
                     }
@@ -41,7 +49,7 @@ long long Matrix::rank() {
             }
         } else {
             bool allZeros = true;
-            for (int i = row + 1; i < _rows;  i++) {
+            for (long long i = row + 1; i < _rows;  i++) {
                 if (matrixCopy.getElement(i,row) != 0) {
                     matrixCopy.swapRows(row, i, rank);
                     allZeros = false;
@@ -58,6 +66,6 @@ long long Matrix::rank() {
             row--;
         }
     }
-    return rank;
+    return {rank, matrixCopy};
 }
 

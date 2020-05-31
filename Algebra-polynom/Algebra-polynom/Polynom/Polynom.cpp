@@ -419,7 +419,7 @@ long long Polynom::rootsNumber() {
 		}
 	}
 
-    long long matrixRank = AMatrix.rank();
+    long long matrixRank = AMatrix.rank().first;
     return (pow - matrixRank);
 }
 
