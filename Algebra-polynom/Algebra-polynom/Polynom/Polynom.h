@@ -32,6 +32,9 @@ private:
         long long key;      // Coefficient of terms of polynomial
         long long pow;      // Power of term
         PolyTerm* next;     // Pointer to next term
+
+        /*destructor*/
+        ~PolyTerm() { if (next) delete next; }
     };
     PolyTerm* head;         // Pointer to the first term of polynom
 
@@ -40,8 +43,23 @@ public:
     Polynom();
     Polynom(long long _prime, std::vector<long long> keys);   //for all terms
     Polynom(long long _prime, std::vector<std::vector<long long>> keys); //for some terms
+    Polynom(const Polynom& other) { // copy constructor
+        this->prime = other.prime;
+        head = nullptr;
+        PolyTerm* tmp = other.getHead();
+        while (tmp) {
+            addItem(makeItem(tmp->pow, tmp->key));
+            tmp = tmp->next;
+        }
+        tmp = nullptr;
+    }
+    Polynom(Polynom&& other) noexcept { // move constructor
+        this->prime = other.prime;
+        this->head = other.head;
+        other.head = nullptr;
+    }
     /*destructor*/
-    ~Polynom() { }
+    ~Polynom() { if (head) delete head; }
 
     /*Getters and Setters*/
     PolyTerm* getHead() const { return head; }
@@ -63,14 +81,25 @@ public:
     long long getPrime() const { return prime; }
     void setHead(PolyTerm* _head) { head = _head; }
     void setPrime(long long _prime) { prime = _prime; }
-    void copy(const Polynom pol) {
-        prime = pol.getPrime();
+    void operator=(const Polynom& other) {
+        prime = other.getPrime();
         head = nullptr;
-        PolyTerm* tmp = pol.getHead();
+        PolyTerm* tmp = other.getHead();
         while (tmp) {
             addItem(makeItem(tmp->pow, tmp->key));
             tmp = tmp->next;
         }
+        tmp = nullptr;
+    };
+    void copy(const Polynom& other) {
+        prime = other.getPrime();
+        head = nullptr;
+        PolyTerm* tmp = other.getHead();
+        while (tmp) {
+            addItem(makeItem(tmp->pow, tmp->key));
+            tmp = tmp->next;
+        }
+        tmp = nullptr;
     };
     std::string show() const;
     // return power of a polinomial
@@ -146,7 +175,7 @@ public:
 
     /** #9      @author Rostyslav Mochulskyi   **/
     /*! #9
-    * @brief This method calculates nth �yclotomic polynomial
+    * @brief This method calculates nth cyclotomic polynomial
     */
     static Polynom CyclotomicPolynomial(int prime, int n);
 

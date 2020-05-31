@@ -195,6 +195,7 @@ Polynom Polynom::derivative() const {
     if (node->pow == 0) {
         answer.setHead(node->next);
         auto tmp = node->next;
+        node->next = nullptr;
         delete node;
         node = tmp;
     }
