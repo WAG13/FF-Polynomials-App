@@ -198,18 +198,13 @@ protected:
 	*/
 	std::pair<Polynom, Polynom> simple_division(Polynom const & p1, Polynom const & p2) const;
 	/*! #6
-	* @brief Inverse for numbers
+	* @brief Division for numbers
 	*/
 	long long division_for_numbers(long long a, long long b, long long prime);
 	/*! #6
 	* @brief Inverse for numbers
 	*/
 	long long inverse(long long number, long long prime);
-	/*! #6
-	* @brief Function for inverse
-	*/
-	void decrease(long long& a, long long& b, long long& a_count_in_a, long long& a_count_in_b) const;
-
     /*! #9
     * @brief Function to check if n is prime or not 
     */
