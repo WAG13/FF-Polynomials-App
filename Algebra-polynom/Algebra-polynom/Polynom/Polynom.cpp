@@ -445,14 +445,18 @@ bool operator==(Polynom const &p1, Polynom const &p2) {
 
 /*4     Number of roots       */
 long long Polynom::rootsNumber() {
-    long long pow = getPolyPower() + 1;
-    Matrix AMatrix(pow, pow);
+	long long pow = getPrime() - 1;
+	Matrix AMatrix(pow, pow);
 
-    for (long long i = 0, shift = 0; i < pow; i++, shift++) {
-        for (long long j = 0; j < pow; j++) {
-            AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
-        }
-    }
+	for (long long i = 0, shift = 0; i < pow; i++, shift++) {
+		for (long long j = 0; j < pow; j++) {
+		    if ( (j + shift) % pow == 0) {
+                AMatrix.setElement(i, j, (getTermKey(0) + getTermKey(pow)) % (pow + 1));
+		    } else {
+		        AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
+		    }
+		}
+	}
 
     long long matrixRank = AMatrix.rank();
     return (pow - matrixRank);
