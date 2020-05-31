@@ -347,7 +347,7 @@ bool operator==(Polynom const& p1, Polynom const& p2)
 /*4     Number of roots       */
 long long Polynom::rootsNumber() {
 	long long pow = getPrime() - 1;
-	Matrix AMatrix(pow, pow);
+	Matrix AMatrix(pow, pow, pow + 1);
 
 	for (long long i = 0, shift = 0; i < pow; i++, shift++) {
 		for (long long j = 0; j < pow; j++) {

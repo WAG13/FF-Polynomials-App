@@ -1,6 +1,5 @@
 #include "Matrix.h"
 
-
 long long Matrix::getElement(long long row, long long column) const {
     assert(row < _rows);
     assert(column < _columns);
@@ -12,7 +11,7 @@ void Matrix::setElement(long long row, long long column, long long key) {
     assert(row < _rows);
     assert(column < _columns);
 
-    _matrix[row][column] = key;
+    _matrix[row][column] = key % _prime;
 }
 
 void Matrix::swapRows(int firstRow, int secondRow, int column) {
@@ -28,11 +27,12 @@ long long Matrix::rank() {
     Matrix matrixCopy(*this);
 
     for (int row = 0; row < rank; row++) {
-        if (matrixCopy.getElement(row,row)!= 0) {
+        if (matrixCopy.getElement(row,row) != 0) {
             for (int col = 0; col < _rows; col++) {
                 if (col != row) {
-                    double multi = (double)matrixCopy.getElement(col,row) /
-                                   matrixCopy.getElement(row,row);
+                    long long multi = matrixCopy.getElement(col,row) /
+                           matrixCopy.getElement(row,row);
+
                     for (int i = 0; i < rank; i++) {
                         matrixCopy.setElement(col,i,
                                               static_cast<long long>(matrixCopy.getElement(col,i) - multi * matrixCopy.getElement(row,i)));

@@ -12,11 +12,13 @@ class Matrix {
 public:
     long long _rows;
     long long _columns;
+    long long _prime;
 
-    Matrix(long long rows, long long columns): _rows(rows), _columns(columns),
+    Matrix(long long rows, long long columns, long long prime): _rows(rows), _columns(columns), _prime(prime),
         _matrix(std::vector<std::vector<long long>>(rows, std::vector<long long>(columns, 0))) {}
 
-    explicit Matrix(Matrix& matrix) : _rows(matrix._rows), _columns(matrix._columns), _matrix(matrix._matrix) {}
+    explicit Matrix(Matrix& matrix) : _rows(matrix._rows), _columns(matrix._columns),
+        _prime(matrix._prime), _matrix(matrix._matrix) {}
 
     long long getElement(long long row, long long column) const;
 
