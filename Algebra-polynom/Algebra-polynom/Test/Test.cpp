@@ -21,10 +21,12 @@ TEST_CASE("Polynomial")
     SUBCASE("Creating copy of polynom")
     {
         Polynom polynomial(3, {1, 2});
-        Polynom copy;
-        copy.copy(polynomial);
+        Polynom copy = polynomial;
         REQUIRE(polynomial.show() == copy.show());
         REQUIRE(polynomial.getPrime() == copy.getPrime());
+
+        copy = copy + polynomial;
+        REQUIRE(polynomial.show() != copy.show());
     }
     SUBCASE("Power of polynom")
     {
@@ -231,6 +233,13 @@ TEST_CASE("Roots amount")
         Polynom polynomial(5, {1, 2, 2, 1});
         REQUIRE(polynomial.rootsNumber() == 1);
     }
+
+    SUBCASE("Fourth example") {
+        Polynom polynomial(17, {
+                {0,-2},{1,-1},{2,4},{3,-7},{4,3},{5,-7},{6,1}
+        });
+        REQUIRE(polynomial.rootsNumber() == 4);
+    }
 }
 
 TEST_CASE("Cyclotomic polynomials")
@@ -371,4 +380,49 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 		}
 		REQUIRE(product == cyclotomic);
 	}
+}
+
+TEST_CASE("Finding all irreducible polynomials of degree n")
+{
+    SUBCASE("prime = 2, n = 2")
+    {
+        int prime = 2;
+        int n = 2;
+
+        std::vector<Polynom> result = Polynom::allIrreduciblePolynomials(prime, n);
+        std::vector<Polynom> required;
+        required.push_back(Polynom(prime, { 1, 1, 1 }));
+
+        REQUIRE(result == required);
+    }
+    SUBCASE("prime = 2, n = 3")
+    {
+        int prime = 2;
+        int n = 3;
+
+        std::vector<Polynom> result = Polynom::allIrreduciblePolynomials(prime, n);
+        std::vector<Polynom> required;
+        required.push_back(Polynom(prime, { 1, 1, 0, 1 }));
+        required.push_back(Polynom(prime, { 1, 0, 1, 1 }));
+
+        REQUIRE(result == required);
+    }
+    SUBCASE("prime = 3, n = 3")
+    {
+        int prime = 3;
+        int n = 3;
+
+        std::vector<Polynom> result = Polynom::allIrreduciblePolynomials(prime, n);
+        std::vector<Polynom> required;
+        required.push_back(Polynom(prime, { 2, 2, 0, 1 }));
+        required.push_back(Polynom(prime, { 2, 2, 2, 1 }));
+        required.push_back(Polynom(prime, { 2, 1, 1, 1 }));
+        required.push_back(Polynom(prime, { 2, 0, 1, 1 }));
+        required.push_back(Polynom(prime, { 1, 2, 0, 1 }));
+        required.push_back(Polynom(prime, { 1, 2, 1, 1 }));
+        required.push_back(Polynom(prime, { 1, 1, 2, 1 }));
+        required.push_back(Polynom(prime, { 1, 0, 2, 1 }));
+
+        REQUIRE(result == required);
+    }
 }
