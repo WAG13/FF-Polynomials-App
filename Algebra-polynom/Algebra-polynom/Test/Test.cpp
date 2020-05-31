@@ -85,7 +85,76 @@ TEST_CASE("Polynomial")
 	    REQUIRE(res.show() == "1 + 2*x + 2*x^2");
     }
 }
+TEST_CASE("Division") {
+    SUBCASE("/ operation")
+    {
+        SUBCASE("example 1") {
+            Polynom polynom1(3, 3, { 3, 7, 10, 1, 0, 3, 4 });
+            Polynom polynom2(3, 3, { 2,1,5 });
+            Polynom result = polynom1 / polynom2;
+            REQUIRE(result.show() == "2 + 2*x^3 + 2*x^4");
+        }
 
+        SUBCASE("example 2") {
+            Polynom polynom1(3, 3, { 3, 7, 10, 1, 0, 3, 4 });
+            Polynom polynom2(3, 3, { 2,1,5 });
+            Polynom result = polynom2 / polynom1;
+            REQUIRE(result.show() == "");
+        }
+        SUBCASE("example 3") {
+            Polynom polynom1(17, 3, { 20, 34, 65, 43, 53 });
+            Polynom polynom2(17, 3, { 37,56,67,27,14 });
+            Polynom result = polynom1 / polynom2;
+            REQUIRE(result.show() == "5");
+        }
+        SUBCASE("example 4") {
+            Polynom polynom1(17, 3, { 20, 34, 65, 43, 53,43,51,60 });
+            Polynom polynom2(17, 3, { 37,56,67,27,14 });
+            Polynom result = polynom1 / polynom2;
+            REQUIRE(result.show() == "14 + 10*x + 7*x^2 + 14*x^3");
+        }
+        SUBCASE("example 5") {
+            Polynom polynom1(17, 3, { 20, 34, 65, 43, 53,43,51,60 });
+            Polynom polynom2(17, 3, { 37,56,67,27,57,86,39 });
+            Polynom result = polynom1 / polynom2;
+            REQUIRE(result.show() == "1 + 12*x");
+        }
+    }
+    SUBCASE("% operation")
+    {
+        SUBCASE("example 1") {
+            Polynom polynom1(3, 3, { 3, 7, 10, 1, 0, 3, 4 });
+            Polynom polynom2(3, 3, { 2,1,5 });
+            Polynom result = polynom1 % polynom2;
+            REQUIRE(result.show() == "2 + 2*x");
+        }
+
+        SUBCASE("example 2") {
+            Polynom polynom1(3, 3, { 3, 7, 10, 1, 0, 3, 4 });
+            Polynom polynom2(3, 3, { 2,1,5 });
+            Polynom result = polynom2 % polynom1;
+            REQUIRE(result.show() == "2 + 1*x + 2*x^2");
+        }
+        SUBCASE("example 3") {
+            Polynom polynom1(17, 3, { 20, 34, 65, 43, 53 });
+            Polynom polynom2(17, 3, { 37,56,67,27,14 });
+            Polynom result = polynom1 % polynom2;
+            REQUIRE(result.show() == "5 + 9*x + 2*x^2 + 10*x^3");
+        }
+        SUBCASE("example 4") {
+            Polynom polynom1(17, 3, { 20, 34, 65, 43, 53,43,51,60 });
+            Polynom polynom2(17, 3, { 37,56,67,27,14 });
+            Polynom result = polynom1 % polynom2;
+            REQUIRE(result.show() == "12 + 2*x + 8*x^2 + 6*x^3");
+        }
+        SUBCASE("example 5") {
+            Polynom polynom1(17, 3, { 20, 34, 65, 43, 53,43,51,60 });
+            Polynom polynom2(17, 3, { 37,56,67,27,57,86,39 });
+            Polynom result = polynom1 % polynom2;
+            REQUIRE(result.show() == "10*x + 6*x^2 + 11*x^3 + 12*x^4 + 4*x^5");
+        }
+    }
+}
 TEST_CASE("Derivation")
 {
     SUBCASE("First example")
