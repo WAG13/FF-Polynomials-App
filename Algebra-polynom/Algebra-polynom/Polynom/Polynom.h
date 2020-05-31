@@ -13,7 +13,7 @@
 #include <algorithm>
 #include "../Matrix/Matrix.h"
 
- /*!
+/*!
   * @brief class Polynom that describes polynomial
   * @details 
   * polynomials in field p (p - prime)
@@ -24,119 +24,145 @@
   * key - coefficient of term
   * next - pointer to next object of structure "PolyTerm"
   */
-class Polynom {
+class Polynom
+{
 private:
-    long long prime;    // p
+    long long prime; // p
     // Structure that describes term of Polynom
-    struct PolyTerm {
-        long long key;      // Coefficient of terms of polynomial
-        long long pow;      // Power of term
-        PolyTerm* next;     // Pointer to next term
+    struct PolyTerm
+    {
+        long long key;  // Coefficient of terms of polynomial
+        long long pow;  // Power of term
+        PolyTerm *next; // Pointer to next term
 
         /*destructor*/
-        ~PolyTerm() { if (next) delete next; }
+        ~PolyTerm()
+        {
+            if (next)
+                delete next;
+        }
     };
-    PolyTerm* head;         // Pointer to the first term of polynom
+    PolyTerm *head; // Pointer to the first term of polynom
 
 public:
     /*constructors*/
     Polynom();
-    Polynom(long long _prime, std::vector<long long> keys);   //for all terms
+    Polynom(long long _prime, std::vector<long long> keys);              //for all terms
     Polynom(long long _prime, std::vector<std::vector<long long>> keys); //for some terms
-    Polynom(const Polynom& other) { // copy constructor
+    Polynom(const Polynom &other)
+    { // copy constructor
         this->prime = other.prime;
         head = nullptr;
-        PolyTerm* tmp = other.getHead();
-        while (tmp) {
+        PolyTerm *tmp = other.getHead();
+        while (tmp)
+        {
             addItem(makeItem(tmp->pow, tmp->key));
             tmp = tmp->next;
         }
         tmp = nullptr;
     }
-    Polynom(Polynom&& other) noexcept { // move constructor
+    Polynom(Polynom &&other) noexcept
+    { // move constructor
         this->prime = other.prime;
         this->head = other.head;
         other.head = nullptr;
     }
     /*destructor*/
-    ~Polynom() { if (head) delete head; }
+    ~Polynom()
+    {
+        if (head)
+            delete head;
+    }
 
     /*Getters and Setters*/
-    PolyTerm* getHead() const { return head; }
-    PolyTerm* getTerm(long long pow) const {    //retuns term by its power
-        PolyTerm* tmp = head;
-        if (head == nullptr) return nullptr;
-        while (tmp) {
-            if (tmp->pow == pow) return tmp;
+    PolyTerm *getHead() const { return head; }
+    PolyTerm *getTerm(long long pow) const
+    { //retuns term by its power
+        PolyTerm *tmp = head;
+        if (head == nullptr)
+            return nullptr;
+        while (tmp)
+        {
+            if (tmp->pow == pow)
+                return tmp;
             tmp = tmp->next;
         }
         return nullptr;
     }
-    long long getTermKey(long long pow) const {    //retuns coef of a term by its power
-        PolyTerm* term = getTerm(pow);
-        if (term) return term->key;
+    long long getTermKey(long long pow) const
+    { //retuns coef of a term by its power
+        PolyTerm *term = getTerm(pow);
+        if (term)
+            return term->key;
         return 0;
     }
     // return power of a field
     long long getPrime() const { return prime; }
-    void setHead(PolyTerm* _head) { head = _head; }
+    void setHead(PolyTerm *_head) { head = _head; }
     void setPrime(long long _prime) { prime = _prime; }
-    void operator=(const Polynom& other) {
+    void operator=(const Polynom &other)
+    {
         prime = other.getPrime();
         head = nullptr;
-        PolyTerm* tmp = other.getHead();
-        while (tmp) {
+        PolyTerm *tmp = other.getHead();
+        while (tmp)
+        {
             addItem(makeItem(tmp->pow, tmp->key));
             tmp = tmp->next;
         }
         tmp = nullptr;
     };
-    
+
     std::string show() const;
     // return power of a polinomial
-    long long getPolyPower() const {
+    long long getPolyPower() const
+    {
         long long pow = 0;
-        PolyTerm* tmp = head;
-        if (head == nullptr) return pow;
-        while (tmp) {
-            if (tmp->pow > pow) { pow = tmp->pow; }
+        PolyTerm *tmp = head;
+        if (head == nullptr)
+            return pow;
+        while (tmp)
+        {
+            if (tmp->pow > pow)
+            {
+                pow = tmp->pow;
+            }
             tmp = tmp->next;
         }
-        return pow; 
+        return pow;
     }
     // Creates new term (PolyTerm) with coefficient val
-    PolyTerm* makeItem(long long pow, long long val);
+    PolyTerm *makeItem(long long pow, long long val);
     // Adding term to the polynom in non-descending order
-    void addItem(PolyTerm* el);
-    
+    void addItem(PolyTerm *el);
+
     /** #1      @author Daryna Bondarets    **/
     /*! #1
     * @brief Adding two polynomials in field
     */
-    friend Polynom operator +(Polynom const& p1, Polynom const& p2);
+    friend Polynom operator+(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Difference of two polynomials in field
     */
-    friend Polynom operator -(Polynom const& p1, Polynom const& p2);
+    friend Polynom operator-(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplication of two polynomials in field
     */
-    friend Polynom operator *(Polynom const& p1, Polynom const& p2);
+    friend Polynom operator*(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplicates polynomial in field on integer
     */
-    friend Polynom operator *(Polynom const& p, long long const& number);
-    friend Polynom operator *(long long const &number, Polynom const& p);
+    friend Polynom operator*(Polynom const &p, long long const &number);
+    friend Polynom operator*(long long const &number, Polynom const &p);
 
-
-	/* #6
+    /* #6
 	* @brief Divides polynomial in field
 	*/
-	friend Polynom operator /(Polynom const& p1, Polynom const& p2);
-	/* #6
+    friend Polynom operator/(Polynom const &p1, Polynom const &p2);
+    /* #6
 	* @brief Get rest from the divison of polinomials
 	*/
-	friend Polynom operator %(Polynom const& p1, Polynom const& p2);
+    friend Polynom operator%(Polynom const &p1, Polynom const &p2);
     /** #2      @author Darik Ivashyn    **/
     //...
     Polynom derivative() const;
@@ -152,16 +178,16 @@ public:
     */
     long long rootsNumber();
 
-	/** #7      @author Nikita Pupov    **/
-	/*! #7
+    /** #7      @author Nikita Pupov    **/
+    /*! #7
 	* @brief This method calculates greatest common divisor of two polynoms
 	*/
-	Polynom gcd(Polynom p);
+    Polynom gcd(Polynom p);
 
     /* #9
     * @brief Equal operator
     */
-    friend bool operator ==(Polynom const& p1, Polynom const& p2);
+    friend bool operator==(Polynom const &p1, Polynom const &p2);
 
     /** #9      @author Rostyslav Mochulskyi   **/
     /*! #9
@@ -175,14 +201,13 @@ public:
      */
     std::vector<Polynom> factorizeCyclotomicRi(size_t n);
 
-
     /*! #5
     * @author Yaroslava Levchuk Natalia Makarenko
     * @brief This function implements algorithm  for finding invers
     */
-    Polynom inversPoly(long long number, Polynom const& pol1);
+    Polynom inversPoly(long long number, Polynom const &pol1);
 
-    long long gcdforinvers(long long a, long long b, long long* x, long long* y);
+    long long gcdforinvers(long long a, long long b, long long *x, long long *y);
 
     /*! #12
      * @author Vladyslav Prokopchuk
@@ -202,32 +227,30 @@ protected:
     /*! #1
     * @brief Adding two polynomials in field
     */
-    Polynom addPoly(Polynom const& p1, Polynom const& p2);
+    Polynom addPoly(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Difference of two polynomials in field
     */
-    Polynom diffPoly(Polynom const& p1, Polynom const& p2);
+    Polynom diffPoly(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplication of two polynomials in field
     */
-    Polynom multPoly(Polynom const& p1, Polynom const& p2);
+    Polynom multPoly(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplication of two polynomials in field with power=1
     */
-    Polynom multSimple(Polynom const& p1, Polynom const& p2);
+    Polynom multSimple(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplicates polynomial in field on integer
     */
-    Polynom multNumber(Polynom const& p, long long const& number);
+    Polynom multNumber(Polynom const &p, long long const &number);
 
-
-	/*! #6
+    /*! #6
 	* @brief Multiplication of two polynomials in field 
 	*/
-	Polynom multPolyforDivide(Polynom const& p1, Polynom const& p2);
-	/*! #6
+    Polynom multPolyforDivide(Polynom const &p1, Polynom const &p2);
+    /*! #6
 	* @brief Division
 	*/
-	std::pair<Polynom, Polynom> simple_division(Polynom const & p1, Polynom const & p2) const;
-	
+    std::pair<Polynom, Polynom> simple_division(Polynom const &p1, Polynom const &p2) const;
 };
