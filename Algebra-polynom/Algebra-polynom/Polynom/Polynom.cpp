@@ -195,6 +195,7 @@ Polynom Polynom::derivative() const {
     if (node->pow == 0) {
         answer.setHead(node->next);
         auto tmp = node->next;
+        node->next = nullptr;
         delete node;
         node = tmp;
     }
@@ -643,7 +644,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
         return (x % pol1 + pol1) % pol1;
 }*/
 
-/* 12 Finds all irreducible polynomials by n */
+/* 12 Finds all irreducible polynomials of degree n */
 std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long long n)
 {
     std::vector<Polynom> result, temp;
@@ -664,4 +665,24 @@ std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long lo
         std::cout << result[i].show() << std::endl;
     }*/
     return result;
+}
+
+/* 12 Finds one irreducible polynomial of degree n */
+Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
+{
+    std::vector<Polynom> temp;
+    Polynom cyclotomic;
+
+    // 3.31 Lidl
+    long long num = pow(prime, n) - 1;
+    for (long long m = 1; m <= num; ++m) {
+        if ((num % m) == 0) {
+            cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
+            if (cyclotomic.getPolyPower() < n) continue;
+            temp = cyclotomic.factorizeCyclotomicRi(m);
+            return temp[0];
+        }
+    }
+    // Doesn't find
+    return Polynom();
 }
