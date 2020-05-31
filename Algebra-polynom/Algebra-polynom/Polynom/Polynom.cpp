@@ -507,12 +507,33 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
 
 /* 10 Factorization using Ri */
 std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
-	if (n == 1) {
+	if (n <= prime) {
 		std::vector<Polynom> result { Polynom() };
 		result[0].copy(*this);
 		return result;
 	}
-	//TODO: handle gcd(n, p) > 1
+	if (utils::gcd((long long)n, prime) > 1) {
+		//Special case
+		//Q(p^m)n (mod m) may be represented as Qn to some power
+		
+		size_t newN = n;
+		while (newN % prime == 0)
+			newN /= prime;
+
+		Polynom newCyclotomic = Polynom::CyclotomicPolynomial(prime, newN);
+
+		std::vector<Polynom> factors = newCyclotomic.factorizeCyclotomicRi(newN);
+		size_t repeat = this->getPolyPower() / newCyclotomic.getPolyPower();
+		size_t count = factors.size();
+
+		for (size_t i = 1; i < repeat; i++) {
+			for (size_t j = 0; j < count; j++) {
+				factors.emplace_back();
+				factors.back().copy(factors[j]);
+			}
+		}
+		return factors;
+	}
 	
 
 	/* MAIN ALGORITHM (n and p are co-prime) */
