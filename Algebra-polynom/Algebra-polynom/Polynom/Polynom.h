@@ -201,6 +201,13 @@ public:
      */
     static std::vector<Polynom> allIrreduciblePolynomials(long long prime, long long n);
 
+    /*! #12
+     * @author Vladyslav Prokopchuk
+     * @brief Finds one irreducible polynomial of degree n
+     * @return Irreducible polynomial of degree n
+     */
+    static Polynom findIrreduciblePolynomial(long long prime, long long n);
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field
