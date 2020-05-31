@@ -165,6 +165,13 @@ public:
 
     long long gcdforinvers(long long a, long long b, long long* x, long long* y);
 
+    /*! #12
+     * @author Vladyslav Prokopchuk
+     * @brief Finds all irreducible polynomials of degree n
+     * @return Vector of all irreducible polynomials of degree n
+     */
+    static std::vector<Polynom> allIrreduciblePolynomials(long long prime, long long n);
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field
