@@ -353,7 +353,14 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
     Polynom rest;
     Polynom temp_1 = p1;
     Polynom temp_2 = p2;
+    int count = 0;
     while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
+        if (temp_1.getPolyPower() == 0) {
+            if (count >= 1) {
+                break;
+            }
+            count++;
+        }
         Polynom multiply(p1.getPrime(), std::vector<long long>{0});
         multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(),
                                            utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),

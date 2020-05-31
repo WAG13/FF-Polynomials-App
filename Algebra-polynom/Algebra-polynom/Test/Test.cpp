@@ -233,7 +233,7 @@ TEST_CASE("Roots amount")
     }
 
     SUBCASE("Fourth example") {
-        Polynom polynomial(17, 1, {
+        Polynom polynomial(17, {
                 {0,-2},{1,-1},{2,4},{3,-7},{4,3},{5,-7},{6,1}
         });
         REQUIRE(polynomial.rootsNumber() == 4);
