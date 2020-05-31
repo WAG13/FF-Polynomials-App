@@ -325,8 +325,8 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 {
 	SUBCASE("n < q")
 	{
-		int n = 2;
-		int q = 3;
+		int n = 5;
+		int q = 7;
 		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 		REQUIRE(factors.size() == 1);
