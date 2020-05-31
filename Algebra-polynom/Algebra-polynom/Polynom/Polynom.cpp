@@ -289,45 +289,6 @@ void Polynom::normalization() {
     }
 }
 
-/*6 divisions for numbers in field*/
-long long Polynom::division_for_numbers(long long a, long long b, long long prime) {
-    a *= inverse(b, prime);
-    return a;
-}
-
-long long Polynom::inverse(long long number, long long prime) {
-    long long a = number;
-    long long b = prime;
-    long long a_1 = 1;
-    long long b_1 = 0;
-    long long result = 0;
-    while ((a != 1) && (b != 1)) {
-        if ((a == 0) || (b == 0)) {
-            return 0;
-        }
-        if (a >= b) {
-            while (a >= b) {
-                a -= b;
-                a_1 -= b_1;
-            }
-        } else {
-            while (b >= a) {
-                b -= a;
-                b_1 -= a_1;
-            }
-        }
-    }
-    if (a == 1) {
-        result = a_1;
-    } else {
-        result = b_1;
-    }
-    result %= prime;
-    if (result < 0) {
-        result += prime;
-    }
-    return result;
-}
 
 /*9 Function to check if n is prime or not*/
 bool Polynom::isPrime(int n) {
@@ -401,7 +362,7 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
     while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
         Polynom multiply(p1.getPrime(), p1.getPower(), std::vector<long long>{0});
         multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(),
-                                           temp_1.division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
+                                           utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
                                                                        temp_2.getTermKey(temp_2.getPolyPower()),
                                                                        p2.getPrime())));
         temp_2 = temp_2.multPolyforDivide(temp_2, multiply);
@@ -510,12 +471,33 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
 
 /* 10 Factorization using Ri */
 std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
-	if (n == 1) {
+	if (n <= prime) {
 		std::vector<Polynom> result { Polynom() };
 		result[0].copy(*this);
 		return result;
 	}
-	//TODO: handle gcd(n, p) > 1
+	if (utils::gcd((long long)n, prime) > 1) {
+		//Special case
+		//Q(p^m)n (mod p) may be represented as Qn to some power
+		
+		size_t newN = n;
+		while (newN % prime == 0)
+			newN /= prime;
+
+		Polynom newCyclotomic = Polynom::CyclotomicPolynomial(prime, newN);
+
+		std::vector<Polynom> factors = newCyclotomic.factorizeCyclotomicRi(newN);
+		size_t repeat = this->getPolyPower() / newCyclotomic.getPolyPower();
+		size_t count = factors.size();
+
+		for (size_t i = 1; i < repeat; i++) {
+			for (size_t j = 0; j < count; j++) {
+				factors.emplace_back();
+				factors.back().copy(factors[j]);
+			}
+		}
+		return factors;
+	}
 	
 
 	/* MAIN ALGORITHM (n and p are co-prime) */
