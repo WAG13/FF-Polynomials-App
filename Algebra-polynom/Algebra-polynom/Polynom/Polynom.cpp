@@ -288,45 +288,7 @@ void Polynom::normalization() {
         node = node->next;
     }
 }
-/*6 divisions for numbers in field*/
-long long Polynom::division_for_numbers(long long a, long long b, long long prime) {
-    a *= inverse(b, prime);
-    return a;
-}
 
-long long Polynom::inverse(long long number, long long prime) {
-    long long a = number;
-    long long b = prime;
-    long long a_1 = 1;
-    long long b_1 = 0;
-    long long result = 0;
-    while ((a != 1) && (b != 1)) {
-        if ((a == 0) || (b == 0)) {
-            return 0;
-        }
-        if (a >= b) {
-            while (a >= b) {
-                a -= b;
-                a_1 -= b_1;
-            }
-        } else {
-            while (b >= a) {
-                b -= a;
-                b_1 -= a_1;
-            }
-        }
-    }
-    if (a == 1) {
-        result = a_1;
-    } else {
-        result = b_1;
-    }
-    result %= prime;
-    if (result < 0) {
-        result += prime;
-    }
-    return result;
-}
 
 /*9 Function to check if n is prime or not*/
 bool Polynom::isPrime(int n) {
@@ -400,7 +362,7 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
     while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
         Polynom multiply(p1.getPrime(), p1.getPower(), std::vector<long long>{0});
         multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(),
-                                           temp_1.division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
+                                           utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
                                                                        temp_2.getTermKey(temp_2.getPolyPower()),
                                                                        p2.getPrime())));
         temp_2 = temp_2.multPolyforDivide(temp_2, multiply);
