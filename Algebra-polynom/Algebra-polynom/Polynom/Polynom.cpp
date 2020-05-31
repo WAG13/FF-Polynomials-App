@@ -306,15 +306,9 @@ long long Polynom::inverse(long long number, long long prime) {
             return 0;
         }
         if (a >= b) {
-            while (a >= b) {
-                a-= b;
-                a_1 -= b_1;
-            }
+            decrease(b, a, b_1, a_1);
         } else {
-            while (b >= a) {
-                b -= a;
-                b_1 -= a_1;
-            }
+            decrease(a, b, a_1, b_1);
         }
     }
     if (a == 1) {
@@ -327,6 +321,13 @@ long long Polynom::inverse(long long number, long long prime) {
         result += prime;
     }
     return result;
+}
+
+void Polynom::decrease(long long &a, long long &b, long long &a_count_in_a, long long &a_count_in_b) const {
+    while (b >= a) {
+        b -= a;
+        a_count_in_b -= a_count_in_a;
+    }
 }
 
 /*9 Function to check if n is prime or not*/
