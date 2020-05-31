@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <cassert>
-
 /**
  * @brief This class implements matrix representation and some useful methods as rank of matrix
  */
