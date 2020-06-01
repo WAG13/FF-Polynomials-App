@@ -5,7 +5,7 @@
  */
 
 #include "Polynom.h"
-#include "utils.h"
+#include "../utils.h"
 #include <list>
 
 using std::cout;
@@ -329,13 +329,13 @@ bool operator==(Polynom const &p1, Polynom const &p2) {
 
 /*4     Number of roots       */
 long long Polynom::rootsNumber() {
-	long long pow = getPrime() - 1;
-	Matrix AMatrix(pow, pow, pow + 1);
+	long long pow = prime - 1;
+	Matrix AMatrix(pow, pow, prime);
 
 	for (long long i = 0, shift = 0; i < pow; i++, shift++) {
 		for (long long j = 0; j < pow; j++) {
 		    if ( (j + shift) % pow == 0) {
-                AMatrix.setElement(i, j, (getTermKey(0) + getTermKey(pow)) % (pow + 1));
+                AMatrix.setElement(i, j, (getTermKey(0) + getTermKey(pow)) % (prime));
 		    } else {
 		        AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
 		    }
@@ -348,7 +348,7 @@ long long Polynom::rootsNumber() {
 
 Polynom Polynom::gcd(Polynom p2) {
     Polynom p1(*this);
-    while (p1.getPolyPower() != 0 && p2.getPolyPower() != 0) {
+    while (p1.getHead() != nullptr && p2.getHead() != nullptr) {
         if (p1.getPolyPower() > p2.getPolyPower()) {
             p1 = p1 % p2;
         } else {
@@ -356,7 +356,7 @@ Polynom Polynom::gcd(Polynom p2) {
         }
     }
 
-    if (p1.getPolyPower() == 0 && p1.getTermKey(0) == 0) {
+    if (p1.getHead() == nullptr) {
         return p2;
     }
 

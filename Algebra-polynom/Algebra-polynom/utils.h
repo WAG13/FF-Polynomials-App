@@ -123,7 +123,7 @@ namespace utils {
 	/*! #6
 	* @brief Inverse for numbers
 	*/
-	static long long inverse(long long number, long long prime) {
+	long long inverse(long long number, long long prime) {
 		long long a = number;
 		long long b = prime;
 		long long a_1 = 1;
@@ -162,7 +162,7 @@ namespace utils {
 	/*! #6
 	* @brief Division for numbers in field
 	*/
-	static long long division_for_numbers(long long a, long long b, long long prime) {
+	long long division_for_numbers(long long a, long long b, long long prime) {
 		a *= inverse(b, prime);
 		return a;
 	}
