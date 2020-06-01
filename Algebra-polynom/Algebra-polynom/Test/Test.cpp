@@ -2,6 +2,7 @@
 
 #include "doctest.h"
 #include "../Polynom/Polynom.h"
+#include "../Polynom/GaloisField.h"
 #include <vector>
 
 TEST_CASE("Polynomial")
@@ -21,10 +22,12 @@ TEST_CASE("Polynomial")
     SUBCASE("Creating copy of polynom")
     {
         Polynom polynomial(3, {1, 2});
-        Polynom copy;
-        copy.copy(polynomial);
+        Polynom copy = polynomial;
         REQUIRE(polynomial.show() == copy.show());
         REQUIRE(polynomial.getPrime() == copy.getPrime());
+
+        copy = copy + polynomial;
+        REQUIRE(polynomial.show() != copy.show());
     }
     SUBCASE("Power of polynom")
     {
@@ -41,16 +44,16 @@ TEST_CASE("Polynomial")
         Polynom poly2 = poly1 + poly1;
         REQUIRE(poly1.show() == "1 + 2*x");
         REQUIRE(poly2.show() == "2 + 1*x");
-        REQUIRE((poly1 + poly2).show() == "");
+        REQUIRE((poly1 + poly2).show() == "0");
     }
     SUBCASE("Substract polynoms")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2(3, {2, 2});
-        REQUIRE((poly1 - poly1).show() == "");
+        REQUIRE((poly1 - poly1).show() == "0");
         REQUIRE((poly1 - poly2).show() == "2");
     }
-    SUBCASE("Multiplicate polynoms")
+    SUBCASE("Multiplicate polynoms in Z[3]")
     {
         Polynom poly1(3, {1, 2});
         REQUIRE(poly1.show() == "1 + 2*x");
@@ -62,26 +65,40 @@ TEST_CASE("Polynomial")
         Polynom polynomial = poly1 * poly1;
         REQUIRE(polynomial.show() == "1 + 1*x + 1*x^2");
 
-        /*it`s wrong but just for test*/
-        Polynom poly2(3, {1, 2});
-        polynomial = poly2 * poly2;
-        REQUIRE(polynomial.show() == "1 + 1*x + 1*x^2");
-
-        //Polynom poly3(3, 2, { 1,1 });
-        //polynomial = poly2 * poly3;
-        //REQUIRE(polynomial.getTerm(0)->key == 2);
+        Polynom poly2(3, {1, 1});
+        polynomial = poly1 * poly2;
+        REQUIRE(polynomial.show() == "1 + 2*x^2");
 
         polynomial = poly1 * 3;
-        REQUIRE(polynomial.show() == "");
+        REQUIRE(polynomial.show() == "0");
     }
 
     SUBCASE("GCD polynoms") {
-	    Polynom pol1(3, { 1,0,0,0,1 });
-	    Polynom pol2(3, { 1,1,0,1 });
+		Polynom pol1(3, { 4,0,3,3,3,1 });
+		Polynom pol2(3, { 1,2,0,1,1 });
 
-	    Polynom res = pol1.gcd(pol2);
+		Polynom res = pol1.gcd(pol2);
 
-	    REQUIRE(res.show() == "1 + 2*x + 2*x^2");
+		REQUIRE(res.getTermKey(0) == 1);
+		REQUIRE(res.getPolyPower() == 0);
+
+		pol1 = Polynom(5, { 4, 0, 7 });
+		pol2 = Polynom(5, { 1, 2, 1 });
+
+		res = pol1.gcd(pol2);
+
+		REQUIRE(res.getTermKey(0) == 2);
+		REQUIRE(res.getPolyPower() == 0);
+
+		pol1 = Polynom(5, { 4, 0, 7 });
+		pol2 = Polynom(5, { 4, 0, 7 });
+
+		res = pol1.gcd(pol2);
+
+		REQUIRE(res.getTermKey(0) == 4);
+		REQUIRE(res.getTermKey(1) == 0);
+		REQUIRE(res.getTermKey(2) == 7);
+		REQUIRE(res.getPolyPower() == 2);
     }
 }
 
@@ -99,7 +116,7 @@ TEST_CASE("Division") {
             Polynom polynom1(3, { 3, 7, 10, 1, 0, 3, 4 });
             Polynom polynom2(3, { 2,1,5 });
             Polynom result = polynom2 / polynom1;
-            REQUIRE(result.show() == "");
+            REQUIRE(result.show() == "0");
         }
         SUBCASE("example 3") {
             Polynom polynom1(17, { 20, 34, 65, 43, 53 });
@@ -233,7 +250,7 @@ TEST_CASE("Roots amount")
     }
 
     SUBCASE("Fourth example") {
-        Polynom polynomial(17, 1, {
+        Polynom polynomial(17, {
                 {0,-2},{1,-1},{2,4},{3,-7},{4,3},{5,-7},{6,1}
         });
         REQUIRE(polynomial.rootsNumber() == 4);
@@ -378,4 +395,100 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 		}
 		REQUIRE(product == cyclotomic);
 	}
+}
+
+TEST_CASE("Finding all irreducible polynomials of degree n")
+{
+    SUBCASE("prime = 2, n = 2")
+    {
+        int prime = 2;
+        int n = 2;
+
+        std::vector<Polynom> result = Polynom::allIrreduciblePolynomials(prime, n);
+        std::vector<Polynom> required;
+        required.push_back(Polynom(prime, { 1, 1, 1 }));
+
+        REQUIRE(result == required);
+    }
+    SUBCASE("prime = 2, n = 3")
+    {
+        int prime = 2;
+        int n = 3;
+
+        std::vector<Polynom> result = Polynom::allIrreduciblePolynomials(prime, n);
+        std::vector<Polynom> required;
+        required.push_back(Polynom(prime, { 1, 1, 0, 1 }));
+        required.push_back(Polynom(prime, { 1, 0, 1, 1 }));
+
+        REQUIRE(result == required);
+    }
+    SUBCASE("prime = 3, n = 3")
+    {
+        int prime = 3;
+        int n = 3;
+
+        std::vector<Polynom> result = Polynom::allIrreduciblePolynomials(prime, n);
+        std::vector<Polynom> required;
+        required.push_back(Polynom(prime, { 2, 2, 0, 1 }));
+        required.push_back(Polynom(prime, { 2, 2, 2, 1 }));
+        required.push_back(Polynom(prime, { 2, 1, 1, 1 }));
+        required.push_back(Polynom(prime, { 2, 0, 1, 1 }));
+        required.push_back(Polynom(prime, { 1, 2, 0, 1 }));
+        required.push_back(Polynom(prime, { 1, 2, 1, 1 }));
+        required.push_back(Polynom(prime, { 1, 1, 2, 1 }));
+        required.push_back(Polynom(prime, { 1, 0, 2, 1 }));
+
+        REQUIRE(result == required);
+    }
+}
+
+TEST_CASE("Testing polynomial field [3^2]")
+{
+    GaloisField field(3, 2);
+    Polynom a(3, { 1, 2 });
+    Polynom b(3, { 1, 1 });
+
+    SUBCASE("Addition")
+    {
+        REQUIRE(field.add(a, b).show() == "2");
+    }
+    SUBCASE("Subtraction")
+    {
+        REQUIRE(field.subtract(a, b).show() == "1*x");
+        REQUIRE(field.subtract(b, a).show() == "2*x");
+        REQUIRE(field.subtract(a, a).show() == "0");
+    }
+    SUBCASE("Multiplication")
+    {
+        REQUIRE(field.multiply(a, b).show() == "2");
+    }
+    SUBCASE("Derivative")
+    {
+        REQUIRE(field.derivative(a).show() == "2");
+    }
+}
+
+TEST_CASE("Testing polynomial field [5^3]") 
+{
+    GaloisField field(5, 3);
+    Polynom a(5, { 2, 3, 1, 4, 0, 1 });
+    Polynom b(5, { 4, 0, 3, 4, 2, 0, 2 });
+
+    SUBCASE("Addition")
+    {
+        REQUIRE(field.add(a, b).show() == "2*x^2");
+    }
+    SUBCASE("Subtraction") 
+    {
+        REQUIRE(field.subtract(a, b).show() == "4*x^2");
+        REQUIRE(field.subtract(b, a).show() == "1*x^2");
+    }
+    SUBCASE("Multiplication")
+    {
+        REQUIRE(field.multiply(a, b).show() == "4 + 2*x + 3*x^2");
+    }
+    SUBCASE("Derivative")
+    {
+        REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
+    }
 }

@@ -3,9 +3,86 @@
 
 namespace utils {
 
-	
+	/* 2 Euclidean algorithm */
+	std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime) {
+		std::vector<long long> answer;
+		answer.push_back(0);
+		answer.push_back(0);
+		answer.push_back(0);
+		if (b > a) {
+			long long pocket = a;
+			a = b;
+			b = pocket;
+		}
+		if (b == 0) {
+			answer[0] = a;
+			answer[1] = 1;
+			answer[2] = 0;
+			return answer;
+		}
+		long long x2 = 1, x1 = 0,
+			y2 = 0, y1 = 1;
+		while (b >= 1) {
+			long long q{ 0 };
+			q = a / b;
+			long long r = a - q * b;
+			answer[1] = x2 - q * x1;
+			answer[2] = y2 - q * y1;
+			a = b;
+			b = r;
+			x2 = x1;
+			x1 = answer[1];
+			y2 = y1;
+			y1 = answer[2];
+		}
+		a %= prime;
+		x2 %= prime;
+		y2 %= prime;
+		if (a < 0) a += prime;
+		if (x2 < 0) x2 += prime;
+		if (y2 < 0) y2 += prime;
+		answer[0] = a;
+		answer[1] = x2;
+		answer[2] = y2;
+		return answer;
+	}
 
+	/*! #9
+	* @brief Function to check if n is prime or not
+	*/
+	bool isPrime(int n) {
+		if (n < 2)
+			return false;
+		for (int i = 2; i * i <= n; i++)
+			if (n % i == 0)
+				return false;
+		return true;
+	}
 
+	/*! #9
+    * @brief Mobius Function
+    */
+	int mobius(int N) {
+		// Base Case
+		if (N == 1)
+			return 1;
+		// For a prime factor i check if i^2 is also
+		// a factor.
+		int p = 0;
+		for (int i = 1; i <= N; i++) {
+			if (N % i == 0 && utils::isPrime(i)) {
+				// Check if N is divisible by i^2
+				if (N % (i * i) == 0)
+					return 0;
+				else
+					// i occurs only once, increase p
+					p++;
+			}
+		}
+		// All prime factors are contained only once
+		// Return 1 if p is even else -1
+		return (p % 2 != 0) ? -1 : 1;
+	}
 
 	template<typename T>
 	T gcd(const T& num1, const T& num2) {
@@ -14,11 +91,12 @@ namespace utils {
 		if (num1 > num2) {
 			a = num1;
 			b = num2;
-		} else {
+		}
+		else {
 			a = num2;
 			b = num1;
 		}
-	
+
 		while (b > 0) {
 			T tmp = b;
 			b = a % b;
@@ -26,12 +104,12 @@ namespace utils {
 		}
 		return a;
 	}
-	
+
 	/*
 	 * @author Hryshchenko Yurii
 	 * @brief Euler's totient function (counts integers from 1 to n that are co-prime to n)
 	 */
-	
+
 	template<typename T>
 	T euler(const T& n) {
 		T result = 1;
@@ -41,10 +119,11 @@ namespace utils {
 		}
 		return result;
 	}
+
 	/*! #6
 	* @brief Inverse for numbers
 	*/
-	static long long inverse(long long number, long long prime) {
+	long long inverse(long long number, long long prime) {
 		long long a = number;
 		long long b = prime;
 		long long a_1 = 1;
@@ -79,10 +158,11 @@ namespace utils {
 		}
 		return result;
 	}
+
 	/*! #6
 	* @brief Division for numbers in field
 	*/
-	static long long division_for_numbers(long long a, long long b, long long prime) {
+	long long division_for_numbers(long long a, long long b, long long prime) {
 		a *= inverse(b, prime);
 		return a;
 	}

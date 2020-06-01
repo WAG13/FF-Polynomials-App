@@ -90,7 +90,8 @@ std::string Polynom::show() const {
     std::string answer;
     PolyTerm *tmp = head;
     bool isFirst = true;
-    while (tmp != nullptr) {
+    if (!tmp) return "0";
+    while (tmp) {
         if (!isFirst) { answer += " + "; }
         else { isFirst = false; }
         answer += std::to_string(tmp->key);
@@ -105,8 +106,7 @@ std::string Polynom::show() const {
 
 /*1     operation +       */
 Polynom Polynom::addPoly(Polynom const &pol1, Polynom const &pol2) {
-    Polynom pol3;
-    pol3.copy(pol1);
+    Polynom pol3 = pol1;
     PolyTerm *tmp = pol2.getHead();
     while (tmp) {
         pol3.addItem(makeItem(tmp->pow, tmp->key));
@@ -123,8 +123,7 @@ Polynom operator+(Polynom const &pol1, Polynom const &pol2) {
 
 /*1     operation -       */
 Polynom Polynom::diffPoly(Polynom const &pol1, Polynom const &pol2) {
-    Polynom pol3;
-    pol3.copy(pol1);
+    Polynom pol3 = pol1;
     PolyTerm *tmp = pol2.getHead();
     while (tmp) {
         pol3.addItem(makeItem(tmp->pow, -tmp->key));
@@ -189,12 +188,12 @@ Polynom Polynom::multNumber(Polynom const &p, long long const &number) {
 /*2    derivative */
 
 Polynom Polynom::derivative() const {
-    Polynom answer;
-    answer.copy(*this);
+    Polynom answer=*this;
     auto node = answer.getHead();
     if (node->pow == 0) {
         answer.setHead(node->next);
         auto tmp = node->next;
+        node->next = nullptr;
         delete node;
         node = tmp;
     }
@@ -228,93 +227,16 @@ long long Polynom::valueAtPoint(long long x) const {
 
 /* 2  normalization of polynomial*/
 
-std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime) {
-    std::vector<long long> answer;
-    answer.push_back(0);
-    answer.push_back(0);
-    answer.push_back(0);
-    if (b > a) {
-        long long pocket = a;
-        a = b;
-        b = pocket;
-    }
-    if (b == 0) {
-        answer[0] = a;
-        answer[1] = 1;
-        answer[2] = 0;
-        return answer;
-    }
-    long long x2 = 1, x1 = 0,
-            y2 = 0, y1 = 1;
-    while (b >= 1) {
-        long long q{0};
-        q = a / b;
-        long long r = a - q * b;
-        answer[1] = x2 - q * x1;
-        answer[2] = y2 - q * y1;
-        a = b;
-        b = r;
-        x2 = x1;
-        x1 = answer[1];
-        y2 = y1;
-        y1 = answer[2];
-    }
-    a %= prime;
-    x2 %= prime;
-    y2 %= prime;
-    if (a < 0) a += prime;
-    if (x2 < 0) x2 += prime;
-    if (y2 < 0) y2 += prime;
-    answer[0] = a;
-    answer[1] = x2;
-    answer[2] = y2;
-    return answer;
-}
-
 void Polynom::normalization() {
     auto node = this->head;
     while (node->next) node = node->next;
-    long long inv = euclideanAlgorithm(node->key, this->prime, this->prime)[2];
+    long long inv = utils::euclideanAlgorithm(node->key, this->prime, this->prime)[2];
     node = this->head;
     while (node) {
         node->key *= inv;
         node->key %= prime;
         node = node->next;
     }
-}
-
-
-/*9 Function to check if n is prime or not*/
-bool Polynom::isPrime(int n) {
-    if (n < 2)
-        return false;
-    for (int i = 2; i * i <= n; i++)
-        if (n % i == 0)
-            return false;
-    return true;
-}
-
-/*9 Mobius Function */
-int Polynom::mobius(int N) {
-    // Base Case
-    if (N == 1)
-        return 1;
-    // For a prime factor i check if i^2 is also
-    // a factor.
-    int p = 0;
-    for (int i = 1; i <= N; i++) {
-        if (N % i == 0 && isPrime(i)) {
-            // Check if N is divisible by i^2
-            if (N % (i * i) == 0)
-                return 0;
-            else
-                // i occurs only once, increase p
-                p++;
-        }
-    }
-    // All prime factors are contained only once
-    // Return 1 if p is even else -1
-    return (p % 2 != 0) ? -1 : 1;
 }
 
 /*6 operation for division*/
@@ -353,7 +275,14 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
     Polynom rest;
     Polynom temp_1 = p1;
     Polynom temp_2 = p2;
+    int count = 0;
     while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
+        if (temp_1.getPolyPower() == 0) {
+            if (count >= 1) {
+                break;
+            }
+            count++;
+        }
         Polynom multiply(p1.getPrime(), std::vector<long long>{0});
         multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(),
                                            utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
@@ -419,7 +348,7 @@ long long Polynom::rootsNumber() {
 
 Polynom Polynom::gcd(Polynom p2) {
     Polynom p1(*this);
-    while (p1.getPolyPower() != 0 && p2.getPolyPower() != 0) {
+    while (p1.getHead() != nullptr && p2.getHead() != nullptr) {
         if (p1.getPolyPower() > p2.getPolyPower()) {
             p1 = p1 % p2;
         } else {
@@ -427,7 +356,7 @@ Polynom Polynom::gcd(Polynom p2) {
         }
     }
 
-    if (p1.getPolyPower() == 0 && p1.getTermKey(0) == 0) {
+    if (p1.getHead() == nullptr) {
         return p2;
     }
 
@@ -440,10 +369,10 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
     std::vector<long long> keys{1};
     Polynom result(prime, keys);
     int mob;
-    if (isPrime(n))
+    if (utils::isPrime(n))
         return Polynom(prime, std::vector<long long>(n, 1));
     for (int d = 1; d <= n; d++) {
-        if (n % d == 0 && mobius(n / d) == 1) {
+        if (n % d == 0 && utils::mobius(n / d) == 1) {
             std::vector<long long> keys(d + 1, 0);
             keys[d] = 1;
             keys[0] = -1;
@@ -452,7 +381,7 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
         }
     }
     for (int d = 1; d <= n; d++) {
-        if (n % d == 0 && mobius(n / d) == -1) {
+        if (n % d == 0 && utils::mobius(n / d) == -1) {
             std::vector<long long> keys(d + 1, 0);
             keys[d] = 1;
             keys[0] = -1;
@@ -468,7 +397,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	//std::cout << "Current: " << this->show() << std::endl;
 	if (n == 1) {
 		std::vector<Polynom> result { Polynom() };
-		result[0].copy(*this);
+		result[0]=*this;
 		return result;
 	}
 	if (utils::gcd((long long)n, prime) > 1) {
@@ -488,7 +417,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 		for (size_t i = 1; i < repeat; i++) {
 			for (size_t j = 0; j < count; j++) {
 				factors.emplace_back();
-				factors.back().copy(factors[j]);
+				factors.back()=factors[j];
 			}
 		}
 		return factors;
@@ -511,13 +440,13 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	std::vector<Polynom> factors;
 	std::list<Polynom> polysToFactorize;
 	polysToFactorize.emplace_back();
-	polysToFactorize.back().copy(*this);
+	polysToFactorize.back()=*this;
 
 	size_t factorsCount = utils::euler(n) / d;	
 	size_t factorPower = getPolyPower() / factorsCount;		
 	if (factorsCount == 1) {
 		factors.emplace_back();
-		factors[0].copy(*this);
+		factors[0]=*this;
 		return factors;
 	}
 	//std::cout << "Factors count: " << factorsCount << std::endl;
@@ -636,7 +565,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
         return (x % pol1 + pol1) % pol1;
 }*/
 
-/* 12 Finds all irreducible polynomials by n */
+/* 12 Finds all irreducible polynomials of degree n */
 std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long long n)
 {
     std::vector<Polynom> result, temp;
@@ -657,4 +586,24 @@ std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long lo
         std::cout << result[i].show() << std::endl;
     }*/
     return result;
+}
+
+/* 12 Finds one irreducible polynomial of degree n */
+Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
+{
+    std::vector<Polynom> temp;
+    Polynom cyclotomic;
+
+    // 3.31 Lidl
+    long long num = pow(prime, n) - 1;
+    for (long long m = 1; m <= num; ++m) {
+        if ((num % m) == 0) {
+            cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
+            if (cyclotomic.getPolyPower() < n) continue;
+            temp = cyclotomic.factorizeCyclotomicRi(m);
+            return temp[0];
+        }
+    }
+    // Doesn't find
+    return Polynom();
 }
