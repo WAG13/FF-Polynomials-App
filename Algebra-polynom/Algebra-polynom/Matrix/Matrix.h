@@ -23,6 +23,8 @@ public:
 
     void setElement(long long row, long long column, long long key);
 
+    Matrix transpose() const;
+
     std::pair<long long, Matrix> rank();
 
     /**
@@ -33,7 +35,7 @@ private:
     /**
      * @brief Swapping two rows from 0 column to param column
      */
-    void swapRows(long long firstRow, long long secondRow, long long column);
+    void swapRows(long long firstRow, long long secondRow, long long columnStart, long long columnEnd);
 
-    std::vector<long long> findZeroColumns() const;
+    std::vector<long long> findNonConvertedColumns(long long kernel_dimension) const;
 };

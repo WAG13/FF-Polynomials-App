@@ -2,6 +2,7 @@
 
 namespace utils {
     long long division_for_numbers(long long a, long long b, long long prime);
+    long long inverse(long long number, long long prime);
 }
 
 long long Matrix::getElement(long long row, long long column) const {
@@ -25,8 +26,8 @@ void Matrix::setElement(long long row, long long column, long long key) {
     _matrix[row][column] = key;
 }
 
-void Matrix::swapRows(long long firstRow, long long secondRow, long long column) {
-    for (long long i = 0; i < column; i++) {
+void Matrix::swapRows(long long firstRow, long long secondRow, long long columnStart, long long columnEnd) {
+    for (long long i = columnStart; i < columnEnd; i++) {
         long long temp = _matrix[firstRow][i];
         _matrix[firstRow][i] = _matrix[secondRow][i];
         _matrix[secondRow][i] = temp;
@@ -34,101 +35,125 @@ void Matrix::swapRows(long long firstRow, long long secondRow, long long column)
 }
 
 std::pair<long long, Matrix> Matrix::rank() {
-    long long rank = _columns;
+    long long rank = 0;
     Matrix matrixCopy(*this);
 
-    for (long long row = 0; row < rank; row++) {
-        if (matrixCopy.getElement(row,row) != 0) {
-            for (long long col = 0; col < _rows; col++) {
-                if (col != row) {
-                    long long multi = utils::division_for_numbers(matrixCopy.getElement(col,row),
-                            matrixCopy.getElement(row,row), _prime);
+    for (long long row = 0, col = 0; row < _rows && col < _columns; col++) {
+        if (matrixCopy.getElement(row, col) != 0) {
+            /*converting element [row, col] to 1, changing other row's elements respectively*/
+            long long inverse = utils::inverse(matrixCopy.getElement(row, col), _prime);
+            for (long long i = 0; i < _columns; i++) {
+                matrixCopy.setElement(row, i, (matrixCopy.getElement(row, i) * inverse) % _prime);
+            }
 
-                    for (long long i = 0; i < rank; i++) {
-                        matrixCopy.setElement(col,i,
-                                              static_cast<long long>(matrixCopy.getElement(col,i) - multi * matrixCopy.getElement(row,i)));
+            for (long long i = 0; i < _rows; i++) {
+                if (i != row) {
+                    long long multi = matrixCopy.getElement(i, col);
+
+                    if (multi) {
+                        for (long long j = col; j < _columns; j++) {
+                            matrixCopy.setElement(i, j,
+                                static_cast<long long>(matrixCopy.getElement(i, j) - multi * matrixCopy.getElement(row, j)));
+                        }
                     }
                 }
             }
+
+            rank++;
+            row++;
         } else {
-            bool allZeros = true;
             for (long long i = row + 1; i < _rows;  i++) {
-                if (matrixCopy.getElement(i,row) != 0) {
-                    matrixCopy.swapRows(row, i, rank);
-                    allZeros = false;
+                if (matrixCopy.getElement(i, col) != 0) {
+                    /*we swap rows starting from col element, because on the left everything is 0 and swapping is useless*/
+                    matrixCopy.swapRows(row, i, col, _columns);
+                    col--;
                     break;
                 }
             }
-
-            if (allZeros) {
-                rank--;
-                for (long long i = 0; i < _rows; i++) {
-                    matrixCopy.setElement(i,row, matrixCopy.getElement(i,rank));
-                }
-            }
-            row--;
         }
     }
     return {rank, matrixCopy};
 }
 
-std::vector<long long> Matrix::findZeroColumns() const {
-    std::vector<long long> result;
-    bool all_zero;
+Matrix Matrix::transpose() const {
+    Matrix result(_columns, _rows, _prime);
+    for (long long i = 0; i < _rows; i++) {
+        for (long long j = 0; j < _columns; j++) {
+            result.setElement(i, j, _matrix[j][i]);
+        }
+    }
+    return result;
+}
 
-    for (long long i = 0; i < _columns; i++) {
-        all_zero = true;
+std::vector<long long> Matrix::findNonConvertedColumns(long long kernel_dimension) const {
+    std::vector<long long> result;
+    std::vector<bool> converted(_rows, false);
+
+    for (long long i = 0; result.size() < kernel_dimension; i++) {
+        bool identity_spotted = false;
+        long long identity_row_index = 0;
+
         for (long long j = 0; j < _rows; j++) {
             if (_matrix[j][i]) {
-                all_zero = false;
-                break;
+                if (!identity_spotted) {
+                    identity_spotted = true;
+                    identity_row_index = j;
+                }
+                else {
+                    identity_spotted = false;
+                    break;
+                }
             }
         }
-        if (all_zero) result.push_back(i);
+
+        if (!identity_spotted) {
+            result.push_back(i);
+        }
+        else {
+            if (!converted[identity_row_index]) {
+                converted[identity_row_index] = true;
+            }
+            else {
+                result.push_back(i);
+            }
+        }
     }
 
     return result;
 }
 
 std::vector<std::vector<long long>> Matrix::buildSolutionSpaceBasis() {
-    auto rank_pair = rank();
+    Matrix converted_matrix(*this);
+    converted_matrix = converted_matrix.transpose();
+    auto rank_pair = converted_matrix.rank();
     long long kernel_dimension = _columns - rank_pair.first;
-    Matrix converted_matrix = rank_pair.second;
-    auto zero_columns = findZeroColumns();
-    std::vector<long long> coefficients;
-    std::vector<std::vector<long long>> basis;
+    converted_matrix = rank_pair.second;
+    auto non_converted_columns = converted_matrix.findNonConvertedColumns(kernel_dimension);
+    std::vector<std::vector<long long>> basis(kernel_dimension);
 
-    for (long long i = 0; i < kernel_dimension; i++) {
-        long long j = zero_columns[i];
-        long long current_zero_column = 0;
+    for (long long i = 0; i < basis.size(); i++) {
+        basis[i].resize(_columns);
+        for (long long j = 0; j < _columns; j++) {
+            basis[i][j] = 0;
+        }
+        basis[i][non_converted_columns[i]] = 1;
+    }
 
-        for (long long k = 0; k < _columns; k++) {
-            if (current_zero_column < zero_columns.size() && zero_columns[current_zero_column] == k && k != j) {
-                coefficients.push_back(0);
-                current_zero_column++;
-            }
-            else if (k == j) {
-                coefficients.push_back(-1);
-                current_zero_column++;
-            }
-            else {
-                if (k - current_zero_column < _rows) {
-                    coefficients.push_back(_matrix[k - current_zero_column][j]);
+    for (long long k = 0; k < basis.size(); k++) {
+        long long corresponding_column = non_converted_columns[k];
+        long long non_converted_columns_passed = 0;
+
+        for (long long i = 0, j = 0; i < _rows && j < _columns; i++, j++) {
+            if (converted_matrix.getElement(i, corresponding_column)) {
+                if (j == non_converted_columns[non_converted_columns_passed]) {
+                    non_converted_columns_passed++;
+                    i--;
                 }
                 else {
-                    coefficients.push_back(0);
+                    basis[k][j] = _prime - converted_matrix.getElement(i, corresponding_column);
                 }
             }
         }
-
-        for (long long k = coefficients.size() - 1; k > 0; k--) {
-            if (coefficients[k] == 0) {
-                coefficients.erase(coefficients.begin() + k);
-            }
-            else break;
-        }
-
-        basis.push_back(coefficients);
     }
 
     return basis;
