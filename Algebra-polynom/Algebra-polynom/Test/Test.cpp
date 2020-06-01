@@ -74,12 +74,31 @@ TEST_CASE("Polynomial")
     }
 
     SUBCASE("GCD polynoms") {
-	    Polynom pol1(3, { 1,0,0,0,1 });
-	    Polynom pol2(3, { 1,1,0,1 });
+		Polynom pol1(3, { 4,0,3,3,3,1 });
+		Polynom pol2(3, { 1,2,0,1,1 });
 
-	    Polynom res = pol1.gcd(pol2);
+		Polynom res = pol1.gcd(pol2);
 
-	    REQUIRE(res.show() == "1 + 2*x + 2*x^2");
+		REQUIRE(res.getTermKey(0) == 1);
+		REQUIRE(res.getPolyPower() == 0);
+
+		pol1 = Polynom(5, { 4, 0, 7 });
+		pol2 = Polynom(5, { 1, 2, 1 });
+
+		res = pol1.gcd(pol2);
+
+		REQUIRE(res.getTermKey(0) == 2);
+		REQUIRE(res.getPolyPower() == 0);
+
+		pol1 = Polynom(5, { 4, 0, 7 });
+		pol2 = Polynom(5, { 4, 0, 7 });
+
+		res = pol1.gcd(pol2);
+
+		REQUIRE(res.getTermKey(0) == 4);
+		REQUIRE(res.getTermKey(1) == 0);
+		REQUIRE(res.getTermKey(2) == 7);
+		REQUIRE(res.getPolyPower() == 2);
     }
 }
 

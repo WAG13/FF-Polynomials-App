@@ -348,7 +348,7 @@ long long Polynom::rootsNumber() {
 
 Polynom Polynom::gcd(Polynom p2) {
     Polynom p1(*this);
-    while (p1.getPolyPower() != 0 && p2.getPolyPower() != 0) {
+    while (p1.getHead() != nullptr && p2.getHead() != nullptr) {
         if (p1.getPolyPower() > p2.getPolyPower()) {
             p1 = p1 % p2;
         } else {
@@ -356,7 +356,7 @@ Polynom Polynom::gcd(Polynom p2) {
         }
     }
 
-    if (p1.getPolyPower() == 0 && p1.getTermKey(0) == 0) {
+    if (p1.getHead() == nullptr) {
         return p2;
     }
 
