@@ -1,5 +1,8 @@
 #include "Matrix.h"
-#include "../utils.h"
+
+namespace utils {
+    long long division_for_numbers(long long a, long long b, long long prime);
+}
 
 long long Matrix::getElement(long long row, long long column) const {
     assert(row < _rows);
