@@ -509,27 +509,41 @@ TEST_CASE("Testing polynomial field [3^2]")
     }
 }
 
-//TEST_CASE("Testing polynomial field [5^3]")
-//{
-//    GaloisField field(5, 3);
-//    Polynom a(5, { 2, 3, 1, 4, 0, 1 });
-//    Polynom b(5, { 4, 0, 3, 4, 2, 0, 2 });
-//
-//    SUBCASE("Addition")
-//    {
-//        REQUIRE(field.add(a, b).show() == "2*x^2");
-//    }
-//    SUBCASE("Subtraction")
-//    {
-//        REQUIRE(field.subtract(a, b).show() == "4*x^2");
-//        REQUIRE(field.subtract(b, a).show() == "1*x^2");
-//    }
-//    SUBCASE("Multiplication")
-//    {
-//        REQUIRE(field.multiply(a, b).show() == "4 + 2*x + 3*x^2");
-//    }
-//    SUBCASE("Derivative")
-//    {
-//        REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
-//    }
-//}
+TEST_CASE("Testing polynomial field [5^3]")
+{
+    GaloisField field(5, 3);
+    Polynom a(5, { 2, 3, 1, 4, 0, 1 });
+    Polynom b(5, { 4, 0, 3, 4, 2, 0, 2 });
+
+    SUBCASE("Addition")
+    {
+        REQUIRE(field.add(a, b).show() == "2*x^2");
+    }
+    SUBCASE("Subtraction")
+    {
+        REQUIRE(field.subtract(a, b).show() == "4*x^2");
+        REQUIRE(field.subtract(b, a).show() == "1*x^2");
+    }
+    SUBCASE("Multiplication")
+    {
+        REQUIRE(field.multiply(a, b).show() == "4 + 2*x + 3*x^2");
+    }
+    SUBCASE("Derivative")
+    {
+        REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
+    }
+}
+TEST_CASE("Testing berlecamp")
+{
+    std::vector<std::vector<long long>> polyVector = { {0,1}, {3,1}, {4,1}, {6,1}, {8,1} };
+    Polynom polynom(2, polyVector);
+
+    Matrix matrix = polynom.buildBerlekampMatrix();
+
+    SUBCASE("Building berlekamp matrix")
+    {
+        REQUIRE(matrix.getElement(0, 0) == 0);
+        REQUIRE(matrix.getElement(1, 1) == 1);
+        REQUIRE(matrix.getElement(1, 2) == 1);
+    }
+}
