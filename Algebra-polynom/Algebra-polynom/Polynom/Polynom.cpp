@@ -397,9 +397,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	//std::cout << "Prime: " << prime << std::endl;
 	//std::cout << "Current: " << this->show() << std::endl;
 	if (n == 1) {
-		std::vector<Polynom> result { Polynom() };
-		result[0]=*this;
-		return result;
+		return std::vector<Polynom> { Polynom(*this) };
 	}
 	if (utils::gcd((long long)n, prime) > 1) {
 		//Special case
@@ -417,8 +415,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 
 		for (size_t i = 1; i < repeat; i++) {
 			for (size_t j = 0; j < count; j++) {
-				factors.emplace_back();
-				factors.back()=factors[j];
+				factors.emplace_back(factors[j]);
 			}
 		}
 		return factors;
@@ -440,14 +437,12 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 
 	std::vector<Polynom> factors;
 	std::list<Polynom> polysToFactorize;
-	polysToFactorize.emplace_back();
-	polysToFactorize.back()=*this;
+	polysToFactorize.emplace_back(*this);
 
 	size_t factorsCount = utils::euler(n) / d;	
 	size_t factorPower = getPolyPower() / factorsCount;		
 	if (factorsCount == 1) {
-		factors.emplace_back();
-		factors[0]=*this;
+		factors.emplace_back(*this);
 		return factors;
 	}
 	//std::cout << "Factors count: " << factorsCount << std::endl;
