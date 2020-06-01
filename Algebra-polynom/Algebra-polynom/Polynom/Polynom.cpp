@@ -394,6 +394,7 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
 
 /* 10 Factorization using Ri */
 std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
+	//std::cout << "Prime: " << prime << std::endl;
 	//std::cout << "Current: " << this->show() << std::endl;
 	if (n == 1) {
 		std::vector<Polynom> result { Polynom() };
@@ -493,7 +494,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 				factorized = true;
 				gcdRi.normalization();
 				factors.push_back(gcdRi);
-			} else if (gcdPower % factorPower == 0) {
+			} else if (gcdPower > 0 && gcdPower % factorPower == 0) {
 				factorized = true;
 				polysToFactorize.push_back(gcdRi);
 			}
