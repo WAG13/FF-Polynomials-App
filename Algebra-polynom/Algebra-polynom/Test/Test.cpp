@@ -38,7 +38,7 @@ TEST_CASE("Polynomial")
         Polynom poly3(3, {1, 1, 1});
         REQUIRE(poly3.getPolyPower() == 2);
     }
-    SUBCASE("Adding polynoms")
+    SUBCASE("Adding polynoms in Z[3]")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2 = poly1 + poly1;
@@ -46,7 +46,7 @@ TEST_CASE("Polynomial")
         REQUIRE(poly2.show() == "2 + 1*x");
         REQUIRE((poly1 + poly2).show() == "0");
     }
-    SUBCASE("Substract polynoms")
+    SUBCASE("Substract polynoms in Z[3]")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2(3, {2, 2});
@@ -489,6 +489,10 @@ TEST_CASE("Testing polynomial field [3^2]")
     Polynom a(3, { 1, 2 });
     Polynom b(3, { 1, 1 });
 
+    SUBCASE("Irreducible")
+    {
+        REQUIRE(field.getIrreducible().show() == "1 + 1*x^2");
+    }
     SUBCASE("Addition")
     {
         REQUIRE(field.add(a, b).show() == "2");
@@ -515,6 +519,11 @@ TEST_CASE("Testing polynomial field [5^3]")
     Polynom a(5, { 2, 3, 1, 4, 0, 1 });
     Polynom b(5, { 4, 0, 3, 4, 2, 0, 2 });
 
+
+    SUBCASE("Irreducible")
+    {
+        REQUIRE(field.getIrreducible().show() == "4 + 3*x^2 + 1*x^3");
+    }
     SUBCASE("Addition")
     {
         REQUIRE(field.add(a, b).show() == "2*x^2");

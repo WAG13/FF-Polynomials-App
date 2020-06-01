@@ -628,7 +628,7 @@ bool Polynom::isIrreducible(){
 /* build berlekamp matrix */
 Matrix Polynom::buildBerlekampMatrix() {
     std::vector<Polynom> M;
-    Polynom one(prime, {1});
+    Polynom one(prime, std::vector<long long>{1});
     M.push_back(one);
     Polynom current(*this);
     for (int i = 1; i < getPolyPower(); i++) {
