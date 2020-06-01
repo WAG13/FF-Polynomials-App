@@ -1,4 +1,6 @@
-int main() {
+#include "Polynom/Polynom.h"
+#include "Polynom/GaloisField.h"
 
-    return 1;
+int main() {
+	return 1;
 }
