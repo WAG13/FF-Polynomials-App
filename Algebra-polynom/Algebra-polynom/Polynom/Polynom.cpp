@@ -608,6 +608,7 @@ Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
     return Polynom();
 }
 
+/* 13 Irreducibility test */
 bool Polynom::isIrreducible(){
     long long prime = this->getPrime();
     Polynom odd(prime, {0,1});
