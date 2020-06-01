@@ -230,6 +230,13 @@ public:
      */
     bool isIrreducible();
 
+    /*! @author Medynskyi Mykola
+  * @brief Finds berlekamp matrix
+  * @return berlekamp matrix
+  *
+  */
+
+    Matrix buildBerlekampMatrix();
 protected:
     /*! #1
     * @brief Adding two polynomials in field

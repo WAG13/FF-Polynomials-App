@@ -625,3 +625,29 @@ bool Polynom::isIrreducible(){
     }
     return true;
 }
+/* build berlekamp matrix */
+Matrix Polynom::buildBerlekampMatrix() {
+    std::vector<Polynom> M;
+    Polynom one(prime, {1});
+    M.push_back(one);
+    Polynom current(*this);
+    for (int i = 1; i < getPolyPower(); i++) {
+        std::vector<std::vector<long long>> someVec = {{i * prime, 1}};
+        Polynom polynomXPI(prime, someVec);
+        Polynom remainder = polynomXPI % current;
+        M.push_back(remainder);
+    }
+    std::cout << getPolyPower() << std::endl;
+    Matrix matrix(getPolyPower(), getPolyPower(), prime);
+
+    for (int i = 0; i < getPolyPower(); i++) {
+        for (int j = 0; j < getPolyPower(); j++) {
+
+            matrix.setElement(i, j, M[i].getTermKey(j));
+            if (i == j) {
+                matrix.setElement(i, j, getTermKey(j) - 1);
+            }
+        }
+    }
+    return matrix;
+}
