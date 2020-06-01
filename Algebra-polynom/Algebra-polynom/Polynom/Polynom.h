@@ -223,6 +223,13 @@ public:
      */
     static Polynom findIrreduciblePolynomial(long long prime, long long n);
 
+    /*! #13
+     * @author Totskyi Alexander
+     * @brief Checks if the polynomial is irreducible
+     * @return 1 - if irreducible, 0 - reducible
+     */
+    bool isIrreducible();
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field

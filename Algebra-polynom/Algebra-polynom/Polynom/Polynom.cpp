@@ -607,3 +607,25 @@ Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
     // Doesn't find
     return Polynom();
 }
+
+/* 13 Irreducibility test */
+bool Polynom::isIrreducible(){
+    long long prime = this->getPrime();
+    Polynom odd(prime, {0,1});
+    Polynom one(prime, {1, 0});
+    Polynom gcd_(prime, {0, 0});
+    Polynom pol(*this);
+    long long polPower(pol.getPolyPower());
+    for(long long i = 1; i <= polPower/2; i++){
+        long long power_ = pow(pol.getPrime(), i);
+        Polynom x(prime, {{0, 0}, {power_, 1}});
+        if((x-odd).getPolyPower() >= pol.getPolyPower()){
+            gcd_= pol.gcd((x-odd)%pol);
+        }else{
+            gcd_=pol.gcd(x-odd);
+        }
+        if(gcd_.getPolyPower()!=0)
+            return false;
+    }
+    return true;
+}
