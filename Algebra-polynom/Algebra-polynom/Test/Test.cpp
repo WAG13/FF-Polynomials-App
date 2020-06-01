@@ -509,27 +509,27 @@ TEST_CASE("Testing polynomial field [3^2]")
     }
 }
 
-TEST_CASE("Testing polynomial field [5^3]")
-{
-    GaloisField field(5, 3);
-    Polynom a(5, { 2, 3, 1, 4, 0, 1 });
-    Polynom b(5, { 4, 0, 3, 4, 2, 0, 2 });
-
-    SUBCASE("Addition")
-    {
-        REQUIRE(field.add(a, b).show() == "2*x^2");
-    }
-    SUBCASE("Subtraction")
-    {
-        REQUIRE(field.subtract(a, b).show() == "4*x^2");
-        REQUIRE(field.subtract(b, a).show() == "1*x^2");
-    }
-    SUBCASE("Multiplication")
-    {
-        REQUIRE(field.multiply(a, b).show() == "4 + 2*x + 3*x^2");
-    }
-    SUBCASE("Derivative")
-    {
-        REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
-    }
-}
+//TEST_CASE("Testing polynomial field [5^3]")
+//{
+//    GaloisField field(5, 3);
+//    Polynom a(5, { 2, 3, 1, 4, 0, 1 });
+//    Polynom b(5, { 4, 0, 3, 4, 2, 0, 2 });
+//
+//    SUBCASE("Addition")
+//    {
+//        REQUIRE(field.add(a, b).show() == "2*x^2");
+//    }
+//    SUBCASE("Subtraction")
+//    {
+//        REQUIRE(field.subtract(a, b).show() == "4*x^2");
+//        REQUIRE(field.subtract(b, a).show() == "1*x^2");
+//    }
+//    SUBCASE("Multiplication")
+//    {
+//        REQUIRE(field.multiply(a, b).show() == "4 + 2*x + 3*x^2");
+//    }
+//    SUBCASE("Derivative")
+//    {
+//        REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
+//    }
+//}

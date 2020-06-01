@@ -72,3 +72,64 @@ std::pair<long long, Matrix> Matrix::rank() {
     return {rank, matrixCopy};
 }
 
+std::vector<long long> Matrix::findZeroColumns() const {
+    std::vector<long long> result;
+    bool all_zero;
+
+    for (long long i = 0; i < _columns; i++) {
+        all_zero = true;
+        for (long long j = 0; j < _rows; j++) {
+            if (_matrix[j][i]) {
+                all_zero = false;
+                break;
+            }
+        }
+        if (all_zero) result.push_back(i);
+    }
+
+    return result;
+}
+
+std::vector<std::vector<long long>> Matrix::buildSolutionSpaceBasis() {
+    auto rank_pair = rank();
+    long long kernel_dimension = _columns - rank_pair.first;
+    Matrix converted_matrix = rank_pair.second;
+    auto zero_columns = findZeroColumns();
+    std::vector<long long> coefficients;
+    std::vector<std::vector<long long>> basis;
+
+    for (long long i = 0; i < kernel_dimension; i++) {
+        long long j = zero_columns[i];
+        long long current_zero_column = 0;
+
+        for (long long k = 0; k < _columns; k++) {
+            if (current_zero_column < zero_columns.size() && zero_columns[current_zero_column] == k && k != j) {
+                coefficients.push_back(0);
+                current_zero_column++;
+            }
+            else if (k == j) {
+                coefficients.push_back(-1);
+                current_zero_column++;
+            }
+            else {
+                if (k - current_zero_column < _rows) {
+                    coefficients.push_back(_matrix[k - current_zero_column][j]);
+                }
+                else {
+                    coefficients.push_back(0);
+                }
+            }
+        }
+
+        for (long long k = coefficients.size() - 1; k > 0; k--) {
+            if (coefficients[k] == 0) {
+                coefficients.erase(coefficients.begin() + k);
+            }
+            else break;
+        }
+
+        basis.push_back(coefficients);
+    }
+
+    return basis;
+}
