@@ -13,6 +13,8 @@ TEST_CASE("Polynomial")
         REQUIRE(polynomial1.show() == "1 + 2*x^2");
         Polynom polynomial(3, {1, 2});
         REQUIRE(polynomial.show() == "1 + 2*x");
+        Polynom polynomial2(3, "1 + 2*x", 'x');
+        REQUIRE(polynomial2.show() == "1 + 2*x");
     }
     SUBCASE("Creating empty polynom")
     {

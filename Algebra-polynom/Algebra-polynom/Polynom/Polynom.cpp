@@ -31,6 +31,14 @@ Polynom::Polynom(long long _prime, std::vector<std::vector<long long>> keys) : p
     }
 }
 
+Polynom::Polynom(long long _prime, std::string polynom, char X) : prime(_prime) {
+    head = nullptr;
+    std::vector<std::vector<long long>> keys = utils::coefStr(polynom, X);
+    for (int i = 0; i < keys.size(); i++) {
+        addItem(makeItem(keys[i][0], keys[i][1]));
+    }
+}
+
 Polynom::PolyTerm *Polynom::makeItem(long long pow, long long value) {
     auto *el = new PolyTerm;
     el->key = value;

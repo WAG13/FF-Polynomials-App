@@ -2,9 +2,14 @@
 
 #include <math.h>
 #include <utility>
+#include <string>
 #include <vector>
+#include <sstream>
 
 namespace utils {
+	/* 1 string to coeff*/
+	std::vector<std::vector<long long>> coefStr(const std::string str, char X = 'x');
+	
 	/* 2 Euclidean algorithm */
 	std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime);
 

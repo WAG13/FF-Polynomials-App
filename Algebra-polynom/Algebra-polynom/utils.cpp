@@ -1,7 +1,59 @@
 #include "utils.h"
 
-#include <vector>
 namespace utils {
+	/* 1 string to coeff*/
+	std::vector<std::vector<long long>> coefStr(const std::string str, char X) {
+		std::vector<std::vector<long long>> keys;
+		// First strip blanks
+		std::string s;
+		for (char c : str) if (!isspace(c)) s += c;
+
+		// Break into units at every '+' or '-'; the limits will be [p,q)
+		int p = 0, q = p;
+		while (q < s.size())
+		{
+			for (q = p + 1; q < s.size() && s[q] != '+' && s[q] != '-'; q++);
+			std::string unit = s.substr(p, q - p);                                           // should be of form "cxn", meaning c times x^n
+
+			// Pick out coefficient and exponent
+			int c = 1;
+			int n = 0;
+
+			int pos = unit.find(X);                                                     // position of char X
+			if (pos == std::string::npos)                                                    // X not found; pure number
+			{
+				std::stringstream(unit) >> c;
+			}
+			else                                                                          // identify coefficient (c) and exponent (n)
+			{
+				if (pos != 0)                                                            // pos == 0 would mean default c = 1
+				{
+					std::string first = unit.substr(0, pos);
+					if (first == "+") c = 1;                                         // just "+" means +1
+					else if (first == "-") c = -1;                                        // just "-" means -1
+					else   std::stringstream(first) >> c;
+				}
+
+				if (pos == unit.size() - 1)
+				{
+					n = 1;
+				}
+				else
+				{
+					std::stringstream(unit.substr(pos + 1)) >> n;
+				}
+			}
+
+			std::vector<long long> term;
+			term.push_back(n);
+			term.push_back(c);
+			keys.push_back(term);
+			p = q;
+		}
+
+		return keys;
+	}
+
 	/* 2 Euclidean algorithm */
 	std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime) {
 		std::vector<long long> answer;

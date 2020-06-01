@@ -49,6 +49,7 @@ public:
     Polynom();
     Polynom(long long _prime, std::vector<long long> keys);              //for all terms
     Polynom(long long _prime, std::vector<std::vector<long long>> keys); //for some terms
+    Polynom(long long _prime, std::string polynom, char X);
     Polynom(const Polynom &other)
     { // copy constructor
         this->prime = other.prime;
