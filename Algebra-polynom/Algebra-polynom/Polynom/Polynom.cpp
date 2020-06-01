@@ -90,7 +90,8 @@ std::string Polynom::show() const {
     std::string answer;
     PolyTerm *tmp = head;
     bool isFirst = true;
-    while (tmp != nullptr) {
+    if (!tmp) return "0";
+    while (tmp) {
         if (!isFirst) { answer += " + "; }
         else { isFirst = false; }
         answer += std::to_string(tmp->key);

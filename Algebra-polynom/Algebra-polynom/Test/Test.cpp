@@ -2,7 +2,7 @@
 
 #include "doctest.h"
 #include "../Polynom/Polynom.h"
-#include "Polynom/GaloisField.h"
+#include "../Polynom/GaloisField.h"
 #include <vector>
 
 TEST_CASE("Polynomial")
@@ -44,16 +44,16 @@ TEST_CASE("Polynomial")
         Polynom poly2 = poly1 + poly1;
         REQUIRE(poly1.show() == "1 + 2*x");
         REQUIRE(poly2.show() == "2 + 1*x");
-        REQUIRE((poly1 + poly2).show() == "");
+        REQUIRE((poly1 + poly2).show() == "0");
     }
     SUBCASE("Substract polynoms")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2(3, {2, 2});
-        REQUIRE((poly1 - poly1).show() == "");
+        REQUIRE((poly1 - poly1).show() == "0");
         REQUIRE((poly1 - poly2).show() == "2");
     }
-    SUBCASE("Multiplicate polynoms")
+    SUBCASE("Multiplicate polynoms in Z[3]")
     {
         Polynom poly1(3, {1, 2});
         REQUIRE(poly1.show() == "1 + 2*x");
@@ -65,17 +65,12 @@ TEST_CASE("Polynomial")
         Polynom polynomial = poly1 * poly1;
         REQUIRE(polynomial.show() == "1 + 1*x + 1*x^2");
 
-        /*it`s wrong but just for test*/
-        Polynom poly2(3, {1, 2});
-        polynomial = poly2 * poly2;
-        REQUIRE(polynomial.show() == "1 + 1*x + 1*x^2");
-
-        //Polynom poly3(3, 2, { 1,1 });
-        //polynomial = poly2 * poly3;
-        //REQUIRE(polynomial.getTerm(0)->key == 2);
+        Polynom poly2(3, {1, 1});
+        polynomial = poly1 * poly2;
+        REQUIRE(polynomial.show() == "1 + 2*x^2");
 
         polynomial = poly1 * 3;
-        REQUIRE(polynomial.show() == "");
+        REQUIRE(polynomial.show() == "0");
     }
 
     SUBCASE("GCD polynoms") {
@@ -102,7 +97,7 @@ TEST_CASE("Division") {
             Polynom polynom1(3, { 3, 7, 10, 1, 0, 3, 4 });
             Polynom polynom2(3, { 2,1,5 });
             Polynom result = polynom2 / polynom1;
-            REQUIRE(result.show() == "");
+            REQUIRE(result.show() == "0");
         }
         SUBCASE("example 3") {
             Polynom polynom1(17, { 20, 34, 65, 43, 53 });
@@ -428,7 +423,33 @@ TEST_CASE("Finding all irreducible polynomials of degree n")
     }
 }
 
-TEST_CASE("Testing polynomial field") 
+TEST_CASE("Testing polynomial field [3^2]")
+{
+    GaloisField field(3, 2);
+    Polynom a(3, { 1, 2 });
+    Polynom b(3, { 1, 1 });
+
+    SUBCASE("Addition")
+    {
+        REQUIRE(field.add(a, b).show() == "2");
+    }
+    SUBCASE("Subtraction")
+    {
+        REQUIRE(field.subtract(a, b).show() == "1*x");
+        REQUIRE(field.subtract(b, a).show() == "2*x");
+        REQUIRE(field.subtract(a, a).show() == "0");
+    }
+    SUBCASE("Multiplication")
+    {
+        REQUIRE(field.multiply(a, b).show() == "2");
+    }
+    SUBCASE("Derivative")
+    {
+        REQUIRE(field.derivative(a).show() == "2");
+    }
+}
+
+TEST_CASE("Testing polynomial field [5^3]") 
 {
     GaloisField field(5, 3);
     Polynom a(5, { 2, 3, 1, 4, 0, 1 });
@@ -441,6 +462,7 @@ TEST_CASE("Testing polynomial field")
     SUBCASE("Subtraction") 
     {
         REQUIRE(field.subtract(a, b).show() == "4*x^2");
+        REQUIRE(field.subtract(b, a).show() == "1*x^2");
     }
     SUBCASE("Multiplication")
     {
