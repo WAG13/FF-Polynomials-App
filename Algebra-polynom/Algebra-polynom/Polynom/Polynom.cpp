@@ -324,22 +324,6 @@ bool operator==(Polynom const &p1, Polynom const &p2) {
     return true;
 }
 
-bool operator!=(Polynom const &p1, Polynom const &p2) {
-    Polynom::PolyTerm *cur1 = p1.getHead();
-    Polynom::PolyTerm *cur2 = p2.getHead();
-    while (cur1 != nullptr && cur2 != nullptr) {
-        if (cur1->key != cur2->key)
-            return true;
-        if (cur1->pow != cur2->pow)
-            return true;
-        cur1 = cur1->next;
-        cur2 = cur2->next;
-    }
-    if (cur1 != nullptr || cur2 != nullptr)
-        return true;
-    return false;
-}
-
 
 /**/
 
@@ -624,22 +608,22 @@ Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
     return Polynom();
 }
 
-bool Polynom::IsIrreducible(){
+bool Polynom::isIrreducible(){
     long long prime = this->getPrime();
     Polynom odd(prime, {0,1});
-    Polynom one(prime, {1});
-    Polynom gcd_(prime, {0});
+    Polynom one(prime, {1, 0});
+    Polynom gcd_(prime, {0, 0});
     Polynom pol(*this);
     long long polPower(pol.getPolyPower());
-    for(long long i = 1; i < polPower/2; i++){
+    for(long long i = 1; i <= polPower/2; i++){
         long long power_ = pow(pol.getPrime(), i);
-        Polynom xpow(prime, {{0, 0}, {power_, 1}});
-        if((xpow-odd).getPolyPower() >= pol.getPolyPower()){
-            gcd_= pol.gcd((xpow-odd)%pol);
+        Polynom x(prime, {{0, 0}, {power_, 1}});
+        if((x-odd).getPolyPower() >= pol.getPolyPower()){
+            gcd_= pol.gcd((x-odd)%pol);
         }else{
-            gcd_=pol.gcd(xpow-odd);
+            gcd_=pol.gcd(x-odd);
         }
-        if(gcd_!=one)
+        if(gcd_.getPolyPower()!=0)
             return false;
     }
     return true;

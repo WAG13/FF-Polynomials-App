@@ -189,8 +189,6 @@ public:
     */
     friend bool operator==(Polynom const &p1, Polynom const &p2);
 
-    friend bool operator!=(Polynom const &p1, Polynom const &p2);
-
     /** #9      @author Rostyslav Mochulskyi   **/
     /*! #9
     * @brief This method calculates nth cyclotomic polynomial
@@ -225,7 +223,12 @@ public:
      */
     static Polynom findIrreduciblePolynomial(long long prime, long long n);
 
-    bool IsIrreducible();
+    /*! #13
+     * @author Totskyi Alexander
+     * @brief Checks if the polynomial is irreducible
+     * @return 1 - if irreducible, 0 - reducible
+     */
+    bool isIrreducible();
 
 protected:
     /*! #1

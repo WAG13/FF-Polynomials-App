@@ -97,7 +97,7 @@ TEST_CASE("Polynomial")
 
 		REQUIRE(res.getTermKey(0) == 4);
 		REQUIRE(res.getTermKey(1) == 0);
-		REQUIRE(res.getTermKey(2) == 7);
+		REQUIRE(res.getTermKey(2) == 2);
 		REQUIRE(res.getPolyPower() == 2);
     }
 }
@@ -399,7 +399,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 
 TEST_CASE("Finding all irreducible polynomials of degree n")
 {
-    SUBCASE("prime = 2, n = 2")
+            SUBCASE("prime = 2, n = 2")
     {
         int prime = 2;
         int n = 2;
@@ -408,9 +408,9 @@ TEST_CASE("Finding all irreducible polynomials of degree n")
         std::vector<Polynom> required;
         required.push_back(Polynom(prime, { 1, 1, 1 }));
 
-        REQUIRE(result == required);
+                REQUIRE(result == required);
     }
-    SUBCASE("prime = 2, n = 3")
+            SUBCASE("prime = 2, n = 3")
     {
         int prime = 2;
         int n = 3;
@@ -420,9 +420,9 @@ TEST_CASE("Finding all irreducible polynomials of degree n")
         required.push_back(Polynom(prime, { 1, 1, 0, 1 }));
         required.push_back(Polynom(prime, { 1, 0, 1, 1 }));
 
-        REQUIRE(result == required);
+                REQUIRE(result == required);
     }
-    SUBCASE("prime = 3, n = 3")
+            SUBCASE("prime = 3, n = 3")
     {
         int prime = 3;
         int n = 3;
@@ -438,9 +438,50 @@ TEST_CASE("Finding all irreducible polynomials of degree n")
         required.push_back(Polynom(prime, { 1, 1, 2, 1 }));
         required.push_back(Polynom(prime, { 1, 0, 2, 1 }));
 
-        REQUIRE(result == required);
+                REQUIRE(result == required);
     }
 }
+
+TEST_CASE("Check if the polynomial is irreducible")
+{
+    SUBCASE("prime = 2, n = 2")
+    {
+        Polynom pol1(2, { 1, 1, 1 });
+
+            REQUIRE(pol1.isIrreducible() == 1);
+    }
+
+    SUBCASE("prime = 2, n = 3")
+    {
+        Polynom pol1(2, { 1, 1, 0, 1 });
+            REQUIRE(pol1.isIrreducible() == 1);
+
+        Polynom pol2(2, { 1, 0, 1, 1 });
+            REQUIRE(pol2.isIrreducible() == 1);
+
+    }
+
+    SUBCASE("prime = 3, n = 3")
+    {
+        Polynom pol1(3, { 2, 2, 0, 1 });
+                REQUIRE(pol1.isIrreducible() == 1);
+        Polynom pol2(3, { 2, 2, 2, 1 });
+                REQUIRE(pol2.isIrreducible() == 1);
+        Polynom pol3(3, { 2, 1, 1, 1 });
+                REQUIRE(pol3.isIrreducible() == 1);
+        Polynom pol4(3, { 2, 0, 1, 1 });
+                REQUIRE(pol4.isIrreducible() == 1);
+        Polynom pol5(3, { 1, 2, 0, 1 });
+                REQUIRE(pol5.isIrreducible() == 1);
+        Polynom pol6(3, { 1, 2, 1, 1 });
+                REQUIRE(pol6.isIrreducible() == 1);
+        Polynom pol7(3, { 1, 1, 2, 1 });
+                REQUIRE(pol7.isIrreducible() == 1);
+        Polynom pol8(3, { 1, 0, 2, 1 });
+                REQUIRE(pol8.isIrreducible() == 1);
+    }
+}
+
 
 TEST_CASE("Testing polynomial field [3^2]")
 {
@@ -468,7 +509,7 @@ TEST_CASE("Testing polynomial field [3^2]")
     }
 }
 
-TEST_CASE("Testing polynomial field [5^3]") 
+TEST_CASE("Testing polynomial field [5^3]")
 {
     GaloisField field(5, 3);
     Polynom a(5, { 2, 3, 1, 4, 0, 1 });
@@ -478,7 +519,7 @@ TEST_CASE("Testing polynomial field [5^3]")
     {
         REQUIRE(field.add(a, b).show() == "2*x^2");
     }
-    SUBCASE("Subtraction") 
+    SUBCASE("Subtraction")
     {
         REQUIRE(field.subtract(a, b).show() == "4*x^2");
         REQUIRE(field.subtract(b, a).show() == "1*x^2");
