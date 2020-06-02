@@ -219,6 +219,7 @@ Polynom Polynom::derivative() const {
 /*2     Define value of polynom at a point */
 long long Polynom::valueAtPoint(long long x) const {
     long long answer{0};
+    x %= this->prime;
     auto node = this->head;
     while (node) {
         long long addition{node->key};
@@ -228,7 +229,6 @@ long long Polynom::valueAtPoint(long long x) const {
         }
         answer += addition;
         answer %= this->prime;
-        //std::cout << answer << std::endl;
         node = node->next;
     }
     return answer;
