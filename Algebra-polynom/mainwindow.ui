@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">*{
+	
+	font: 12pt &quot;PT Sans&quot;;
+	color: rgb(240, 240, 240);
+	background-color: rgb(90, 80, 80)
+}
+
+/*BUTTON*/
+QPushButton{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 255), stop:1 rgba(255, 85, 0, 255));
+border-radius:15px;
+padding: 10px 15px;
+font-weight:bold;
+}
+QPushButton:hover{
+	background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 200, 96, 255), stop:1 rgba(255, 128, 65, 255));
+}
+QPushButton:pressed{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 240), stop:1 rgba(255, 85, 0, 240));
+}
+
+/*COMBOBOX*/
+QComboBox {
+	color: rgb(39, 39, 39);
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+}
+QComboBox:editable {
+    background: white;
+}
+QComboBox:!editable, QComboBox::drop-down:editable {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+}
+QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #D3D3D3, stop: 0.4 #D8D8D8,
+                                stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
+}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 25px;
+border-top-right-radius:3px;
+border-bottom-right-radius:3px;
+	background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 255), stop:1 rgba(255, 85, 0, 255));
+}
+
+QComboBox::drop-down:hover {
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 200, 96, 255), stop:1 rgba(255, 128, 65, 255));
+}
+
+
+/*NUMBER PICKER*/
+QSpinBox {
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 50), stop:1 rgba(255, 85, 0, 150));
+border-radius:3px;
+}
+QSpinBox::up-button {
+	background-color: qlineargradient(spread:pad, x1:0.507, y1:0, x2:0.532, y2:1, stop:0 rgba(255, 166, 0, 255), stop:1 rgba(255, 123, 0, 255));
+}
+QSpinBox::down-button {
+	background-color: qlineargradient(spread:pad, x1:0.507, y1:0, x2:0.532, y2:1, stop:0 rgba(255, 123, 0, 255), stop:1 rgba(255, 85, 0, 255));
+}
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+	background-color: rgb(255, 170, 85);
+}
+QSpinBox::up-button:pressed,QSpinBox::down-button:pressed {
+	background-color: rgb(200, 100, 0);
+}
+
+/*TABS*/
+QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid rgb(255, 108, 0);
+}
+QTabWidget::tab-bar {
+    left: 5px; /* move to the right by 5px */
+}
+QTabBar::tab {
+	color: rgb(39, 39, 39);
+    background: qlineargradient(spread:pad, x1:0.531925, y1:0.807, x2:0.523, y2:0, stop:0 rgba(187, 187, 187, 255), stop:1 rgba(232, 232, 232, 255)); 
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 2px 15px;
+margin-right:5px;
+	border:1px solid rgb(90, 80, 80);
+	border-bottom-color: rgb(255, 108, 0); /* same as the pane color */
+}
+QTabBar::tab:selected {
+	color: rgb(240, 240, 240);
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 255), stop:1 rgba(255, 85, 0, 255))
+}
+QTabBar::tab:hover {
+	color: rgb(240, 240, 240);
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 200, 96, 255), stop:1 rgba(255, 128, 65, 255));
+}
+/*SCROLL BAR*/
+QScrollBar:vertical {
+     border: none;
+     background: rgb(70, 62, 62);
+     width: 10px;
+     margin: 20px 0;
+ }
+ QScrollBar::handle:vertical {
+     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 85, 0, 255));
+border-radius:3px;
+     min-height: 20px;
+ }
+ QScrollBar::add-line:vertical {
+     background: qlineargradient(spread:pad, x1:0.701781, y1:1, x2:0.298, y2:0.0113636, stop:0.00497512 rgba(213, 213, 213, 255), stop:1 rgba(224, 224, 224, 255));
+	border-radius:3px;
+     height: 20px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:vertical {
+     background: qlineargradient(spread:pad, x1:0.701781, y1:1, x2:0.298, y2:0.0113636, stop:0.00497512 rgba(213, 213, 213, 255), stop:1 rgba(224, 224, 224, 255));
+	border-radius:3px;
+     height: 20px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+     background: none;
+ }</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="tab1">
+       <attribute name="title">
+        <string>Налаштування поля</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Числення над полем поліномів у полі &lt;span style=&quot; font-weight:600;&quot;&gt;F(p&lt;/span&gt;&lt;span style=&quot; font-weight:600; vertical-align:super;&quot;&gt;n&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;) &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QFormLayout" name="formLayout_3">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::ExpandingFieldsGrow</enum>
+          </property>
+          <property name="labelAlignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>просте число p =</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <item alignment="Qt::AlignTop">
+             <widget class="QSpinBox" name="primeBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>28</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <number>2</number>
+              </property>
+              <property name="maximum">
+               <number>1000000</number>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="wrongP">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 138, 0);
+margin-left:10px;</string>
+              </property>
+              <property name="text">
+               <string>p має бути простим!</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>показник n =</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="powerBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>2</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="chooseIP">
+            <property name="styleSheet">
+             <string notr="true">font: 75 12pt &quot;PT Sans&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Обрати незвідний поліном</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listIP">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>500</height>
+           </size>
+          </property>
+          <property name="currentRow">
+           <number>-1</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="makeFieldButton">
+          <property name="styleSheet">
+           <string notr="true">font: 75 15pt &quot;PT Sans&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Задати поле</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab2">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <attribute name="title">
+        <string>Операції над поліномами</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>300</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>300</height>
+           </size>
+          </property>
+          <property name="title">
+           <string/>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item alignment="Qt::AlignTop">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Оберіть операцію:</string>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignTop">
+              <widget class="QComboBox" name="comboBox">
+               <item>
+                <property name="text">
+                 <string>A + B   (додавання)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>A - B    (віднімання)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>A * B    (множення)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>A / B    (частка)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>A % B   (остача)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>НСД(A, B)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>(A)^-1   (обернений)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>A'           (похідна)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>A(x)        (значення в точці х)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Нормування A</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Корені A</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Кількість коренів A</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Круговий многочлен n-го порядку</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Розклад кругового многочлена на незвідні множники (многочлени Ri)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Розклад А на незвідні множники (Берлекемпа) </string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Знаходження всіх незвідних многочленів n-го порядку</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Перевірка чи А незвідний</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Порядок А</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QFormLayout" name="formLayout">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::ExpandingFieldsGrow</enum>
+               </property>
+               <property name="labelAlignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Поліном А</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="lineEdit_2"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Поліном В</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="lineEdit"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string>n =</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QSpinBox" name="spinBox_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1000</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_3">
+             <property name="styleSheet">
+              <string notr="true">font: 75 14pt &quot;PT Sans&quot;;
+margin-top: 15px;
+</string>
+             </property>
+             <property name="text">
+              <string>Розрахувати</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>450</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
