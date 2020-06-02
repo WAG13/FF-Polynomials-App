@@ -742,3 +742,41 @@ TEST_CASE("Testing Berlekamp factorization algorithm")
         REQUIRE(polynom.berlekampAlgorithm() == "(1 + 1*x + 1*x^4 + 1*x^5 + 1*x^6) * (1 + 1*x + 1*x^2)");
     }
 }
+
+TEST_CASE("Inverse polynom") {
+    SUBCASE("Double Inversing 1") {
+        GaloisField field(3, 4);
+
+        Polynom x(3, std::vector<long long>{1, 1, 1});
+        Polynom origin = x;
+
+        x = field.getInverse(x);
+        x = field.getInverse(x);
+
+        REQUIRE(x == origin);
+    }
+
+    SUBCASE("Double Inversing 2") {
+        GaloisField field(2, 4);
+
+        Polynom x(2, std::vector<long long>{1, 1});
+        Polynom origin = x;
+
+        x = field.getInverse(x);
+        x = field.getInverse(x);
+
+        REQUIRE(x == origin);
+    }
+
+    SUBCASE("Double Inversing 3") {
+        GaloisField field(2, 3);
+
+        Polynom x(2, std::vector<long long>{1, 0, 1});
+        Polynom origin = x;
+
+        x = field.getInverse(x);
+        x = field.getInverse(x);
+        std::cout << x.show();
+        REQUIRE(x == origin);
+    }
+}
