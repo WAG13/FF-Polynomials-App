@@ -258,13 +258,9 @@ void MainWindow::on_Calculate_clicked()
         }
         addNewLine(" ");
         break;}
-    case 14:{/************************************************************************************************TODO**********/
-        //long long n = ui->nBox->value();
+    case 14:{
         addNewLine("Розклад A на незвідні множники (Берлекемпа)");
-        //std::vector<Polynom> pols = A.berlekampAlgorithmMainCase();
-        //for(auto& pol:pols){
-        //    addNewLine(polToQStr(pol));
-        //}
+        addNewLine(toQStr(A.berlekampAlgorithm()));
         addNewLine(" ");
         break;}
     case 15:{
