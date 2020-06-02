@@ -733,7 +733,11 @@ std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long lo
             cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
             if (cyclotomic.getPolyPower() < n) continue;
             temp = cyclotomic.factorizeCyclotomicRi(m);
-            result.insert(result.end(), temp.begin(), temp.end());
+            for (auto& ir : temp) {
+                if (ir.getPolyPower() == n) {
+                    result.push_back(ir);
+                }
+            }
         }
     }
     /*// Output
@@ -743,10 +747,10 @@ std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long lo
     return result;
 }
 
-/* 12 Finds one irreducible polynomial of degree n */
-Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
+/* 12 Finds "size" irreducible polynomials of degree n */
+std::vector<Polynom> Polynom::nIrreduciblePolynomials(long long prime, long long n, int size)
 {
-    std::vector<Polynom> temp;
+    std::vector<Polynom> result, temp;
     Polynom cyclotomic;
 
     // 3.31 Lidl
@@ -756,10 +760,23 @@ Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
             cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
             if (cyclotomic.getPolyPower() < n) continue;
             temp = cyclotomic.factorizeCyclotomicRi(m);
-            return temp[0];
+            for (auto& ir : temp) {
+                if (ir.getPolyPower() == n) {
+                    if (result.size() < size) result.push_back(ir);
+                    else return result;
+                }
+            }
+            
         }
     }
-    // Doesn't find
+    return result;
+}
+
+/* 12 Finds one irreducible polynomial of degree n */
+Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
+{
+    std::vector<Polynom> temp = nIrreduciblePolynomials(prime,n,1);
+    if (temp.size() != 0) return temp[0];
     return Polynom();
 }
 

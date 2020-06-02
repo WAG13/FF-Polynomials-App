@@ -224,6 +224,12 @@ public:
     static std::vector<Polynom> allIrreduciblePolynomials(long long prime, long long n);
 
     /*! #12
+     * @brief Finds "size" irreducible polynomials of degree n
+     * @return Vector of all irreducible polynomials of degree n
+     */
+    static std::vector<Polynom> nIrreduciblePolynomials(long long prime, long long n, int size);
+
+    /*! #12
      * @author Vladyslav Prokopchuk
      * @brief Finds one irreducible polynomial of degree n
      * @return Irreducible polynomial of degree n

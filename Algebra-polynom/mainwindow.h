@@ -21,15 +21,20 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_chooseIP_clicked();
 
     void on_makeFieldButton_clicked();
+
+    void on_primeBox_valueChanged(int arg1);
+
+    void on_powerBox_valueChanged(int arg1);
+
+    void on_allirrPol_clicked();
 
 private:
     Ui::MainWindow *ui;
     GaloisField Field;
     bool fieldCreated = false;
-
+    bool canCerateField = true;
     void addIrrPolList();
 
 };

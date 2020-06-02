@@ -19,13 +19,13 @@ public:
 		return irreducible;
 	}
 
-	std::vector<Polynom> getAllIrreducible() const {
-		return Polynom::allIrreduciblePolynomials(prime, degree);
+	std::vector<Polynom> getNIrreducible(int n) const {
+		return Polynom::nIrreduciblePolynomials(prime, degree, n);
 	}
 
-	void setIrreducible(int index) {
-		std::vector<Polynom> temp = getAllIrreducible();
-		irreducible = temp[index % temp.size()];
+	void setIrreducible(int n, int index) {
+		std::vector<Polynom> temp = getNIrreducible(n);
+		irreducible = temp[index % n];
 	}
 
 	Polynom add(Polynom const& left, Polynom const& right) const {
