@@ -55,7 +55,7 @@ namespace utils {
 	}
 
 	/* 2 Euclidean algorithm */
-	std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime) {
+	std::vector<long long> euclideanAlgorithm(long long a, long long b, long long prime) {
 		std::vector<long long> answer;
 		answer.push_back(0);
 		answer.push_back(0);
