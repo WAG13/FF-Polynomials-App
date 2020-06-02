@@ -737,15 +737,15 @@ TEST_CASE("Testing polynomial field [5^3]")
         REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
     }
 }
-TEST_CASE("Testing berlecamp")
+TEST_CASE("Testing Berlekamp factorization algorithm")
 {
     std::vector<std::vector<long long>> polyVector = {{0,1}, {3,1}, {4,1}, {6,1}, {8,1}};
     Polynom polynom(2, polyVector);
 
-    Matrix matrix = polynom.buildBerlekampMatrix();
-
-    SUBCASE("Building berlekamp matrix")
+    SUBCASE("Building Berlekamp matrix")
     {
+        Matrix matrix = polynom.buildBerlekampMatrix();
+
         REQUIRE(matrix.getElement(0,0) == 0);
         REQUIRE(matrix.getElement(1,1) == 1);
         REQUIRE(matrix.getElement(1,2) == 1);
