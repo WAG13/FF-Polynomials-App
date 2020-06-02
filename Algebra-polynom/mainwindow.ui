@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>800</width>
-    <height>700</height>
+    <height>800</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,11 +34,12 @@ border-radius:15px;
 padding: 10px 15px;
 font-weight:bold;
 }
-QPushButton:hover{
+QPushButton:hover {
 	background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 200, 96, 255), stop:1 rgba(255, 128, 65, 255));
 }
-QPushButton:pressed{
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 240), stop:1 rgba(255, 85, 0, 240));
+QPushButton:pressed,
+QPushButton:disabled{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 180), stop:1 rgba(255, 85, 0, 180));
 }
 
 /*COMBOBOX*/
@@ -125,11 +126,13 @@ QScrollBar:vertical {
      width: 10px;
      margin: 20px 0;
  }
- QScrollBar::handle:vertical {
+
+ QScrollBar::handle:verticall {
      background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 85, 0, 255));
 border-radius:3px;
      min-height: 20px;
  }
+
  QScrollBar::add-line:vertical {
      background: qlineargradient(spread:pad, x1:0.701781, y1:1, x2:0.298, y2:0.0113636, stop:0.00497512 rgba(213, 213, 213, 255), stop:1 rgba(224, 224, 224, 255));
 	border-radius:3px;
@@ -146,9 +149,61 @@ border-radius:3px;
      subcontrol-origin: margin;
  }
 
- QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+/*hor*/
+
+QScrollBar:horizontal {
+     border: none;
+     background: rgb(70, 62, 62);
+     height: 10px;
+     margin: 0 20px;
+ }
+
+ QScrollBar::handle:horizontal {
+     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 170, 0, 255), stop:1 rgba(255, 85, 0, 255));
+border-radius:3px;
+     min-width: 20px;
+ }
+
+ QScrollBar::add-line:horizontal {
+     background: qlineargradient(spread:pad, x1:0.701781, y1:1, x2:0.298, y2:0.0113636, stop:0.00497512 rgba(213, 213, 213, 255), stop:1 rgba(224, 224, 224, 255));
+	border-radius:3px;
+     width: 20px;
+     subcontrol-position: right;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:horizontal {
+     background: qlineargradient(spread:pad, x1:0.701781, y1:1, x2:0.298, y2:0.0113636, stop:0.00497512 rgba(213, 213, 213, 255), stop:1 rgba(224, 224, 224, 255));
+	border-radius:3px;
+     width: 20px;
+     subcontrol-position: left;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical,
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
      background: none;
- }</string>
+ }
+
+/* List */
+QListView {
+    show-decoration-selected: 1; /* make the selection span the entire width of the view */
+}
+
+QListView::item {
+    background: rgb(86, 76, 76);
+margin-bottom: 2px;
+}
+
+QListView::item:hover {
+    background: rgba(10, 0, 0,0.1);
+}
+
+QListView::item:selected {
+    border: 1px solid rgb(240, 240, 240);;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 240), stop:1 rgba(255, 85, 0, 240));
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -173,7 +228,7 @@ border-radius:3px;
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab1">
        <attribute name="title">
@@ -310,30 +365,113 @@ margin-left:10px;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="chooseIP">
-            <property name="styleSheet">
-             <string notr="true">font: 75 12pt &quot;PT Sans&quot;;</string>
-            </property>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>Обрати незвідний поліном</string>
+             <string>Незвідний поліном:</string>
             </property>
            </widget>
           </item>
+          <item row="2" column="1">
+           <widget class="QPlainTextEdit" name="showIR">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="plainText">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QListWidget" name="listIP">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>400</height>
+             </size>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="currentRow">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QPushButton" name="allirrPol">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Обрати інший незвідний поліном</string>
+              </property>
+              <property name="autoRepeat">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="styleSheet">
+               <string notr="true">margin-left:90</string>
+              </property>
+              <property name="text">
+               <string>Кількість:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="countIP">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>8</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QListWidget" name="listIP">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>500</height>
-           </size>
-          </property>
-          <property name="currentRow">
-           <number>-1</number>
-          </property>
-         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="makeFieldButton">
@@ -378,13 +516,13 @@ margin-left:10px;</string>
           <property name="minimumSize">
            <size>
             <width>300</width>
-            <height>300</height>
+            <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>300</height>
+            <height>280</height>
            </size>
           </property>
           <property name="title">
@@ -394,7 +532,7 @@ margin-left:10px;</string>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout">
              <item alignment="Qt::AlignTop">
-              <widget class="QLabel" name="label_5">
+              <widget class="QLabel" name="label_op">
                <property name="text">
                 <string>Оберіть операцію:</string>
                </property>
@@ -404,30 +542,33 @@ margin-left:10px;</string>
               </widget>
              </item>
              <item alignment="Qt::AlignTop">
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="operations">
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
                <item>
                 <property name="text">
-                 <string>A + B   (додавання)</string>
+                 <string>A + B       (додавання)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A - B    (віднімання)</string>
+                 <string>A - B        (віднімання)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A * B    (множення)</string>
+                 <string>A * B        (множення)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A / B    (частка)</string>
+                 <string>A / B        (частка)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A % B   (остача)</string>
+                 <string>A % B       (остача)</string>
                 </property>
                </item>
                <item>
@@ -437,17 +578,17 @@ margin-left:10px;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>(A)^-1   (обернений)</string>
+                 <string>(A)^-1      (обернений)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A'           (похідна)</string>
+                 <string>A'              (похідна)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A(x)        (значення в точці х)</string>
+                 <string>A(x)          (значення в точці х)</string>
                 </property>
                </item>
                <item>
@@ -497,7 +638,7 @@ margin-left:10px;</string>
                </item>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignTop">
               <widget class="Line" name="line">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -513,34 +654,41 @@ margin-left:10px;</string>
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_3">
+                <widget class="QLabel" name="labelA">
                  <property name="text">
                   <string>Поліном А</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="lineEdit_2"/>
+                <widget class="QLineEdit" name="pA"/>
                </item>
                <item row="1" column="0">
-                <widget class="QLabel" name="label_4">
+                <widget class="QLabel" name="labelB">
                  <property name="text">
                   <string>Поліном В</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit"/>
+                <widget class="QLineEdit" name="pB"/>
                </item>
                <item row="2" column="0">
-                <widget class="QLabel" name="label_6">
+                <widget class="QLabel" name="labelN">
                  <property name="text">
                   <string>n =</string>
                  </property>
                 </widget>
                </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="labelX">
+                 <property name="text">
+                  <string>x =</string>
+                 </property>
+                </widget>
+               </item>
                <item row="2" column="1">
-                <widget class="QSpinBox" name="spinBox_3">
+                <widget class="QSpinBox" name="nBox">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -557,7 +705,23 @@ margin-left:10px;</string>
                   <number>1</number>
                  </property>
                  <property name="maximum">
-                  <number>1000</number>
+                  <number>2147483647</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QSpinBox" name="xBox">
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="minimum">
+                  <number>-2147483647</number>
+                 </property>
+                 <property name="maximum">
+                  <number>2147483647</number>
                  </property>
                 </widget>
                </item>
@@ -566,7 +730,7 @@ margin-left:10px;</string>
             </layout>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="Calculate">
              <property name="styleSheet">
               <string notr="true">font: 75 14pt &quot;PT Sans&quot;;
 margin-top: 15px;
@@ -581,7 +745,7 @@ margin-top: 15px;
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="plainTextEdit">
+         <widget class="QPlainTextEdit" name="history">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>

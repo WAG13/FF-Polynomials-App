@@ -219,6 +219,8 @@ Polynom Polynom::derivative() const {
 /*2     Define value of polynom at a point */
 long long Polynom::valueAtPoint(long long x) const {
     long long answer{0};
+    x %= this->prime;
+    if (x < 0) x += this->prime;
     auto node = this->head;
     while (node) {
         long long addition{node->key};
@@ -228,7 +230,6 @@ long long Polynom::valueAtPoint(long long x) const {
         }
         answer += addition;
         answer %= this->prime;
-        //std::cout << answer << std::endl;
         node = node->next;
     }
     return answer;
@@ -669,60 +670,6 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	return factors;
 }
 
-/*5 Inverse of a polynomial in field
-Знаходження оберненого многочлена*/
-/*
-{
-  Polynom tar;
-  Polynom irr;
-  Polynom div;
-  Polynom rem;
-  Polynom res;
-  int i = 1;
-  tar.copy(pol1);
-  irr.copy(pol2);
-  while (rem == 1)
-  {
-    div = irr / tar;
-    rem = irr % tar;
-    irr.copy(tar);
-    tar.copy(rem);
-    if (i % 2)
-      res = res + div;
-    else
-      res = res + 1;
-  }
-  return res;
-}
-*/
-/*long long Polynom::gcdforinvers(long long a, long long b, long long* x, long long* y)
-{
-    if (a == 0)
-    {
-        *x = 0, * y = 1;
-        return b;
-    }
-
-    long long x1, y1;
-    long long gcd = gcdExtended(b % a, a, &x1, &y1);
-
-    *x = y1 - (b / a) * x1;
-    *y = x1;
-
-    return gcd;
-}*/
-
-/*Polynom Polynom::inversPoly(long long number, Polynom const& pol1)
-{
-    int x, y;
-    int g = gcdforinvers(number, pol1, int & x, int & y);
-
-    if (g != 1)
-        return -1;
-    else
-        return (x % pol1 + pol1) % pol1;
-}*/
-
 /* 12 Finds all irreducible polynomials of degree n */
 std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long long n)
 {
@@ -736,7 +683,11 @@ std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long lo
             cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
             if (cyclotomic.getPolyPower() < n) continue;
             temp = cyclotomic.factorizeCyclotomicRi(m);
-            result.insert(result.end(), temp.begin(), temp.end());
+            for (auto& ir : temp) {
+                if (ir.getPolyPower() == n) {
+                    result.push_back(ir);
+                }
+            }
         }
     }
     /*// Output
@@ -746,10 +697,10 @@ std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long lo
     return result;
 }
 
-/* 12 Finds one irreducible polynomial of degree n */
-Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
+/* 12 Finds "size" irreducible polynomials of degree n */
+std::vector<Polynom> Polynom::nIrreduciblePolynomials(long long prime, long long n, int size)
 {
-    std::vector<Polynom> temp;
+    std::vector<Polynom> result, temp;
     Polynom cyclotomic;
 
     // 3.31 Lidl
@@ -759,10 +710,23 @@ Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
             cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
             if (cyclotomic.getPolyPower() < n) continue;
             temp = cyclotomic.factorizeCyclotomicRi(m);
-            return temp[0];
+            for (auto& ir : temp) {
+                if (ir.getPolyPower() == n) {
+                    if (result.size() < size) result.push_back(ir);
+                    else return result;
+                }
+            }
+            
         }
     }
-    // Doesn't find
+    return result;
+}
+
+/* 12 Finds one irreducible polynomial of degree n */
+Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
+{
+    std::vector<Polynom> temp = nIrreduciblePolynomials(prime,n,1);
+    if (temp.size() != 0) return temp[0];
     return Polynom();
 }
 
@@ -810,10 +774,7 @@ Matrix Polynom::buildBerlekampMatrix() const {
             else {
                 matrix.setElement(i, j, M[i].getTermKey(j)-1);
             }
-
-            cout << matrix.getElement(i,j);
         }
-        cout << endl;
     }
     return matrix;
 }

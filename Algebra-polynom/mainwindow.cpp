@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->wrongP->setVisible(false);
-    (fieldCreated) ? ui->tab2->setVisible(true) : ui->tab2->setVisible(false);
+    on_primeBox_valueChanged();
+    showX(false);showN(false);
 }
 
 MainWindow::~MainWindow()
@@ -15,24 +15,277 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_chooseIP_clicked()
-{
-    if (utils::isPrime(ui->primeBox->value())){
-        ui->wrongP->setVisible(false);
-        Field = GaloisField(ui->primeBox->value(),ui->powerBox->value());
-        fieldCreated = true;
-        addIrrPolList();
-
-    } else {ui->wrongP->setVisible(true);}
+/* Converter */
+QString toQStr(std::string str) {return QString::fromStdString(str);}
+QString polToQStr(Polynom pol) {return QString::fromStdString(pol.show());}
+std::string qStrtoStd (QString str) {return str.toLocal8Bit().constData();}
+/* Cleaner */
+void MainWindow::cleanerTab(){
+    fieldCreated = false;
+    ui->listIP->clear();
+    ui->showIR->clear();
+    ui->allirrPol->setEnabled(false);
+    ui->Calculate->setEnabled(false);
+    ui->tabWidget->findChild<QTabBar *>()->hide();
+    ui->history->clear();
 }
 
+/* IrrPolynoms List */
 void MainWindow::addIrrPolList(){
-    std::vector<Polynom> IP = Field.getAllIrreducible();
-    //make list
+    IP = Field.getNIrreducible(ui->countIP->value());
+    ui->listIP->clear();
+    int row=0;
+    for (auto& ip : IP) {
+        ip.show();
+        QListWidgetItem *newItem = new QListWidgetItem;
+        newItem->setText(polToQStr(ip));
+        ui->listIP->insertItem(row, newItem);
+        row++;
+    }
 }
 
+void MainWindow::on_listIP_currentRowChanged(int currentRow)
+{
+    if (currentRow >= 0){
+        Field.setIrreducible(IP[currentRow]);
+        ui->showIR->setPlainText(polToQStr(Field.getIrreducible()));
+    }
+}
+
+void MainWindow::on_allirrPol_clicked()
+{
+    if (canCerateField) addIrrPolList();
+}
+
+/* Making Field */
 void MainWindow::on_makeFieldButton_clicked()
 {
-    (fieldCreated) ? ui->tab2->setVisible(true) : ui->tab2->setVisible(false);
+    if (canCerateField){
+        fieldCreated = true;
+        Field = GaloisField(ui->primeBox->value(),ui->powerBox->value());
+        ui->showIR->setPlainText(polToQStr(Field.getIrreducible()));
+        ui->allirrPol->setEnabled(true);
+        ui->Calculate->setEnabled(true);
+    } else {
+        fieldCreated = false;
+        ui->wrongP->setVisible(true);
+        ui->allirrPol->setEnabled(false);
+    }
+
+    (fieldCreated)
+              ? ui->tabWidget->findChild<QTabBar *>()->show()
+              : ui->tabWidget->findChild<QTabBar *>()->hide();
 }
+
+
+
+void MainWindow::on_primeBox_valueChanged()
+{
+    cleanerTab();
+    if (utils::isPrime(ui->primeBox->value())){
+        canCerateField = true;
+        ui->wrongP->setVisible(false);
+    } else {
+        canCerateField = false;
+        ui->wrongP->setVisible(true);
+    }
+}
+
+void MainWindow::on_powerBox_valueChanged()
+{
+    cleanerTab();
+}
+
+
+/* Operations */
+void MainWindow::showB(bool show){
+    ui->labelB->setVisible(show);
+    ui->pB->setVisible(show);
+    if (!show)ui->pB->clear();
+}
+
+void MainWindow::showN(bool show){
+    ui->nBox->setVisible(show);
+    ui->labelN->setVisible(show);
+    if (show)ui->nBox->setValue(1);
+}
+
+void MainWindow::showX(bool show){
+    ui->xBox->setVisible(show);
+    ui->labelX->setVisible(show);
+    if (show)ui->xBox->setValue(1);
+}
+
+void MainWindow::on_operations_currentIndexChanged(int index){
+    ((index > -1) && (index < 6))
+            ? showB(true)
+            : showB(false);
+    (index == 8)
+            ? showX(true)
+            : showX(false);
+    ((index == 12) || (index == 13) || (index == 15))
+            ? showN(true)
+            : showN(false);
+}
+
+void MainWindow::addNewLine(QString text){
+    ui->history->appendPlainText(text);
+}
+
+void MainWindow::on_Calculate_clicked()
+{
+    Polynom A(Field.getPrime(), qStrtoStd(ui->pA->text()),'x');
+    A = A%Field.getIrreducible();
+    ui->pA->setText(polToQStr(A));
+
+    switch (ui->operations->currentIndex()) {
+    case 0:{
+        Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
+        B = B%Field.getIrreducible();
+        ui->pB->setText(polToQStr(B));
+        addNewLine("("+polToQStr(A)+")");
+        addNewLine("+");
+        addNewLine("("+polToQStr(B)+")");
+        addNewLine("===============================");
+        addNewLine(polToQStr(Field.add(A,B)));
+        addNewLine(" ");
+        break;}
+    case 1:{
+        Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
+        B = B%Field.getIrreducible();
+        ui->pB->setText(polToQStr(B));
+        addNewLine("("+polToQStr(A)+")");
+        addNewLine("-");
+        addNewLine("("+polToQStr(B)+")");
+        addNewLine("===============================");
+        addNewLine(polToQStr(Field.subtract(A,B)));
+        addNewLine(" ");
+        break;}
+    case 2:{
+        Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
+        B = B%Field.getIrreducible();
+        ui->pB->setText(polToQStr(B));
+        addNewLine("("+polToQStr(A)+")");
+        addNewLine("*");
+        addNewLine("("+polToQStr(B)+")");
+        addNewLine("===============================");
+        addNewLine(polToQStr(Field.multiply(A,B)));
+        addNewLine(" ");
+        break;}
+    case 3:{
+        Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
+        B = B%Field.getIrreducible();
+        ui->pB->setText(polToQStr(B));
+        addNewLine("("+polToQStr(A)+")");
+        addNewLine("/");
+        addNewLine("("+polToQStr(B)+")");
+        addNewLine("===============================");
+        addNewLine(polToQStr(Field.divide(A,B)));
+        addNewLine(" ");
+        break;}
+    case 4:{
+        Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
+        B = B%Field.getIrreducible();
+        ui->pB->setText(polToQStr(B));
+        addNewLine("("+polToQStr(A)+")");
+        addNewLine("%");
+        addNewLine("("+polToQStr(B)+")");
+        addNewLine("===============================");
+        addNewLine(polToQStr(Field.mod(A,B)));
+        addNewLine(" ");
+        break;}
+    case 5:{
+        Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
+        B = B%Field.getIrreducible();
+        ui->pB->setText(polToQStr(B));
+        addNewLine("НСД("+polToQStr(A)+",");
+        addNewLine("   "+polToQStr(B)+")");
+        addNewLine("===============================");
+        addNewLine(polToQStr(A.gcd(B)));
+        addNewLine(" ");
+        break;}
+    case 6:{
+        addNewLine("("+polToQStr(A)+")^(-1)");
+        addNewLine("===============================");
+        addNewLine(polToQStr(Field.getInverse(A)));
+        addNewLine(" ");
+        break;}
+    case 7:{
+        addNewLine("("+polToQStr(A)+")'");
+        addNewLine("===============================");
+        addNewLine(polToQStr(Field.derivative(A)));
+        addNewLine(" ");
+        break;}
+    case 8:{
+        long long x = ui->xBox->value();
+        addNewLine("A(x), x = "+QString::number(x));
+        addNewLine("===============================");
+        addNewLine(QString::number(A.valueAtPoint(x)));
+        addNewLine(" ");
+        break;}
+    case 9:{
+        long long x = ui->xBox->value();
+        addNewLine("Нормування A");
+        A.normalization();
+        ui->pA->setText(polToQStr(A));
+        addNewLine(polToQStr(A));
+        addNewLine(" ");
+        break;}
+    case 10:{
+        addNewLine("Корені A");
+        std::vector<Polynom> roots = A.findRoots();
+        for(auto& root:roots){
+            addNewLine(polToQStr(root));
+        }
+        addNewLine(" ");
+        break;}
+    case 11:{
+        addNewLine("Кількість коренів A = "+QString::number(A.rootsNumber()));
+        addNewLine(" ");
+        break;}
+    case 12:{
+        long long n = ui->nBox->value();
+        addNewLine("Круговий многочлен порядку "+QString::number(n));
+        addNewLine(polToQStr(A.CyclotomicPolynomial(Field.getPrime(),n)));
+        addNewLine(" ");
+        break;}
+    case 13:{
+        long long n = ui->nBox->value();
+        addNewLine("Розклад кругового многочлена на незвідні множники (Ri)");
+        std::vector<Polynom> pols = A.factorizeCyclotomicRi(n);
+        for(auto& pol:pols){
+            addNewLine(polToQStr(pol));
+        }
+        addNewLine(" ");
+        break;}
+    case 14:{/************************************************************************************************TODO**********/
+        //long long n = ui->nBox->value();
+        addNewLine("Розклад A на незвідні множники (Берлекемпа)");
+        //std::vector<Polynom> pols = A.berlekampAlgorithmMainCase();
+        //for(auto& pol:pols){
+        //    addNewLine(polToQStr(pol));
+        //}
+        addNewLine(" ");
+        break;}
+    case 15:{
+        long long n = ui->nBox->value();
+        addNewLine("Всі незвідні многочлени порядку "+QString::number(n));
+        std::vector<Polynom> pols = A.allIrreduciblePolynomials(Field.getPrime(),n);
+        for(auto& pol:pols){
+            addNewLine(polToQStr(pol));
+        }
+        addNewLine(" ");
+        break;}
+    case 16:{
+        (A.isIrreducible()) ? addNewLine("A незвідний") : addNewLine("A не незвідний");
+        addNewLine(" ");
+        break;}
+    case 17:{ /**************************************************************************************************TODO**********/
+        addNewLine("Порядок A = "+QString::number(0));
+        addNewLine(" ");
+        break;}
+    default:
+        break;
+    }
+}
+
