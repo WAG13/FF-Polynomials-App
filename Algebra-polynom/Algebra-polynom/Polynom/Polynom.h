@@ -208,14 +208,6 @@ public:
      */
     std::vector<Polynom> factorizeCyclotomicRi(size_t n);
 
-    /*! #5
-    * @author Yaroslava Levchuk Natalia Makarenko
-    * @brief This function implements algorithm  for finding invers
-    */
-    Polynom inversPoly(long long number, Polynom const &pol1);
-
-    long long gcdforinvers(long long a, long long b, long long *x, long long *y);
-
     /*! #12
      * @author Vladyslav Prokopchuk
      * @brief Finds all irreducible polynomials of degree n
