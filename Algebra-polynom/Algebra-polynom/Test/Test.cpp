@@ -747,7 +747,7 @@ TEST_CASE("Inverse polynom") {
     SUBCASE("Double Inversing 1") {
         GaloisField field(3, 4);
 
-        Polynom x(3, std::vector<long long>{1, 1, 1});
+        Polynom x(3, std::vector<long long>{1,1,1});
         Polynom origin = x;
 
         x = field.getInverse(x);
