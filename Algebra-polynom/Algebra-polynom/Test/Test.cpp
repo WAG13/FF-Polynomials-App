@@ -287,7 +287,6 @@ TEST_CASE("Roots amount")
         Polynom polynomial(5, {
                 {0,-2},{1,-1}, {2,1},{3,2},{4,-1},{5,1}
         });
-        polynomial.show();
         REQUIRE(polynomial.rootsNumber() == 2);
     }
 }
@@ -789,7 +788,6 @@ TEST_CASE("Inverse polynom") {
 
         x = field.getInverse(x);
         x = field.getInverse(x);
-        std::cout << x.show();
         REQUIRE(x == origin);
     }
 }
