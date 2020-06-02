@@ -170,7 +170,9 @@ public:
     void normalization();
 
     /** #3      @author Karina Masol & Yuriy Momotenko     **/
+    //Finding roots of the polynomial
     std::vector<Polynom> findRoots();
+    //bringing polynomial to the power
     Polynom toThePower(long long pow) const;
     //get instead of polynom f(x) - polynom f(x-b)
     Polynom getWithOtherParameter(long long b) const;

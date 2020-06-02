@@ -291,7 +291,7 @@ Polynom Polynom::getWithOtherParameter(long long b) const {
 	return ans;
 }
 
-/* #3 */
+/* #3 find roots of the polynomial*/
 std::vector<Polynom> Polynom::findRoots() {
 	long long rootsNumber = this->rootsNumber();
 
