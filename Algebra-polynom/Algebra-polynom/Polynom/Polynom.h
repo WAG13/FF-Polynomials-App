@@ -237,7 +237,8 @@ public:
   *
   */
 
-    Matrix buildBerlekampMatrix();
+    Matrix buildBerlekampMatrix() const;
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field
@@ -268,4 +269,8 @@ protected:
 	* @brief Division
 	*/
     std::pair<Polynom, Polynom> simple_division(Polynom const &p1, Polynom const &p2) const;
+
+    std::vector<Polynom> getComparisonSystemSolutionBasis() const;
+
+    void berlekampAlgorithmMainCase() const;
 };
