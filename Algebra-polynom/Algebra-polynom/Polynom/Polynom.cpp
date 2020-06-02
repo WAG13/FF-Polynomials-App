@@ -796,17 +796,21 @@ Matrix Polynom::buildBerlekampMatrix() const {
         Polynom remainder = polynomXPI % current;
         M.push_back(remainder);
     }
-    std::cout << getPolyPower() << std::endl;
+
     Matrix matrix(getPolyPower(), getPolyPower(), prime);
 
     for (int i = 0; i < getPolyPower(); i++) {
         for (int j = 0; j < getPolyPower(); j++) {
-
-            matrix.setElement(i, j, M[i].getTermKey(j));
-            if (i == j) {
-                matrix.setElement(i, j, getTermKey(j) - 1);
+            if(i != j){
+                matrix.setElement(i, j, M[i].getTermKey(j));
             }
+            else {
+                matrix.setElement(i, j, M[i].getTermKey(j)-1);
+            }
+
+            cout << matrix.getElement(i,j);
         }
+        cout << endl;
     }
     return matrix;
 }
