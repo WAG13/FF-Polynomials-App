@@ -236,12 +236,16 @@ public:
     bool isIrreducible();
 
     /*! @author Medynskyi Mykola
-  * @brief Finds berlekamp matrix
-  * @return berlekamp matrix
-  *
-  */
-
+    * @brief Finds berlekamp matrix
+    * @return berlekamp matrix
+    */
     Matrix buildBerlekampMatrix() const;
+
+    /*! @author Medynskyi Mykola, Pashchenko Dmytro
+    * @brief factorizes polynomial by Berlekamp algorithm
+    * @return string with factorized polinomial
+    */
+    std::string berlekampAlgorithm() const;
 
 protected:
     /*! #1
@@ -274,7 +278,32 @@ protected:
 	*/
     std::pair<Polynom, Polynom> simple_division(Polynom const &p1, Polynom const &p2) const;
 
+    /*! @author  Datsiuk Vitaliy, Medynskyi Mykola
+    * @brief Computes the square free decomposition of the given polynomial. Returns a
+    * list of pairs. The first element of the pair is a factor of the given
+    * polynomial, and the second, its multiplicity.
+    * @return vector of pairs<Polynom, int>
+    */
+    std::vector<std::pair<Polynom, long long>> squareFreeDecomposition() const;
+
+    /*! @author Medynskyi Mykola
+    * @brief Finds pth root of given polynom
+    * @return polynom
+    */
+    Polynom pthRoot(Polynom f);
+
+    std::vector<std::pair<std::vector<Polynom>, long long>> berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>> const& unmultiple_factors) const;
+
+    /*! @author Pashchenko Dmytro
+    * @brief builds polynomial basis of solution space of comparison system h^p = h (mod f)
+    * @return basis polynomials
+    */
     std::vector<Polynom> getComparisonSystemSolutionBasis() const;
 
-    void berlekampAlgorithmMainCase() const;
+    /*! @author Pashchenko Dmytro
+    * @brief factorizes unmultiple factors using basis polynomials (f = Ï(gcd(f, h - a)))
+    * @return massive with pairs "polynomials, their multiplicity"
+    */
+    std::vector<std::pair<std::vector<Polynom>, long long>> factorizeByBasisPolynomials(std::vector<std::pair<Polynom, long long>> const &unmultiple_factors, 
+        std::vector<Polynom> const &basis) const;
 };

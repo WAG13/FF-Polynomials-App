@@ -751,6 +751,47 @@ bool Polynom::isIrreducible(){
     }
     return true;
 }
+
+Polynom Polynom::pthRoot(Polynom f) {
+    int p = prime;
+    std::vector<long long> roots;
+    int power = f.getPolyPower();
+    for (int i = 0; i <= power; i += p) {
+        roots.push_back(f.getTermKey(i));
+    }
+    Polynom polynom(prime, roots);
+    return polynom;
+}
+
+std::vector<std::pair<Polynom, long long>> Polynom::squareFreeDecomposition() const {
+    std::vector<std::pair<Polynom, long long>> result;
+    Polynom polynom(*this);
+    Polynom one(prime, std::vector<long long>{1});
+    long long s = 1;
+    do {
+        int j = 1;
+        Polynom derivativePolynom = polynom.derivative();
+        Polynom gcdPolynom = polynom.gcd(derivativePolynom);
+        Polynom g = polynom / gcdPolynom;
+        while (!(g == one)) {
+            polynom = polynom / g;
+            Polynom h = polynom.gcd(g);
+            Polynom m = g / h;
+            if (!(m == one)) {
+                std::pair<Polynom, long long> polynomAndPower = { m,j * s };
+                result.push_back(polynomAndPower);
+            }
+            g = h;
+            j++;
+        }
+        if (!(polynom == one)) {
+            polynom = polynom.pthRoot(polynom);
+            s *= prime;
+        }
+    } while (!(polynom == one));
+    return result;
+}
+
 /* build berlekamp matrix */
 Matrix Polynom::buildBerlekampMatrix() const {
     std::vector<Polynom> M;
@@ -789,12 +830,77 @@ std::vector<Polynom> Polynom::getComparisonSystemSolutionBasis() const {
     return polynomial_basis;
 }
 
-void Polynom::berlekampAlgorithmMainCase() const {
+std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>> const& unmultiple_factors) const {
     auto polynomial_basis = getComparisonSystemSolutionBasis();
     if (polynomial_basis.size() == 1) {
-        //irreducible
+        return std::vector<std::pair<std::vector<Polynom>, long long>>{ { {*this}, 1} };
     }
     else {
-        //body
+        return factorizeByBasisPolynomials(unmultiple_factors, polynomial_basis);
     }
+}
+
+std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasisPolynomials(std::vector<std::pair<Polynom, long long>> const& unmultiple_factors, 
+    std::vector<Polynom> const& basis) const {
+    long long total_num_of_factors = basis.size();
+    long long current_num_of_factors = unmultiple_factors.size();
+    std::vector<std::pair<std::vector<Polynom>, long long>> result;
+
+    for (size_t i = 0; i < unmultiple_factors.size(); i++) {
+        result.push_back({ std::vector<Polynom>{ unmultiple_factors[i].first }, unmultiple_factors[i].second });
+    }
+
+    size_t basis_element_index = 1;
+    while (current_num_of_factors != total_num_of_factors) {
+        for (size_t i = 0; i < result.size(); i++) {
+            for (size_t j = 0; j < result[i].first.size(); j++) {
+
+                std::vector<Polynom> replacement;
+                Polynom temp;
+
+                if (result[i].first[j].getPolyPower() > 1) {
+                    for (long long k = 0; k < prime; k++) {
+                        temp = result[i].first[j].gcd(basis[basis_element_index] - Polynom{ prime, {k, 0} });
+                        if (temp.getPolyPower() > 0) {
+                            replacement.push_back(temp);
+                            current_num_of_factors++;
+                        }
+                    }
+                }
+
+                if (!replacement.empty()) {
+                    current_num_of_factors--;
+                    result[i].first.insert(result[i].first.begin() + j, replacement.begin(), replacement.end());
+                    j += replacement.size();
+                    result[i].first.erase(result[i].first.begin() + j);
+                    if (current_num_of_factors == total_num_of_factors) break;
+                }
+            }
+
+            if (current_num_of_factors == total_num_of_factors) break;
+            basis_element_index++;
+        }
+    }
+
+    return result;
+}
+
+std::string Polynom::berlekampAlgorithm() const {
+    auto unmultipled_polynomial = squareFreeDecomposition();
+    auto result = berlekampAlgorithmMainCase(unmultipled_polynomial);
+    std::string result_to_string;
+
+    for (size_t i = 0; i < result.size(); i++) {
+        long long power = result[i].second;
+        for (size_t j = 0; j < result[i].first.size(); j++) {
+            result_to_string.push_back('(');
+            result_to_string += result[i].first[j].show();
+            result_to_string.push_back(')');
+            if (power > 1) result_to_string += "^" + std::to_string(power);
+            if (j != result[i].first.size() - 1) result_to_string += " * ";
+        }
+        if (i != result.size() - 1) result_to_string += " * ";
+    }
+
+    return result_to_string;
 }

@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>800</height>
+    <height>712</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>800</width>
-    <height>800</height>
+    <height>500</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -206,21 +206,21 @@ QListView::item:selected {
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="maximumSize">
        <size>
-        <width>16777215</width>
+        <width>1400</width>
         <height>16777215</height>
        </size>
       </property>
@@ -405,7 +405,7 @@ margin-left:10px;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>400</height>
+              <height>350</height>
              </size>
             </property>
             <property name="verticalScrollBarPolicy">
@@ -522,7 +522,7 @@ margin-left:10px;</string>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>280</height>
+            <height>300</height>
            </size>
           </property>
           <property name="title">
@@ -548,27 +548,32 @@ margin-left:10px;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>A + B       (додавання)</string>
+                 <string>A + B          (додавання)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A - B        (віднімання)</string>
+                 <string>A - B           (віднімання)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A * B        (множення)</string>
+                 <string>A * B           (множення)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A / B        (частка)</string>
+                 <string>A * B^(-1)   (ділення)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A % B       (остача)</string>
+                 <string>A / B           (частка)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>A % B         (остача)</string>
                 </property>
                </item>
                <item>
@@ -578,17 +583,17 @@ margin-left:10px;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>(A)^-1      (обернений)</string>
+                 <string>(A)^-1        (обернений)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A'              (похідна)</string>
+                 <string>A'                (похідна)</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>A(x)          (значення в точці х)</string>
+                 <string>A(x)            (значення в точці х)</string>
                 </property>
                </item>
                <item>
@@ -636,6 +641,13 @@ margin-left:10px;</string>
                  <string>Порядок А</string>
                 </property>
                </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="modIrr">
+               <property name="text">
+                <string>многочлен в полі F(p^n)</string>
+               </property>
               </widget>
              </item>
              <item alignment="Qt::AlignTop">

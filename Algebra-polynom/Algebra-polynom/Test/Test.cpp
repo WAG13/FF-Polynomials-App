@@ -287,7 +287,6 @@ TEST_CASE("Roots amount")
         Polynom polynomial(5, {
                 {0,-2},{1,-1}, {2,1},{3,2},{4,-1},{5,1}
         });
-        polynomial.show();
         REQUIRE(polynomial.rootsNumber() == 2);
     }
 }
@@ -737,18 +736,22 @@ TEST_CASE("Testing polynomial field [5^3]")
         REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
     }
 }
-TEST_CASE("Testing berlecamp")
+TEST_CASE("Testing Berlekamp factorization algorithm")
 {
     std::vector<std::vector<long long>> polyVector = {{0,1}, {3,1}, {4,1}, {6,1}, {8,1}};
     Polynom polynom(2, polyVector);
 
-    Matrix matrix = polynom.buildBerlekampMatrix();
-
-    SUBCASE("Building berlekamp matrix")
+    SUBCASE("Building Berlekamp matrix")
     {
+        Matrix matrix = polynom.buildBerlekampMatrix();
+
         REQUIRE(matrix.getElement(0,0) == 0);
         REQUIRE(matrix.getElement(1,1) == 1);
         REQUIRE(matrix.getElement(1,2) == 1);
+    }
+
+    SUBCASE("Testing Berlekamp factorization") {
+        REQUIRE(polynom.berlekampAlgorithm() == "(1 + 1*x + 1*x^4 + 1*x^5 + 1*x^6) * (1 + 1*x + 1*x^2)");
     }
 }
 
@@ -785,7 +788,6 @@ TEST_CASE("Inverse polynom") {
 
         x = field.getInverse(x);
         x = field.getInverse(x);
-        std::cout << x.show();
         REQUIRE(x == origin);
     }
 }
