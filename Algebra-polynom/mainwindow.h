@@ -28,10 +28,8 @@ private slots:
     void on_allirrPol_clicked();
 
     void on_listIP_currentRowChanged(int currentRow);
-
-    void on_comboBox_currentIndexChanged(int index);
-
     void on_Calculate_clicked();
+    void on_operations_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;

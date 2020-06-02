@@ -99,44 +99,24 @@ void MainWindow::on_powerBox_valueChanged()
 
 /* Operations */
 void MainWindow::showB(bool show){
-    if (show){
-        ui->labelB->setVisible(true);
-        ui->pB->setVisible(true);
-    }else{
-        ui->labelB->setVisible(false);
-        ui->pB->setVisible(false);
-        ui->pB->clear();
-    }
+    ui->labelB->setVisible(show);
+    ui->pB->setVisible(show);
+    if (!show)ui->pB->clear();
 }
 
 void MainWindow::showN(bool show){
-    if (show){
-        ui->nBox->setValue(1);
-        ui->labelN->setText(toQStr("n ="));
-        ui->labelN->setVisible(true);
-        ui->nBox->setVisible(true);
-    }else{
-        ui->labelN->setVisible(false);
-        ui->nBox->setVisible(false);
-    }
+    ui->nBox->setVisible(show);
+    ui->labelN->setVisible(show);
+    if (show)ui->nBox->setValue(1);
 }
 
 void MainWindow::showX(bool show){
-    if (show){
-        ui->xBox->setValue(1);
-        ui->labelX->setText(toQStr("x ="));
-        ui->labelX->setVisible(true);
-        ui->xBox->setVisible(true);
-    }else{
-        ui->labelX->setVisible(false);
-        ui->xBox->setVisible(false);
-    }
+    ui->xBox->setVisible(show);
+    ui->labelX->setVisible(show);
+    if (show)ui->xBox->setValue(1);
 }
 
-void MainWindow::on_comboBox_currentIndexChanged(int index)
-{
-    showB(false);
-    showN(false);
+void MainWindow::on_operations_currentIndexChanged(int index){
     ((index > -1) && (index < 6))
             ? showB(true)
             : showB(false);
@@ -147,9 +127,11 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
             ? showN(true)
             : showN(false);
 }
+
 void MainWindow::addNewLine(QString text){
     ui->history->appendPlainText(text);
 }
+
 void MainWindow::on_Calculate_clicked()
 {
     Polynom A(Field.getPrime(), qStrtoStd(ui->pA->text()),'x');
@@ -277,7 +259,7 @@ void MainWindow::on_Calculate_clicked()
         addNewLine(" ");
         break;}
     case 14:{/************************************************************************************************TODO**********/
-        long long n = ui->nBox->value();
+        //long long n = ui->nBox->value();
         addNewLine("Розклад A на незвідні множники (Берлекемпа)");
         //std::vector<Polynom> pols = A.berlekampAlgorithmMainCase();
         //for(auto& pol:pols){
@@ -306,3 +288,4 @@ void MainWindow::on_Calculate_clicked()
         break;
     }
 }
+
