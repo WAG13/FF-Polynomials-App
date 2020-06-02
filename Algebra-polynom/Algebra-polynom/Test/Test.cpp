@@ -282,6 +282,14 @@ TEST_CASE("Roots amount")
         });
         REQUIRE(polynomial.rootsNumber() == 4);
     }
+
+    SUBCASE("Fifth example") {
+        Polynom polynomial(5, {
+                {0,-2},{1,-1}, {2,1},{3,2},{4,-1},{5,1}
+        });
+        polynomial.show();
+        REQUIRE(polynomial.rootsNumber() == 2);
+    }
 }
 
 TEST_CASE("Polynom to the power of test") {

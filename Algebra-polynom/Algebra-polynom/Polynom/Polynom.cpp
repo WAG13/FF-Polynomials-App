@@ -490,14 +490,17 @@ bool operator==(Polynom const &p1, Polynom const &p2) {
 long long Polynom::rootsNumber() {
 	long long pow = prime - 1;
 	Matrix AMatrix(pow, pow, prime);
+    std::vector<long long> coeffs(pow, 0);
+    PolyTerm* term = getHead();
+    while (term) {
+        coeffs[term->pow % pow] += term->key;
+        term = term->next;
+    }
+    delete term;
 
 	for (long long i = 0, shift = 0; i < pow; i++, shift++) {
 		for (long long j = 0; j < pow; j++) {
-		    if ( (j + shift) % pow == 0) {
-                AMatrix.setElement(i, j, (getTermKey(0) + getTermKey(pow)) % (prime));
-		    } else {
-		        AMatrix.setElement(i, j, getTermKey((j + shift) % pow));
-		    }
+		    AMatrix.setElement(i, j, coeffs[(j + shift) % pow]);
 		}
 	}
 
