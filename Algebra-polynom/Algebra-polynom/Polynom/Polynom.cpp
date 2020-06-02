@@ -7,6 +7,7 @@
 #include "Polynom.h"
 #include "../utils.h"
 #include <list>
+#include <stack>
 
 using std::cout;
 using std::cin;
@@ -237,6 +238,156 @@ void Polynom::normalization() {
         node->key %= prime;
         node = node->next;
     }
+}
+
+//f(x)^pow
+Polynom Polynom::toThePower(long long pow) const {
+	Polynom ans;
+	ans = Polynom(prime, std::vector<long long>{ 1 });
+
+	Polynom cur = *this;
+
+	while (pow) {
+		if (pow & 1) {
+			ans = ans * cur;
+			--pow;
+		}
+		else {
+			cur = cur * cur;
+			pow >>= 1;
+		}
+	}
+
+	return ans;
+}
+
+//get instead of polynom f(x) - polynom f(x-b)
+Polynom Polynom::getWithOtherParameter(long long b) const {
+	if (b == 0) {
+		return *this;
+	}
+
+	Polynom temp;
+	temp = *this;
+
+	PolyTerm* node = temp.head;
+
+	if (!node) {
+		return Polynom();
+	}
+
+
+	Polynom ans(prime, {
+		{0,0}, {1,0}
+		});
+
+	do {
+		ans = ans + Polynom(prime, {
+			{0,-b}, {1,1}
+			}).toThePower(node->pow) * node->key;
+			node = node->next;
+	} while (node);
+
+	return ans;
+}
+
+/* #3 */
+std::vector<Polynom> Polynom::findRoots() {
+	long long rootsNumber = this->rootsNumber();
+
+	std::vector<Polynom> ans;
+
+	if (rootsNumber == 0) {
+		return std::vector<Polynom>();
+	}
+	else {
+		struct polynomsStruct {
+			Polynom current;
+			Polynom g;
+			long long b;
+
+			polynomsStruct(Polynom current, Polynom g, long long b) {
+				this->current = current;
+				this->g = g;
+				this->b = b;
+			}
+		};
+
+		std::stack<polynomsStruct> polynoms;
+
+		Polynom divider(prime, {
+			{1,-1},{prime, 1}
+			});
+
+		Polynom g = this->gcd(divider);
+		Polynom xp = Polynom(prime, {
+			{1,0}, {(prime - 1) / 2,1}
+			});
+
+		Polynom one = Polynom(prime, {
+			{0,1},{1,0}
+			});
+
+		polynoms.push(polynomsStruct(*this, g, 0));
+
+		while (!polynoms.empty()) {
+			polynomsStruct currentStruct = polynoms.top();
+			polynoms.pop();
+			Polynom current;
+			current = currentStruct.current;
+			if (current.getPolyPower() > 1) {
+				if (current.rootsNumber()) {
+					currentStruct.g = currentStruct.g.getWithOtherParameter(currentStruct.b);
+					currentStruct.g.normalization();
+
+					Polynom originalG;
+					originalG = currentStruct.g;
+
+					while (xp % currentStruct.g == one % currentStruct.g) {
+						++currentStruct.b;
+						currentStruct.g = originalG;
+						currentStruct.g = g.getWithOtherParameter(currentStruct.b);
+						currentStruct.g.normalization();
+					}
+
+					Polynom temp;
+					Polynom tempG;
+					temp = currentStruct.g.gcd(xp + one);
+					temp.normalization();
+					tempG = temp.getWithOtherParameter(-currentStruct.b);
+					tempG.normalization();
+
+					if (temp.getPolyPower() == 1) {
+						temp = temp.getWithOtherParameter(-currentStruct.b);
+					}
+
+					polynoms.push(polynomsStruct(temp, tempG, currentStruct.b + 1));
+					if (temp.getPolyPower() == 1) {
+						temp = currentStruct.g.getWithOtherParameter(-currentStruct.b) / temp;
+						temp.normalization();
+					}
+					else {
+						temp = currentStruct.g.gcd(xp - one);
+						temp.normalization();
+					}
+					tempG = temp.getWithOtherParameter(-currentStruct.b);
+					tempG.normalization();
+					if (!(temp == polynoms.top().current)) {
+						polynoms.push(polynomsStruct(temp, tempG, currentStruct.b + 1));
+					}
+				}
+			}
+			else {
+				if (current.getPolyPower() == 1) {
+					ans.push_back(Polynom(prime,
+						std::vector<long long>{-1LL * current.getTermKey(0)}
+					));
+				}
+			}
+		}
+	}
+
+	return ans;
 }
 
 /*6 operation for division*/
