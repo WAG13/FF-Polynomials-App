@@ -773,10 +773,7 @@ Matrix Polynom::buildBerlekampMatrix() const {
             else {
                 matrix.setElement(i, j, M[i].getTermKey(j)-1);
             }
-
-            cout << matrix.getElement(i,j);
         }
-        cout << endl;
     }
     return matrix;
 }

@@ -437,6 +437,19 @@ TEST_CASE("Roots of the polynomial") {
             REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
         }
     }
+
+    SUBCASE("Eights example") {
+        x = Polynom(5, 
+            { -2,-1,1,2,-1,1 });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
 }
 
 TEST_CASE("Cyclotomic polynomials")
