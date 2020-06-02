@@ -259,6 +259,153 @@ TEST_CASE("Roots amount")
     }
 }
 
+TEST_CASE("Polynom to the power of test") {
+    SUBCASE("number") {
+        Polynom x(10000, std::vector<long long>{ 2 });
+        x = x.toThePower(13);
+        REQUIRE(x.getTermKey(0) == 8192LL);
+    }
+
+    SUBCASE("(x-1)^3") {
+        Polynom x(5, std::vector<long long>{-1, 1});
+        x = x.toThePower(3);
+        REQUIRE(x == Polynom(5, std::vector<long long>{-1, 3, -3, 1}));
+    }
+
+    SUBCASE("Something harder") {
+        Polynom x(MAXLONGLONG, std::vector<long long>{5, -5, -6, 2, 6, 1});
+        x = x.toThePower(10);
+        REQUIRE(x.getTermKey(0) == 9765625LL);
+        REQUIRE(x.getTermKey(48) == 1640LL);
+        REQUIRE(x.getTermKey(49) == 60LL);
+        REQUIRE(x.getTermKey(50) == 1LL);
+    }
+}
+
+TEST_CASE("Get polynom with other x") {
+    SUBCASE("number") {
+        Polynom x(100, std::vector<long long>{5});
+        Polynom orig = x;
+        x = x.getWithOtherParameter(4);
+        REQUIRE(x == orig);
+    }
+
+    SUBCASE("x+5") {
+        Polynom x(100, std::vector<long long>{5, 1});
+        x = x.getWithOtherParameter(2);
+        Polynom tocheck(100, std::vector<long long>{3, 1});
+        REQUIRE(x == tocheck);
+    }
+
+    SUBCASE("x^4+x^3+4x^2+1") {
+        Polynom x(100, std::vector<long long>{1, 0, 4, 1, 1});
+        x = x.getWithOtherParameter(3);
+        Polynom tocheck(100, std::vector<long long>{91, 95, 49, 89, 1});
+    }
+}
+
+TEST_CASE("Roots of the polynomial") {
+    Polynom x;
+
+    SUBCASE("First example") {
+        x = Polynom(17, {
+            {0,-2},{1,-1},{2,4},{3,-7},{4,3},{5,-7},{6,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Second example") {
+        x = Polynom(17, {
+            {0,4},{1,2},{2,4},{3,-7},{4,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Third example") {
+        x = Polynom(19, {
+        {0,-8},{1,-8},{2,-6},{3,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Fourth example") {
+        x = Polynom(19, {
+        {0,-8},{1,-6},{2,4},{3,-3},{4,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Fifth example") {
+        x = Polynom(17, {
+        {0,5},{2,-6},{3,2},{4,3},{5,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Sixth example") {
+        x = Polynom(11, {
+       {0,5},{1,3}, {2,-5},{3,3},{4,-4},{6,-2},{7,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Seventh example") {
+        x = Polynom(19,
+            { -7,6,8,1 }
+        );
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+}
+
 TEST_CASE("Cyclotomic polynomials")
 {
     SUBCASE("n=1")
