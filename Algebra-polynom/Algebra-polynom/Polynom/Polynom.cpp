@@ -506,7 +506,11 @@ long long Polynom::rootsNumber() {
 	}
 
     long long matrixRank = AMatrix.rank().first;
-    return (pow - matrixRank);
+	if (valueAtPoint(0) == 0) {
+	    return (pow - matrixRank + 1);
+	} else {
+        return (pow - matrixRank);
+	}
 }
 
 Polynom Polynom::gcd(Polynom p2) {
