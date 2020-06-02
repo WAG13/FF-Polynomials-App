@@ -46,9 +46,27 @@ public:
 		return (left * right) % irreducible;
 	}
 
-	Polynom getInverse(Polynom const& polynom) const {
-		//Yasia&Natasha
-	}
+    Polynom extendedEuclidianAlgorithm(Polynom a, Polynom b, Polynom & x, Polynom & y)const {
+        long long prime=a.getPrime();
+
+        if (a == Polynom(prime,std::vector<long long>{0}))
+        {
+            x = Polynom(prime,std::vector<long long>{0});
+            y = Polynom(prime,std::vector<long long>{1});
+            return b;
+        }
+        Polynom x1, y1;
+        Polynom d = extendedEuclidianAlgorithm(b%a, a, x1, y1);
+        x = y1 - (b / a) * x1;
+        y = x1;
+        return d;
+    }
+
+    Polynom getInverse(Polynom const& polynom) const {
+        Polynom x, y;
+        extendedEuclidianAlgorithm(polynom, irreducible, x, y);
+        return x;
+    }
 
 	Polynom divide(Polynom const& left, Polynom const& right) const {
 		if (left.getPrime() != right.getPrime() || 
