@@ -23,10 +23,19 @@ public:
 
     void setElement(long long row, long long column, long long key);
 
+    Matrix transpose() const;
+
     std::pair<long long, Matrix> rank();
+
+    /**
+     * @brief Building a solution space basis of a system of linear equations with coefficients from the matrix
+     */
+    std::vector<std::vector<long long>> buildSolutionSpaceBasis();
 private:
     /**
      * @brief Swapping two rows from 0 column to param column
      */
-    void swapRows(long long firstRow, long long secondRow, long long column);
+    void swapRows(long long firstRow, long long secondRow, long long columnStart, long long columnEnd);
+
+    std::vector<long long> findNonConvertedColumns(long long kernel_dimension) const;
 };

@@ -3,14 +3,29 @@
 class GaloisField {
 private:
 	Polynom irreducible;
-
+	long long prime;
+	long long degree;
 public:
-	GaloisField(long long prime, long long degree) {
+	
+	GaloisField() :prime(2), degree(2) {
+		irreducible = Polynom::findIrreduciblePolynomial(2, 2);
+	}
+	
+	GaloisField(long long prime, long long degree) :prime(prime), degree(degree){
 		irreducible = Polynom::findIrreduciblePolynomial(prime, degree);
 	}
 
 	Polynom getIrreducible() const {
 		return irreducible;
+	}
+
+	std::vector<Polynom> getAllIrreducible() const {
+		return Polynom::allIrreduciblePolynomials(prime, degree);
+	}
+
+	void setIrreducible(int index) {
+		std::vector<Polynom> temp = getAllIrreducible();
+		irreducible = temp[index % temp.size()];
 	}
 
 	Polynom add(Polynom const& left, Polynom const& right) const {

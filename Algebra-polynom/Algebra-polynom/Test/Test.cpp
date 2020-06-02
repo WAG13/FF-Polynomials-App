@@ -13,6 +13,8 @@ TEST_CASE("Polynomial")
         REQUIRE(polynomial1.show() == "1 + 2*x^2");
         Polynom polynomial(3, {1, 2});
         REQUIRE(polynomial.show() == "1 + 2*x");
+        Polynom polynomial2(3, "1 + 2*x", 'x');
+        REQUIRE(polynomial2.show() == "1 + 2*x");
     }
     SUBCASE("Creating empty polynom")
     {
@@ -38,7 +40,7 @@ TEST_CASE("Polynomial")
         Polynom poly3(3, {1, 1, 1});
         REQUIRE(poly3.getPolyPower() == 2);
     }
-    SUBCASE("Adding polynoms")
+    SUBCASE("Adding polynoms in Z[3]")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2 = poly1 + poly1;
@@ -46,7 +48,7 @@ TEST_CASE("Polynomial")
         REQUIRE(poly2.show() == "2 + 1*x");
         REQUIRE((poly1 + poly2).show() == "0");
     }
-    SUBCASE("Substract polynoms")
+    SUBCASE("Substract polynoms in Z[3]")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2(3, {2, 2});
@@ -97,7 +99,7 @@ TEST_CASE("Polynomial")
 
 		REQUIRE(res.getTermKey(0) == 4);
 		REQUIRE(res.getTermKey(1) == 0);
-		REQUIRE(res.getTermKey(2) == 7);
+		REQUIRE(res.getTermKey(2) == 2);
 		REQUIRE(res.getPolyPower() == 2);
     }
 }
@@ -257,6 +259,153 @@ TEST_CASE("Roots amount")
     }
 }
 
+TEST_CASE("Polynom to the power of test") {
+    SUBCASE("number") {
+        Polynom x(10000, std::vector<long long>{ 2 });
+        x = x.toThePower(13);
+        REQUIRE(x.getTermKey(0) == 8192LL);
+    }
+
+    SUBCASE("(x-1)^3") {
+        Polynom x(5, std::vector<long long>{-1, 1});
+        x = x.toThePower(3);
+        REQUIRE(x == Polynom(5, std::vector<long long>{-1, 3, -3, 1}));
+    }
+
+    SUBCASE("Something harder") {
+        Polynom x(MAXLONGLONG, std::vector<long long>{5, -5, -6, 2, 6, 1});
+        x = x.toThePower(10);
+        REQUIRE(x.getTermKey(0) == 9765625LL);
+        REQUIRE(x.getTermKey(48) == 1640LL);
+        REQUIRE(x.getTermKey(49) == 60LL);
+        REQUIRE(x.getTermKey(50) == 1LL);
+    }
+}
+
+TEST_CASE("Get polynom with other x") {
+    SUBCASE("number") {
+        Polynom x(100, std::vector<long long>{5});
+        Polynom orig = x;
+        x = x.getWithOtherParameter(4);
+        REQUIRE(x == orig);
+    }
+
+    SUBCASE("x+5") {
+        Polynom x(100, std::vector<long long>{5, 1});
+        x = x.getWithOtherParameter(2);
+        Polynom tocheck(100, std::vector<long long>{3, 1});
+        REQUIRE(x == tocheck);
+    }
+
+    SUBCASE("x^4+x^3+4x^2+1") {
+        Polynom x(100, std::vector<long long>{1, 0, 4, 1, 1});
+        x = x.getWithOtherParameter(3);
+        Polynom tocheck(100, std::vector<long long>{91, 95, 49, 89, 1});
+    }
+}
+
+TEST_CASE("Roots of the polynomial") {
+    Polynom x;
+
+    SUBCASE("First example") {
+        x = Polynom(17, {
+            {0,-2},{1,-1},{2,4},{3,-7},{4,3},{5,-7},{6,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Second example") {
+        x = Polynom(17, {
+            {0,4},{1,2},{2,4},{3,-7},{4,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Third example") {
+        x = Polynom(19, {
+        {0,-8},{1,-8},{2,-6},{3,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Fourth example") {
+        x = Polynom(19, {
+        {0,-8},{1,-6},{2,4},{3,-3},{4,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Fifth example") {
+        x = Polynom(17, {
+        {0,5},{2,-6},{3,2},{4,3},{5,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Sixth example") {
+        x = Polynom(11, {
+       {0,5},{1,3}, {2,-5},{3,3},{4,-4},{6,-2},{7,1}
+            });
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+
+    SUBCASE("Seventh example") {
+        x = Polynom(19,
+            { -7,6,8,1 }
+        );
+
+        std::vector<Polynom> ans = x.findRoots();
+
+        REQUIRE(ans.size() == x.rootsNumber());
+
+        for (int i = 0, size = ans.size(); i < size; ++i) {
+            REQUIRE(x.valueAtPoint(ans[i].getTermKey(0)) == 0);
+        }
+    }
+}
+
 TEST_CASE("Cyclotomic polynomials")
 {
     SUBCASE("n=1")
@@ -399,7 +548,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 
 TEST_CASE("Finding all irreducible polynomials of degree n")
 {
-    SUBCASE("prime = 2, n = 2")
+            SUBCASE("prime = 2, n = 2")
     {
         int prime = 2;
         int n = 2;
@@ -408,9 +557,9 @@ TEST_CASE("Finding all irreducible polynomials of degree n")
         std::vector<Polynom> required;
         required.push_back(Polynom(prime, { 1, 1, 1 }));
 
-        REQUIRE(result == required);
+                REQUIRE(result == required);
     }
-    SUBCASE("prime = 2, n = 3")
+            SUBCASE("prime = 2, n = 3")
     {
         int prime = 2;
         int n = 3;
@@ -420,9 +569,9 @@ TEST_CASE("Finding all irreducible polynomials of degree n")
         required.push_back(Polynom(prime, { 1, 1, 0, 1 }));
         required.push_back(Polynom(prime, { 1, 0, 1, 1 }));
 
-        REQUIRE(result == required);
+                REQUIRE(result == required);
     }
-    SUBCASE("prime = 3, n = 3")
+            SUBCASE("prime = 3, n = 3")
     {
         int prime = 3;
         int n = 3;
@@ -438,9 +587,50 @@ TEST_CASE("Finding all irreducible polynomials of degree n")
         required.push_back(Polynom(prime, { 1, 1, 2, 1 }));
         required.push_back(Polynom(prime, { 1, 0, 2, 1 }));
 
-        REQUIRE(result == required);
+                REQUIRE(result == required);
     }
 }
+
+TEST_CASE("Check if the polynomial is irreducible")
+{
+    SUBCASE("prime = 2, n = 2")
+    {
+        Polynom pol1(2, { 1, 1, 1 });
+
+            REQUIRE(pol1.isIrreducible() == 1);
+    }
+
+    SUBCASE("prime = 2, n = 3")
+    {
+        Polynom pol1(2, { 1, 1, 0, 1 });
+            REQUIRE(pol1.isIrreducible() == 1);
+
+        Polynom pol2(2, { 1, 0, 1, 1 });
+            REQUIRE(pol2.isIrreducible() == 1);
+
+    }
+
+    SUBCASE("prime = 3, n = 3")
+    {
+        Polynom pol1(3, { 2, 2, 0, 1 });
+                REQUIRE(pol1.isIrreducible() == 1);
+        Polynom pol2(3, { 2, 2, 2, 1 });
+                REQUIRE(pol2.isIrreducible() == 1);
+        Polynom pol3(3, { 2, 1, 1, 1 });
+                REQUIRE(pol3.isIrreducible() == 1);
+        Polynom pol4(3, { 2, 0, 1, 1 });
+                REQUIRE(pol4.isIrreducible() == 1);
+        Polynom pol5(3, { 1, 2, 0, 1 });
+                REQUIRE(pol5.isIrreducible() == 1);
+        Polynom pol6(3, { 1, 2, 1, 1 });
+                REQUIRE(pol6.isIrreducible() == 1);
+        Polynom pol7(3, { 1, 1, 2, 1 });
+                REQUIRE(pol7.isIrreducible() == 1);
+        Polynom pol8(3, { 1, 0, 2, 1 });
+                REQUIRE(pol8.isIrreducible() == 1);
+    }
+}
+
 
 TEST_CASE("Testing polynomial field [3^2]")
 {
@@ -448,6 +638,10 @@ TEST_CASE("Testing polynomial field [3^2]")
     Polynom a(3, { 1, 2 });
     Polynom b(3, { 1, 1 });
 
+    SUBCASE("Irreducible")
+    {
+        REQUIRE(field.getIrreducible().show() == "1 + 1*x^2");
+    }
     SUBCASE("Addition")
     {
         REQUIRE(field.add(a, b).show() == "2");
@@ -468,17 +662,22 @@ TEST_CASE("Testing polynomial field [3^2]")
     }
 }
 
-TEST_CASE("Testing polynomial field [5^3]") 
+TEST_CASE("Testing polynomial field [5^3]")
 {
     GaloisField field(5, 3);
     Polynom a(5, { 2, 3, 1, 4, 0, 1 });
     Polynom b(5, { 4, 0, 3, 4, 2, 0, 2 });
 
+
+    SUBCASE("Irreducible")
+    {
+        REQUIRE(field.getIrreducible().show() == "4 + 3*x^2 + 1*x^3");
+    }
     SUBCASE("Addition")
     {
         REQUIRE(field.add(a, b).show() == "2*x^2");
     }
-    SUBCASE("Subtraction") 
+    SUBCASE("Subtraction")
     {
         REQUIRE(field.subtract(a, b).show() == "4*x^2");
         REQUIRE(field.subtract(b, a).show() == "1*x^2");
@@ -490,5 +689,19 @@ TEST_CASE("Testing polynomial field [5^3]")
     SUBCASE("Derivative")
     {
         REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
+    }
+}
+TEST_CASE("Testing berlecamp")
+{
+    std::vector<std::vector<long long>> polyVector = {{0,1}, {3,1}, {4,1}, {6,1}, {8,1}};
+    Polynom polynom(2, polyVector);
+
+    Matrix matrix = polynom.buildBerlekampMatrix();
+
+    SUBCASE("Building berlekamp matrix")
+    {
+        REQUIRE(matrix.getElement(0,0) == 0);
+        REQUIRE(matrix.getElement(1,1) == 1);
+        REQUIRE(matrix.getElement(1,2) == 1);
     }
 }

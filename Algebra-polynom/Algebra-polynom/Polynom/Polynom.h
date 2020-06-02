@@ -49,6 +49,7 @@ public:
     Polynom();
     Polynom(long long _prime, std::vector<long long> keys);              //for all terms
     Polynom(long long _prime, std::vector<std::vector<long long>> keys); //for some terms
+    Polynom(long long _prime, std::string polynom, char X);
     Polynom(const Polynom &other)
     { // copy constructor
         this->prime = other.prime;
@@ -168,8 +169,14 @@ public:
     Polynom derivative() const;
     long long valueAtPoint(long long x) const;
     void normalization();
+
     /** #3      @author Karina Masol & Yuriy Momotenko     **/
-    //...
+    //Finding roots of the polynomial
+    std::vector<Polynom> findRoots();
+    //bringing polynomial to the power
+    Polynom toThePower(long long pow) const;
+    //get instead of polynom f(x) - polynom f(x-b)
+    Polynom getWithOtherParameter(long long b) const;
 
     /** #4      @author Yana Skyrda    **/
     /*! #4
@@ -223,6 +230,21 @@ public:
      */
     static Polynom findIrreduciblePolynomial(long long prime, long long n);
 
+    /*! #13
+     * @author Totskyi Alexander
+     * @brief Checks if the polynomial is irreducible
+     * @return 1 - if irreducible, 0 - reducible
+     */
+    bool isIrreducible();
+
+    /*! @author Medynskyi Mykola
+  * @brief Finds berlekamp matrix
+  * @return berlekamp matrix
+  *
+  */
+
+    Matrix buildBerlekampMatrix() const;
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field
@@ -253,4 +275,8 @@ protected:
 	* @brief Division
 	*/
     std::pair<Polynom, Polynom> simple_division(Polynom const &p1, Polynom const &p2) const;
+
+    std::vector<Polynom> getComparisonSystemSolutionBasis() const;
+
+    void berlekampAlgorithmMainCase() const;
 };
