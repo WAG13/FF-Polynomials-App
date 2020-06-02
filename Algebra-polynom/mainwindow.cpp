@@ -117,13 +117,13 @@ void MainWindow::showX(bool show){
 }
 
 void MainWindow::on_operations_currentIndexChanged(int index){
-    ((index > -1) && (index < 6))
+    ((index > -1) && (index < 7))
             ? showB(true)
             : showB(false);
-    (index == 8)
+    (index == 9)
             ? showX(true)
             : showX(false);
-    ((index == 12) || (index == 13) || (index == 15))
+    ((index == 13) || (index == 14) || (index == 16))
             ? showN(true)
             : showN(false);
 }
@@ -180,10 +180,21 @@ void MainWindow::on_Calculate_clicked()
         addNewLine("/");
         addNewLine("("+polToQStr(B)+")");
         addNewLine("===============================");
-        addNewLine(polToQStr(A/B));
+        addNewLine(polToQStr(Field.divide(A,B)));
         addNewLine(" ");
         break;}
     case 4:{
+        Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
+        if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
+        ui->pB->setText(polToQStr(B));
+        addNewLine("("+polToQStr(A)+")");
+        addNewLine("/");
+        addNewLine("("+polToQStr(B)+")");
+        addNewLine("===============================");
+        addNewLine(polToQStr(A/B));
+        addNewLine(" ");
+        break;}
+    case 5:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
@@ -194,43 +205,43 @@ void MainWindow::on_Calculate_clicked()
         addNewLine(polToQStr(A%B));
         addNewLine(" ");
         break;}
-    case 5:{
+    case 6:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
         addNewLine("НСД("+polToQStr(A)+",");
-        addNewLine("   "+polToQStr(B)+")");
+        addNewLine("         "+polToQStr(B)+")");
         addNewLine("===============================");
         addNewLine(polToQStr(A.gcd(B)));
         addNewLine(" ");
         break;}
-    case 6:{
+    case 7:{
         addNewLine("("+polToQStr(A)+")^(-1)");
         addNewLine("===============================");
         addNewLine(polToQStr(Field.getInverse(A)));
         addNewLine(" ");
         break;}
-    case 7:{
+    case 8:{
         addNewLine("("+polToQStr(A)+")'");
         addNewLine("===============================");
         addNewLine(polToQStr(Field.derivative(A)));
         addNewLine(" ");
         break;}
-    case 8:{
+    case 9:{
         long long x = ui->xBox->value();
         addNewLine("A(x), x = "+QString::number(x));
         addNewLine("===============================");
         addNewLine(QString::number(A.valueAtPoint(x)));
         addNewLine(" ");
         break;}
-    case 9:{
+    case 10:{
         addNewLine("Нормування A");
         A.normalization();
         ui->pA->setText(polToQStr(A));
         addNewLine(polToQStr(A));
         addNewLine(" ");
         break;}
-    case 10:{
+    case 11:{
         addNewLine("Корені A");
         std::vector<Polynom> roots = A.findRoots();
         for(auto& root:roots){
@@ -238,17 +249,17 @@ void MainWindow::on_Calculate_clicked()
         }
         addNewLine(" ");
         break;}
-    case 11:{
+    case 12:{
         addNewLine("Кількість коренів A = "+QString::number(A.rootsNumber()));
         addNewLine(" ");
         break;}
-    case 12:{
+    case 13:{
         long long n = ui->nBox->value();
         addNewLine("Круговий многочлен порядку "+QString::number(n));
         addNewLine(polToQStr(A.CyclotomicPolynomial(Field.getPrime(),n)));
         addNewLine(" ");
         break;}
-    case 13:{
+    case 14:{
         long long n = ui->nBox->value();
         addNewLine("Розклад кругового многочлена на незвідні множники (Ri)");
         std::vector<Polynom> pols = A.factorizeCyclotomicRi(n);
@@ -257,12 +268,12 @@ void MainWindow::on_Calculate_clicked()
         }
         addNewLine(" ");
         break;}
-    case 14:{
+    case 15:{
         addNewLine("Розклад A на незвідні множники (Берлекемпа)");
         addNewLine(toQStr(A.berlekampAlgorithm()));
         addNewLine(" ");
         break;}
-    case 15:{
+    case 16:{
         long long n = ui->nBox->value();
         addNewLine("Всі незвідні многочлени порядку "+QString::number(n));
         std::vector<Polynom> pols = A.allIrreduciblePolynomials(Field.getPrime(),n);
@@ -271,11 +282,11 @@ void MainWindow::on_Calculate_clicked()
         }
         addNewLine(" ");
         break;}
-    case 16:{
+    case 17:{
         (A.isIrreducible()) ? addNewLine("A незвідний") : addNewLine("A не незвідний");
         addNewLine(" ");
         break;}
-    case 17:{ /**************************************************************************************************TODO**********/
+    case 18:{ /**************************************************************************************************TODO**********/
         addNewLine("Порядок A = "+QString::number(0));
         addNewLine(" ");
         break;}
