@@ -4,6 +4,7 @@
 #include "../Polynom/Polynom.h"
 #include "../Polynom/GaloisField.h"
 #include <vector>
+#include "utils.h"
 
 TEST_CASE("Polynomial")
 {
@@ -191,6 +192,10 @@ TEST_CASE("Derivation")
         Polynom polynom(93, {1, 3, 7, 8, 2, 5, 0, 0, 7});
         REQUIRE(polynom.derivative().show() == "3 + 14*x + 24*x^2 + 8*x^3 + 25*x^4 + 56*x^7");
     }
+    SUBCASE("Fourth example") {
+        Polynom polynom(113, {5, 98, 23, 112, 1});
+        REQUIRE(polynom.derivative().show() == "98 + 46*x + 110*x^2 + 4*x^3");
+    }
 }
 
 TEST_CASE("Normalization")
@@ -201,17 +206,27 @@ TEST_CASE("Normalization")
         polynom.normalization();
         REQUIRE(polynom.getTermKey(5) == 1);
     }
-    SUBCASE("First example")
+    SUBCASE("Second example")
     {
         Polynom polynom(97, {4, 5, 1, 3, 0, 9, 8, 6, 2, 0, 0, 0, 1, 15, 96});
         polynom.normalization();
         REQUIRE(polynom.getTermKey(14) == 1);
     }
-    SUBCASE("First example")
+    SUBCASE("Third example")
     {
         Polynom polynom(71, {4, 5, 1, 3, 0, 9, 72});
         polynom.normalization();
         REQUIRE(polynom.getTermKey(6) == 1);
+    }
+    SUBCASE("Fourth example") {
+        Polynom polynom(LLONG_MAX, {4, 2, 12321, 43452, 43928524, 1});
+        polynom.normalization();
+        REQUIRE(polynom.getTermKey(5) == 1);
+    }
+    SUBCASE("Fivth example") {
+        Polynom polynom(INT_MAX, {4, 2, 12321, 43452, 51965, 4});
+        polynom.normalization();
+                REQUIRE(polynom.getTermKey(5) == 1);
     }
 }
 
@@ -224,10 +239,20 @@ TEST_CASE("Definition valua at a point")
         REQUIRE(polynom.valueAtPoint(-1) == 3);
         REQUIRE(polynom.valueAtPoint(0) == 1);
     }
-    SUBCASE("First example")
+    SUBCASE("Second example")
     {
         Polynom polynom(97, {15, 2, 3, 4, 5, 87, 61, 8});
         REQUIRE(polynom.valueAtPoint(3) == 53);
+    }
+            SUBCASE("Third example")
+    {
+        Polynom polynom(2, {1, 0, 1, 1, 0, 0, 0, 1});
+                REQUIRE(polynom.valueAtPoint(3) == 0);
+    }
+            SUBCASE("Fourth example")
+    {
+        Polynom polynom(INT_MAX, {15, 2, 61, INT_MAX});
+                REQUIRE(polynom.valueAtPoint(3) == ((long long) 15 + 6 + 61*3*3 + (long long)INT_MAX*3*3*3)%INT_MAX);
     }
 }
 
@@ -273,7 +298,7 @@ TEST_CASE("Polynom to the power of test") {
     }
 
     SUBCASE("Something harder") {
-        Polynom x(MAXLONGLONG, std::vector<long long>{5, -5, -6, 2, 6, 1});
+        Polynom x(LLONG_MAX, std::vector<long long>{5, -5, -6, 2, 6, 1});
         x = x.toThePower(10);
         REQUIRE(x.getTermKey(0) == 9765625LL);
         REQUIRE(x.getTermKey(48) == 1640LL);

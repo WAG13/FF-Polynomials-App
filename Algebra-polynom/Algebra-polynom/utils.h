@@ -11,7 +11,7 @@ namespace utils {
 	std::vector<std::vector<long long>> coefStr(const std::string str, char X = 'x');
 	
 	/* 2 Euclidean algorithm */
-	std::vector<long long> euclideanAlgorithm(long long a, long long b, int prime);
+	std::vector<long long> euclideanAlgorithm(long long a, long long b, long long prime);
 
 	/*! #9
 	* @brief Function to check if n is prime or not
