@@ -522,7 +522,7 @@ margin-left:10px;</string>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>280</height>
+            <height>300</height>
            </size>
           </property>
           <property name="title">
@@ -636,6 +636,13 @@ margin-left:10px;</string>
                  <string>Порядок А</string>
                 </property>
                </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="modIrr">
+               <property name="text">
+                <string>многочлен в полі F(p^n)</string>
+               </property>
               </widget>
              </item>
              <item alignment="Qt::AlignTop">

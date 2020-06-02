@@ -135,13 +135,13 @@ void MainWindow::addNewLine(QString text){
 void MainWindow::on_Calculate_clicked()
 {
     Polynom A(Field.getPrime(), qStrtoStd(ui->pA->text()),'x');
-    A = A%Field.getIrreducible();
+    if (ui->modIrr->isChecked()) A = A%Field.getIrreducible();
     ui->pA->setText(polToQStr(A));
 
     switch (ui->operations->currentIndex()) {
     case 0:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
-        B = B%Field.getIrreducible();
+        if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
         addNewLine("("+polToQStr(A)+")");
         addNewLine("+");
@@ -152,7 +152,7 @@ void MainWindow::on_Calculate_clicked()
         break;}
     case 1:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
-        B = B%Field.getIrreducible();
+        if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
         addNewLine("("+polToQStr(A)+")");
         addNewLine("-");
@@ -163,7 +163,7 @@ void MainWindow::on_Calculate_clicked()
         break;}
     case 2:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
-        B = B%Field.getIrreducible();
+        if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
         addNewLine("("+polToQStr(A)+")");
         addNewLine("*");
@@ -174,29 +174,29 @@ void MainWindow::on_Calculate_clicked()
         break;}
     case 3:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
-        B = B%Field.getIrreducible();
+        if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
         addNewLine("("+polToQStr(A)+")");
         addNewLine("/");
         addNewLine("("+polToQStr(B)+")");
         addNewLine("===============================");
-        addNewLine(polToQStr(Field.divide(A,B)));
+        addNewLine(polToQStr(A/B));
         addNewLine(" ");
         break;}
     case 4:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
-        B = B%Field.getIrreducible();
+        if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
         addNewLine("("+polToQStr(A)+")");
         addNewLine("%");
         addNewLine("("+polToQStr(B)+")");
         addNewLine("===============================");
-        addNewLine(polToQStr(Field.mod(A,B)));
+        addNewLine(polToQStr(A%B));
         addNewLine(" ");
         break;}
     case 5:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
-        B = B%Field.getIrreducible();
+        if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
         addNewLine("НСД("+polToQStr(A)+",");
         addNewLine("   "+polToQStr(B)+")");
@@ -224,7 +224,6 @@ void MainWindow::on_Calculate_clicked()
         addNewLine(" ");
         break;}
     case 9:{
-        long long x = ui->xBox->value();
         addNewLine("Нормування A");
         A.normalization();
         ui->pA->setText(polToQStr(A));
