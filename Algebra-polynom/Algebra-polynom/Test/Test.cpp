@@ -750,6 +750,10 @@ TEST_CASE("Testing Berlekamp factorization algorithm")
         REQUIRE(matrix.getElement(1,1) == 1);
         REQUIRE(matrix.getElement(1,2) == 1);
     }
+
+    SUBCASE("Testing Berlekamp factorization") {
+        REQUIRE(polynom.berlekampAlgorithm() == "(1 + 1*x + 1*x^4 + 1*x^5 + 1*x^6) * (1 + 1*x + 1*x^2)");
+    }
 }
 
 TEST_CASE("Inverse polynom") {
