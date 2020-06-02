@@ -39,3 +39,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     ../build-AlgebraPolynom-Desktop_Qt_5_14_1_MinGW_64_bit-Debug/AlgebraPolynom.exe
+
+RESOURCES += \
+    icon.qrc
