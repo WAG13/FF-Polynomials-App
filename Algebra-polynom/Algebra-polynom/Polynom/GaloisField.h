@@ -79,6 +79,12 @@ public:
 		return (left * getInverse(right)) % irreducible;
 	}
 
+	Polynom mod(Polynom const& left, Polynom const& right) const {
+		if (left.getPrime() != right.getPrime() ||
+			left.getPrime() != irreducible.getPrime()) return Polynom();
+		return (left % right) % irreducible;
+	}
+
 	Polynom derivative(Polynom const& polynom) const {
 		return polynom.derivative() % irreducible;
 	}

@@ -40,8 +40,7 @@ private:
     bool fieldCreated = false;
     bool canCerateField = true;
     void addIrrPolList();
-    void cleanerTab1();
-    void cleanerTab2();
+    void cleanerTab();
     void addNewLine(QString text);
     void showB(bool show);
     void showN(bool show);
