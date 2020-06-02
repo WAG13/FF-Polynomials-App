@@ -40,7 +40,7 @@ namespace utils {
 				}
 				else
 				{
-					std::stringstream(unit.substr(pos + 1)) >> n;
+					std::stringstream(unit.substr(pos + 2)) >> n;
 				}
 			}
 

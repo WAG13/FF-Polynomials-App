@@ -14,7 +14,8 @@ public:
 	GaloisField(long long prime, long long degree) :prime(prime), degree(degree){
 		irreducible = Polynom::findIrreduciblePolynomial(prime, degree);
 	}
-
+	long long getPrime() const { return prime; }
+	long long getDegree() const { return degree; }
 	Polynom getIrreducible() const {
 		return irreducible;
 	}
@@ -26,6 +27,10 @@ public:
 	void setIrreducible(int n, int index) {
 		std::vector<Polynom> temp = getNIrreducible(n);
 		irreducible = temp[index % n];
+	}
+
+	void setIrreducible(Polynom p) {
+		irreducible = p;
 	}
 
 	Polynom add(Polynom const& left, Polynom const& right) const {

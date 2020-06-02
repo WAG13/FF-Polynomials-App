@@ -23,19 +23,28 @@ public:
 private slots:
 
     void on_makeFieldButton_clicked();
-
-    void on_primeBox_valueChanged(int arg1);
-
-    void on_powerBox_valueChanged(int arg1);
-
+    void on_primeBox_valueChanged();
+    void on_powerBox_valueChanged();
     void on_allirrPol_clicked();
+
+    void on_listIP_currentRowChanged(int currentRow);
+
+    void on_comboBox_currentIndexChanged(int index);
+
+    void on_Calculate_clicked();
 
 private:
     Ui::MainWindow *ui;
     GaloisField Field;
+    std::vector<Polynom> IP;
     bool fieldCreated = false;
     bool canCerateField = true;
     void addIrrPolList();
-
+    void cleanerTab1();
+    void cleanerTab2();
+    void addNewLine(QString text);
+    void showB(bool show);
+    void showN(bool show);
+    void showX(bool show);
 };
 #endif // MAINWINDOW_H

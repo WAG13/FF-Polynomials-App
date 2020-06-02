@@ -220,6 +220,7 @@ Polynom Polynom::derivative() const {
 long long Polynom::valueAtPoint(long long x) const {
     long long answer{0};
     x %= this->prime;
+    if (x < 0) x += this->prime;
     auto node = this->head;
     while (node) {
         long long addition{node->key};
