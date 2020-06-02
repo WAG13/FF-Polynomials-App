@@ -634,7 +634,7 @@ bool Polynom::isIrreducible(){
     return true;
 }
 /* build berlekamp matrix */
-Matrix Polynom::buildBerlekampMatrix() {
+Matrix Polynom::buildBerlekampMatrix() const {
     std::vector<Polynom> M;
     Polynom one(prime, std::vector<long long>{1});
     M.push_back(one);
@@ -658,4 +658,24 @@ Matrix Polynom::buildBerlekampMatrix() {
         }
     }
     return matrix;
+}
+
+std::vector<Polynom> Polynom::getComparisonSystemSolutionBasis() const {
+    Matrix matrix = buildBerlekampMatrix();
+    auto basis = matrix.buildSolutionSpaceBasis();
+    std::vector<Polynom> polynomial_basis;
+    for (size_t i = 0; i < basis.size(); i++) {
+        polynomial_basis.push_back(Polynom{ prime, basis[i] });
+    }
+    return polynomial_basis;
+}
+
+void Polynom::berlekampAlgorithmMainCase() const {
+    auto polynomial_basis = getComparisonSystemSolutionBasis();
+    if (polynomial_basis.size() == 1) {
+        //irreducible
+    }
+    else {
+        //body
+    }
 }
