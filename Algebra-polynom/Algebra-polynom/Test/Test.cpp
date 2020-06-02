@@ -289,6 +289,11 @@ TEST_CASE("Roots amount")
         });
         REQUIRE(polynomial.rootsNumber() == 2);
     }
+
+    SUBCASE("Sixth example") {
+        Polynom polynomial(3, {0,1,1});
+        REQUIRE(polynomial.rootsNumber() == 2);
+    }
 }
 
 TEST_CASE("Polynom to the power of test") {
