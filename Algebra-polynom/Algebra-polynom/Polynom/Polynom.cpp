@@ -847,7 +847,7 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasi
     std::vector<std::pair<std::vector<Polynom>, long long>> result;
 
     for (size_t i = 0; i < unmultiple_factors.size(); i++) {
-        result.push_back({ std::vector{ unmultiple_factors[i].first }, unmultiple_factors[i].second });
+        result.push_back({ std::vector<Polynom>{ unmultiple_factors[i].first }, unmultiple_factors[i].second });
     }
 
     size_t basis_element_index = 1;
