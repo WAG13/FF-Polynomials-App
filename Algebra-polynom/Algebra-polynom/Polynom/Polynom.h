@@ -207,8 +207,9 @@ public:
     /*! #10
      * @author Hryshchenko Yurii
      * @brief Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials
+     * @param amount If maxCount > 0, finds "maxCount" factors at most, otherwise finds all factors.
      */
-    std::vector<Polynom> factorizeCyclotomicRi(size_t n);
+    std::vector<Polynom> factorizeCyclotomicRi(size_t n, size_t maxCount = 0);
 
     /*! #12
      * @author Vladyslav Prokopchuk
