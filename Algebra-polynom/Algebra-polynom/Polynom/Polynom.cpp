@@ -513,21 +513,36 @@ long long Polynom::rootsNumber() {
 	}
 }
 
-Polynom Polynom::gcd(Polynom p2) {
-    Polynom p1(*this);
-    while (p1.getHead() != nullptr && p2.getHead() != nullptr) {
-        if (p1.getPolyPower() > p2.getPolyPower()) {
-            p1 = p1 % p2;
-        } else {
-            p2 = p2 % p1;
-        }
+Polynom Polynom::gcd(const Polynom& other) {
+    Polynom* p1;
+    Polynom* p2;
+    if (other.getPolyPower() >= this->getPolyPower()) {
+        p1 = new Polynom(other);
+	p2 = new Polynom(*this);
+    } else {
+        p1 = new Polynom(*this);
+	p2 = new Polynom(other);
+    }
+    //std::cout << "p1: " << p1->show() << std::endl;
+    //std::cout << "p2: " << p2->show() << std::endl;
+
+    while (p2->getHead() != nullptr) {
+        Polynom* temp = p2;
+	p2 = new Polynom(*p1 % *p2);
+	delete p1;
+	p1 = temp;
+
+    	//std::cout << "p1: " << p1->show() << std::endl;
+    	//std::cout << "p2: " << p2->show() << std::endl;
     }
 
-    if (p1.getHead() == nullptr) {
-        return p2;
-    }
+    Polynom result;
+    result = *p1;    
 
-    return p1;
+    delete p1;
+    delete p2;
+
+    return result;
 }
 
 /*9 This method calculates nth Cyclotomic polynomial*/
