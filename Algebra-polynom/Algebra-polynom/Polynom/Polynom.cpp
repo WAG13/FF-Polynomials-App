@@ -586,7 +586,6 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
         }
     }
     else {
-        int mob;
         if (utils::isPrime(n))
             return Polynom(prime, std::vector<long long>(n, 1));
         for (int d = 1; d <= n; d++) {
@@ -612,9 +611,9 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
 }
 
 /* 10 Factorization using Ri */
-std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
-	//std::cout << "Prime: " << prime << std::endl;
-	//std::cout << "Current: " << this->show() << std::endl;
+std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
+    //std::cout << "Prime: " << prime << std::endl;
+    //std::cout << "Current: " << this->show() << std::endl;
 	if (n == 1) {
 		return std::vector<Polynom> { Polynom(*this) };
 	}
@@ -649,27 +648,29 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 	do {
 		d++;
 		dPow = (dPow * prime) % n;
-		//std::cout << "d = " << d << std::endl;
-		//std::cout << dPow << std::endl;
-	} while (dPow != 1);
-	
+        //std::cout << "d = " << d << std::endl;
+        //std::cout << dPow << std::endl;
+    } while (dPow != 1);
 
 	std::vector<Polynom> factors;
 	std::list<Polynom> polysToFactorize;
 	polysToFactorize.emplace_back(*this);
 
 	size_t factorsCount = utils::euler(n) / d;	
-	size_t factorPower = getPolyPower() / factorsCount;		
+    long long factorPower = getPolyPower() / factorsCount;
 	if (factorsCount == 1) {
 		factors.emplace_back(*this);
 		return factors;
 	}
-	//std::cout << "Factors count: " << factorsCount << std::endl;
-	//std::cout << "Factors power: " << factorPower << std::endl;
+    //std::cout << "Factors count: " << factorsCount << "(max: " << maxCount << std::endl;
+    if (maxCount > 0 && maxCount < factorsCount)
+        factorsCount = maxCount;
+    //std::cout << "Factors power: " << factorPower << std::endl;
 
 	size_t i = 1;
 	while (factors.size() < factorsCount) {
-		//std::cout << "Trying R" << i << std::endl;
+        //std::cout << "Trying R" << i << std::endl;
+        //std::cout << "Found " << factors.size() << " out of " << factorsCount << std::endl;
 		Polynom riPolynomial = Polynom(prime, std::vector<long long>());
 		long long j = 1;
 
@@ -678,6 +679,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 
 		long long mod = n / utils::gcd(n, i);
 		while ((long long)std::pow(prime, j) % mod != 1) {
+            //std::cout << "trying " << j << std::endl;
 			currentTerm->next = makeItem(i * (long long)std::pow(prime, j), 1);
 
 			currentTerm = currentTerm->next;
@@ -688,27 +690,29 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 		bool factorized = false;
 		j = 0;
 		while (j < prime) {
-			//std::cout << "====\n";
-			//std::cout << polysToFactorize.front().show() << std::endl;
-			//std::cout << riPolynomial.show() << std::endl;
+            //std::cout << "====\n";
+            //std::cout << polysToFactorize.front().show() << std::endl;
+            //std::cout << riPolynomial.show() << std::endl;
 
 			Polynom gcdRi = polysToFactorize.front().gcd(riPolynomial);
 
-			//std::cout << gcdRi.show() << std::endl;
-			//std::cout << "====\n";
+            //std::cout << gcdRi.show() << std::endl;
+            //std::cout << "====\n";
 
 			//check if Ri = 0 (mod Q)
-			if (j == 0 && gcdRi == polysToFactorize.front()) {
+            if (j == 0 && (gcdRi == riPolynomial || gcdRi == polysToFactorize.front())) {
 				factorized = false;
 				break;
 			}
 
 			long long gcdPower = gcdRi.getPolyPower();
-			if (gcdPower == factorPower) {
+            if (gcdPower == factorPower) {
 				factorized = true;
 				gcdRi.normalization();
+                //std::cout << "New factor " << gcdRi.show() << std::endl;
 				factors.push_back(gcdRi);
 			} else if (gcdPower > 0 && gcdPower % factorPower == 0) {
+                //std::cout << "New poly to factorize" << std::endl;
 				factorized = true;
 				polysToFactorize.push_back(gcdRi);
 			}
@@ -717,7 +721,11 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n) {
 			j++;
 		}
 		if (factorized) {
+            //std::cout << "Facrorized!" << std::endl;
 			polysToFactorize.pop_front();
+            //std::cout << "Polys to factorize: " << polysToFactorize.size() << std::endl;
+            //std::cout << "Factors: " << factors.size() << std::endl;
+            //std::cout << "===========================" << std::endl;
 		}
 		i++;
 
@@ -765,7 +773,8 @@ std::vector<Polynom> Polynom::nIrreduciblePolynomials(long long prime, long long
         if ((num % m) == 0) {
             cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
             if (cyclotomic.getPolyPower() < n) continue;
-            temp = cyclotomic.factorizeCyclotomicRi(m);
+
+            temp = cyclotomic.factorizeCyclotomicRi(m, size - result.size());
             for (auto& ir : temp) {
                 if (ir.getPolyPower() == n) {
                     if (result.size() < size) result.push_back(ir);
