@@ -448,7 +448,7 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
                                            utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
                                                                        temp_2.getTermKey(temp_2.getPolyPower()),
                                                                        p2.getPrime())));
-        temp_2 = temp_2.multPolyforDivide(temp_2, multiply);
+        temp_2 = temp_2* multiply;
         temp_1 = temp_1 - temp_2;
         temp_2 = p2;
         result = result + multiply;
