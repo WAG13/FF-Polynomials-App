@@ -19,7 +19,7 @@ public:
      Matrix(const Matrix& matrix) : _rows(matrix._rows), _columns(matrix._columns),
         _prime(matrix._prime), _matrix(matrix._matrix) {}
 
-    [[nodiscard]] long long getElement(long long row, long long column) const;
+    long long getElement(long long row, long long column) const;
 
     void setElement(long long row, long long column, long long key);
 

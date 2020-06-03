@@ -529,27 +529,64 @@ Polynom Polynom::gcd(Polynom p2) {
 /*9 This method calculates nth Cyclotomic polynomial*/
 Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
     // if (n % prime == 0) return Polynom();
-    std::vector<long long> keys{1};
+    int m = n / 2;
+    std::vector<long long> keys{ 1 };
     Polynom result(prime, keys);
-    int mob;
-    if (utils::isPrime(n))
-        return Polynom(prime, std::vector<long long>(n, 1));
-    for (int d = 1; d <= n; d++) {
-        if (n % d == 0 && utils::mobius(n / d) == 1) {
-            std::vector<long long> keys(d + 1, 0);
-            keys[d] = 1;
-            keys[0] = -1;
-            Polynom multiplier(prime, keys);
-            result = result * multiplier;
+    if (n % 2 == 0 && utils::isPrime(m) && m % 2 != 0 && m != 1) {
+        int mob;
+        if (utils::isPrime(m)) {
+            std::vector<long long> keys(m, 1);
+            for (int i = 0; i < m; i++) {
+                if (i % 2 != 0)
+                    keys[i] = -1;
+            }
+            return Polynom(prime, keys);
+        }
+        for (int d = 1; d <= m; d++) {
+            if (m % d == 0 && utils::mobius(m / d) == 1) {
+                std::vector<long long> keys(d + 1, 0);
+                if (d % 2 != 0)
+                    keys[d] = -1;
+                else
+                {
+                    keys[d] = 1;
+                }
+                keys[0] = -1;
+                Polynom multiplier(prime, keys);
+                result = result * multiplier;
+            }
+        }
+        for (int d = 1; d <= m; d++) {
+            if (m % d == 0 && utils::mobius(m / d) == -1) {
+                std::vector<long long> keys(d + 1, 0);
+                keys[d] = 1;
+                keys[0] = -1;
+                Polynom divider(prime, keys);
+                result = result / divider;
+            }
         }
     }
-    for (int d = 1; d <= n; d++) {
-        if (n % d == 0 && utils::mobius(n / d) == -1) {
-            std::vector<long long> keys(d + 1, 0);
-            keys[d] = 1;
-            keys[0] = -1;
-            Polynom divider(prime, keys);
-            result = result / divider;
+    else {
+        int mob;
+        if (utils::isPrime(n))
+            return Polynom(prime, std::vector<long long>(n, 1));
+        for (int d = 1; d <= n; d++) {
+            if (n % d == 0 && utils::mobius(n / d) == 1) {
+                std::vector<long long> keys(d + 1, 0);
+                keys[d] = 1;
+                keys[0] = -1;
+                Polynom multiplier(prime, keys);
+                result = result * multiplier;
+            }
+        }
+        for (int d = 1; d <= n; d++) {
+            if (n % d == 0 && utils::mobius(n / d) == -1) {
+                std::vector<long long> keys(d + 1, 0);
+                keys[d] = 1;
+                keys[0] = -1;
+                Polynom divider(prime, keys);
+                result = result / divider;
+            }
         }
     }
     return result;
