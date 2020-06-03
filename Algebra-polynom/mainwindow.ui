@@ -22,7 +22,7 @@
   <property name="styleSheet">
    <string notr="true">*{
 	
-	font: 12pt &quot;PT Sans&quot;;
+	font: 12pt &quot;Arial&quot;;
 	color: rgb(240, 240, 240);
 	background-color: rgb(90, 80, 80)
 }
@@ -39,7 +39,7 @@ QPushButton:hover {
 }
 QPushButton:pressed,
 QPushButton:disabled{
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 166, 0, 180), stop:1 rgba(255, 85, 0, 180));
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(235, 146, 0, 160), stop:1 rgba(235, 65, 0, 180));
 }
 
 /*COMBOBOX*/
@@ -439,7 +439,7 @@ margin-left:10px;</string>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true"/>
+               <string notr="true">font-size:10pt;</string>
               </property>
               <property name="text">
                <string>Обрати інший незвідний поліном</string>
@@ -476,7 +476,7 @@ margin-left:10px;</string>
         <item>
          <widget class="QPushButton" name="makeFieldButton">
           <property name="styleSheet">
-           <string notr="true">font: 75 15pt &quot;PT Sans&quot;;</string>
+           <string notr="true">font: 75 15pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
            <string>Задати поле</string>
@@ -744,7 +744,7 @@ margin-left:10px;</string>
            <item>
             <widget class="QPushButton" name="Calculate">
              <property name="styleSheet">
-              <string notr="true">font: 75 14pt &quot;PT Sans&quot;;
+              <string notr="true">font: 75 14pt &quot;Arial&quot;;
 margin-top: 15px;
 </string>
              </property>
