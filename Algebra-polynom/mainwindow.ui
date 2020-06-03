@@ -285,7 +285,7 @@ QListView::item:selected {
               <property name="minimumSize">
                <size>
                 <width>150</width>
-                <height>28</height>
+                <height>30</height>
                </size>
               </property>
               <property name="minimum">
@@ -351,7 +351,7 @@ margin-left:10px;</string>
             <property name="minimumSize">
              <size>
               <width>150</width>
-              <height>0</height>
+              <height>30</height>
              </size>
             </property>
             <property name="minimum">
@@ -461,6 +461,12 @@ margin-left:10px;</string>
             </item>
             <item>
              <widget class="QSpinBox" name="countIP">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="minimum">
                <number>1</number>
               </property>
@@ -710,7 +716,7 @@ margin-left:10px;</string>
                  <property name="minimumSize">
                   <size>
                    <width>150</width>
-                   <height>0</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="minimum">
@@ -726,7 +732,7 @@ margin-left:10px;</string>
                  <property name="minimumSize">
                   <size>
                    <width>150</width>
-                   <height>0</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="minimum">
