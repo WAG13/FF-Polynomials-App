@@ -229,9 +229,7 @@ void MainWindow::on_Calculate_clicked()
         break;}
     case 9:{
         long long x = ui->xBox->value();
-        addNewLine("A(x), x = "+QString::number(x));
-        addNewLine("===============================");
-        addNewLine(QString::number(A.valueAtPoint(x)));
+        addNewLine("A("+QString::number(x)+") = "+QString::number(A.valueAtPoint(x)));
         addNewLine(" ");
         break;}
     case 10:{
