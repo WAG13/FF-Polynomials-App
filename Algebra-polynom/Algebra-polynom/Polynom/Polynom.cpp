@@ -506,7 +506,11 @@ long long Polynom::rootsNumber() {
 	}
 
     long long matrixRank = AMatrix.rank().first;
-    return (pow - matrixRank);
+	if (valueAtPoint(0) == 0) {
+	    return (pow - matrixRank + 1);
+	} else {
+        return (pow - matrixRank);
+	}
 }
 
 Polynom Polynom::gcd(Polynom p2) {
@@ -868,7 +872,11 @@ std::vector<Polynom> Polynom::getComparisonSystemSolutionBasis() const {
 }
 
 std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>> const& unmultiple_factors) const {
-    auto polynomial_basis = getComparisonSystemSolutionBasis();
+    Polynom unmultiple_polynomial{ prime, { {0, 1}, {1, 0} } };
+    for (size_t i = 0; i < unmultiple_factors.size(); i++) {
+        unmultiple_polynomial = unmultiple_polynomial * unmultiple_factors[i].first;
+    }
+    auto polynomial_basis = unmultiple_polynomial.getComparisonSystemSolutionBasis();
     if (polynomial_basis.size() == 1) {
         return std::vector<std::pair<std::vector<Polynom>, long long>>{ { {*this}, 1} };
     }

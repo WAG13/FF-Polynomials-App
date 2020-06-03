@@ -1,7 +1,6 @@
 #include "Matrix.h"
 
 namespace utils {
-    long long division_for_numbers(long long a, long long b, long long prime);
     long long inverse(long long number, long long prime);
 }
 
