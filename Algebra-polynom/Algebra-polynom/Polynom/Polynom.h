@@ -104,6 +104,8 @@ public:
     void operator=(const Polynom &other)
     {
         prime = other.getPrime();
+        if (head)
+            delete head;
         head = nullptr;
         PolyTerm *tmp = other.getHead();
         while (tmp)
@@ -189,7 +191,7 @@ public:
     /*! #7
 	* @brief This method calculates greatest common divisor of two polynoms
 	*/
-    Polynom gcd(Polynom p);
+    Polynom gcd(const Polynom& other);
 
     /* #9
     * @brief Equal operator
