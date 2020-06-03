@@ -436,6 +436,8 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
     Polynom temp_1 = p1;
     Polynom temp_2 = p2;
     int count = 0;
+    long long power2 = temp_2.getPolyPower();
+    long long key = temp_2.getTermKey(power2);
     while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
         if (temp_1.getPolyPower() == 0) {
             if (count >= 1) {
@@ -444,9 +446,9 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
             count++;
         }
         Polynom multiply(p1.getPrime(), std::vector<long long>{0});
-        multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(),
+        multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - power2,
                                            utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
-                                                                       temp_2.getTermKey(temp_2.getPolyPower()),
+                                                                       key,
                                                                        p2.getPrime())));
         temp_2 = temp_2* multiply;
         temp_1 = temp_1 - temp_2;
