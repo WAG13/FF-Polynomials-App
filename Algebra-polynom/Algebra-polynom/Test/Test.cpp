@@ -567,11 +567,11 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 
-		Polynom product = Polynom(q, std::vector<long long>{ 1 });
-		for (Polynom& factor : factors) {
-			product = product * factor;
-		}
-		REQUIRE(product == cyclotomic);
+		REQUIRE(factors.size() == 4);
+		REQUIRE(factors[0].show() == "1 + 2*x^2 + 1*x^6");
+		REQUIRE(factors[1].show() == "1 + 2*x^2 + 1*x^4 + 1*x^6");
+		REQUIRE(factors[2].show() == "1 + 1*x^2 + 2*x^4 + 1*x^6");
+		REQUIRE(factors[3].show() == "1 + 2*x^4 + 1*x^6");
 	}
 	SUBCASE("n = 45, q = 3")
 	{

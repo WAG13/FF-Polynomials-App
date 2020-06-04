@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QtConcurrent>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -19,6 +21,20 @@ MainWindow::~MainWindow()
 QString toQStr(std::string str) {return QString::fromStdString(str);}
 QString polToQStr(Polynom pol) {return QString::fromStdString(pol.show());}
 std::string qStrtoStd (QString str) {return str.toLocal8Bit().constData();}
+
+/* Threading */
+void MainWindow::onCalculationsBegin() {
+    ui->makeFieldButton->setEnabled(false);
+    ui->Calculate->setEnabled(false);
+    ui->allirrPol->setEnabled(false);
+}
+
+void MainWindow::onCalculationsEnd() {
+    ui->makeFieldButton->setEnabled(true);
+    ui->Calculate->setEnabled(true);
+    ui->allirrPol->setEnabled(fieldCreated);
+}
+
 /* Cleaner */
 void MainWindow::cleanerTab(){
     fieldCreated = false;
@@ -31,12 +47,24 @@ void MainWindow::cleanerTab(){
 }
 
 /* IrrPolynoms List */
-void MainWindow::addIrrPolList(){
-    IP = Field.getNIrreducible(ui->countIP->value());
+void MainWindow::addIrrPolList()
+{
+    onCalculationsBegin();
+    int count = ui->countIP->value();
+    compHandler.run([this, count]() {
+        IP = Field.getNIrreducible(count);
+        std::cout << "(((((((" << count << ")))))))" << std::endl;
+        return QVector<QString>{};
+
+    }, [&](const QVector<QString>& output) { onIrrPolListFinished(output); },
+       [&]() { this->onCalculationsEnd(); });
+}
+
+void MainWindow::onIrrPolListFinished(const QVector<QString>& output)
+{
     ui->listIP->clear();
     int row=0;
     for (auto& ip : IP) {
-        ip.show();
         QListWidgetItem *newItem = new QListWidgetItem;
         newItem->setText(polToQStr(ip));
         ui->listIP->insertItem(row, newItem);
@@ -61,23 +89,36 @@ void MainWindow::on_allirrPol_clicked()
 void MainWindow::on_makeFieldButton_clicked()
 {
     if (canCerateField){
-        fieldCreated = true;
-        Field = GaloisField(ui->primeBox->value(),ui->powerBox->value());
-        ui->showIR->setPlainText(polToQStr(Field.getIrreducible()));
-        ui->allirrPol->setEnabled(true);
-        ui->Calculate->setEnabled(true);
+        onCalculationsBegin();
+        compHandler.run([&]() {
+
+            fieldCreated = true;
+            Field = GaloisField(ui->primeBox->value(),ui->powerBox->value());
+            return QVector<QString>{};
+
+        }, [&](const QVector<QString>& output) { onFieldCreationFinished(output); },
+           [&]() { this->onCalculationsEnd(); });
     } else {
         fieldCreated = false;
         ui->wrongP->setVisible(true);
         ui->allirrPol->setEnabled(false);
+        ui->tabWidget->findChild<QTabBar *>()->hide();
     }
-
-    (fieldCreated)
-              ? ui->tabWidget->findChild<QTabBar *>()->show()
-              : ui->tabWidget->findChild<QTabBar *>()->hide();
 }
 
+void MainWindow::onFieldCreationFinished(const QVector<QString>& output)
+{
+    ui->showIR->setPlainText(polToQStr(Field.getIrreducible()));
+    ui->allirrPol->setEnabled(true);
+    ui->Calculate->setEnabled(true);
+    ui->tabWidget->findChild<QTabBar *>()->show();
+}
 
+void MainWindow::printCalculationResult(const QVector<QString>& output)
+{
+    for (const QString& line : output)
+        addNewLine(line);
+}
 
 void MainWindow::on_primeBox_valueChanged()
 {
@@ -132,6 +173,15 @@ void MainWindow::addNewLine(QString text){
     ui->history->appendPlainText(text);
 }
 
+void MainWindow::launchCalculation(const std::function<QVector<QString> ()>& func)
+{
+    onCalculationsBegin();
+    compHandler.run(func,
+            [this](const QVector<QString>& result) { this->printCalculationResult(result); },
+            [this]() { this->onCalculationsEnd(); }
+    );
+}
+
 void MainWindow::on_Calculate_clicked()
 {
     Polynom A(Field.getPrime(), qStrtoStd(ui->pA->text()),'x');
@@ -143,146 +193,219 @@ void MainWindow::on_Calculate_clicked()
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
-        addNewLine("("+polToQStr(A)+")");
-        addNewLine("+");
-        addNewLine("("+polToQStr(B)+")");
-        addNewLine("===============================");
-        addNewLine(polToQStr(Field.add(A,B)));
-        addNewLine(" ");
+        launchCalculation([this, A, B]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")");
+            result.push_back("+");
+            result.push_back("("+polToQStr(B)+")");
+            result.push_back("===============================");
+            result.push_back(polToQStr(Field.add(A,B)));
+            result.push_back(" ");
+
+            return result;
+        });
         break;}
     case 1:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
-        addNewLine("("+polToQStr(A)+")");
-        addNewLine("-");
-        addNewLine("("+polToQStr(B)+")");
-        addNewLine("===============================");
-        addNewLine(polToQStr(Field.subtract(A,B)));
-        addNewLine(" ");
+        launchCalculation([this, A, B]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")");
+            result.push_back("-");
+            result.push_back("("+polToQStr(B)+")");
+            result.push_back("===============================");
+            result.push_back(polToQStr(Field.subtract(A,B)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 2:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
-        addNewLine("("+polToQStr(A)+")");
-        addNewLine("*");
-        addNewLine("("+polToQStr(B)+")");
-        addNewLine("===============================");
-        addNewLine(polToQStr(Field.multiply(A,B)));
-        addNewLine(" ");
+        launchCalculation([this, A, B]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")");
+            result.push_back("*");
+            result.push_back("("+polToQStr(B)+")");
+            result.push_back("===============================");
+            result.push_back(polToQStr(Field.multiply(A,B)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 3:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
-        addNewLine("("+polToQStr(A)+")");
-        addNewLine("/");
-        addNewLine("("+polToQStr(B)+")");
-        addNewLine("===============================");
-        addNewLine(polToQStr(Field.divide(A,B)));
-        addNewLine(" ");
+        launchCalculation([this, A, B]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")");
+            result.push_back("/");
+            result.push_back("("+polToQStr(B)+")");
+            result.push_back("===============================");
+            result.push_back(polToQStr(Field.divide(A,B)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 4:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
-        addNewLine("("+polToQStr(A)+")");
-        addNewLine("/");
-        addNewLine("("+polToQStr(B)+")");
-        addNewLine("===============================");
-        addNewLine(polToQStr(A/B));
-        addNewLine(" ");
+        launchCalculation([A, B]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")");
+            result.push_back("/");
+            result.push_back("("+polToQStr(B)+")");
+            result.push_back("===============================");
+            result.push_back(polToQStr(A/B));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 5:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
-        addNewLine("("+polToQStr(A)+")");
-        addNewLine("%");
-        addNewLine("("+polToQStr(B)+")");
-        addNewLine("===============================");
-        addNewLine(polToQStr(A%B));
-        addNewLine(" ");
+        launchCalculation([A, B]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")");
+            result.push_back("%");
+            result.push_back("("+polToQStr(B)+")");
+            result.push_back("===============================");
+            result.push_back(polToQStr(A%B));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 6:{
         Polynom B(Field.getPrime(), qStrtoStd(ui->pB->text()),'x');
         if (ui->modIrr->isChecked()) B = B%Field.getIrreducible();
         ui->pB->setText(polToQStr(B));
-        addNewLine("НСД("+polToQStr(A)+",");
-        addNewLine("         "+polToQStr(B)+")");
-        addNewLine("===============================");
-        addNewLine(polToQStr(A.gcd(B)));
-        addNewLine(" ");
+        launchCalculation([A, B]() {
+            QVector<QString> result;
+            result.push_back("НСД("+polToQStr(A)+",");
+            result.push_back("         "+polToQStr(B)+")");
+            result.push_back("===============================");
+            result.push_back(polToQStr(A.gcd(B)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 7:{
-        addNewLine("("+polToQStr(A)+")^(-1)");
-        addNewLine("===============================");
-        addNewLine(polToQStr(Field.getInverse(A)));
-        addNewLine(" ");
+        launchCalculation([this, A]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")^(-1)");
+            result.push_back("===============================");
+            result.push_back(polToQStr(Field.getInverse(A)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 8:{
-        addNewLine("("+polToQStr(A)+")'");
-        addNewLine("===============================");
-        addNewLine(polToQStr(Field.derivative(A)));
-        addNewLine(" ");
+        launchCalculation([this, A]() {
+            QVector<QString> result;
+            result.push_back("("+polToQStr(A)+")'");
+            result.push_back("===============================");
+            result.push_back(polToQStr(Field.derivative(A)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 9:{
         long long x = ui->xBox->value();
-        addNewLine("A("+QString::number(x)+") = "+QString::number(A.valueAtPoint(x)));
-        addNewLine(" ");
+        launchCalculation([A, x]() {
+            QVector<QString> result;
+            result.push_back("A("+QString::number(x)+") = "+QString::number(A.valueAtPoint(x)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 10:{
         addNewLine("Нормування A");
         A.normalization();
         ui->pA->setText(polToQStr(A));
-        addNewLine(polToQStr(A));
-        addNewLine(" ");
+        launchCalculation([A]() {
+            QVector<QString> result;
+            result.push_back(polToQStr(A));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 11:{
         addNewLine("Корені A");
-        std::vector<Polynom> roots = A.findRoots();
-        for(auto& root:roots){
-            addNewLine(polToQStr(root));
-        }
-        addNewLine(" ");
+        launchCalculation([A]() {
+            QVector<QString> result;
+            std::vector<Polynom> roots = A.findRoots();
+            for(auto& root:roots){
+                result.push_back(polToQStr(root));
+            }
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 12:{
-        addNewLine("Кількість коренів A = "+QString::number(A.rootsNumber()));
-        addNewLine(" ");
+        launchCalculation([A]() {
+            QVector<QString> result;
+            result.push_back("Кількість коренів A = "+QString::number(A.rootsNumber()));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 13:{
         long long n = ui->nBox->value();
         addNewLine("Круговий многочлен порядку "+QString::number(n));
-        addNewLine(polToQStr(A.CyclotomicPolynomial(Field.getPrime(),n)));
-        addNewLine(" ");
+        launchCalculation([this, A, n]() {
+            QVector<QString> result;
+            result.push_back(polToQStr(A.CyclotomicPolynomial(Field.getPrime(),n)));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 14:{
         long long n = ui->nBox->value();
         addNewLine("Розклад кругового многочлена на незвідні множники (Ri)");
-        std::vector<Polynom> pols = A.factorizeCyclotomicRi(n);
-        for(auto& pol:pols){
-            addNewLine(polToQStr(pol));
-        }
-        addNewLine(" ");
+        launchCalculation([A, n]() {
+            QVector<QString> result;
+            std::vector<Polynom> pols = A.factorizeCyclotomicRi(n);
+            for(auto& pol:pols){
+                result.push_back(polToQStr(pol));
+            }
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 15:{
         addNewLine("Розклад A на незвідні множники (Берлекемпа)");
-        addNewLine(toQStr(A.berlekampAlgorithm()));
-        addNewLine(" ");
+        launchCalculation([A]() {
+            QVector<QString> result;
+            result.push_back(toQStr(A.berlekampAlgorithm()));
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 16:{
         long long n = ui->nBox->value();
         addNewLine("Всі незвідні многочлени порядку "+QString::number(n));
-        std::vector<Polynom> pols = A.allIrreduciblePolynomials(Field.getPrime(),n);
-        for(auto& pol:pols){
-            addNewLine(polToQStr(pol));
-        }
-        addNewLine(" ");
+        launchCalculation([this, A, n]() {
+            QVector<QString> result;
+            std::vector<Polynom> pols = A.allIrreduciblePolynomials(Field.getPrime(),n);
+            for(auto& pol : pols){
+                result.push_back(polToQStr(pol));
+            }
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 17:{
-        (A.isIrreducible()) ? addNewLine("A незвідний") : addNewLine("A не незвідний");
-        addNewLine(" ");
+        launchCalculation([A]() {
+            QVector<QString> result;
+            (A.isIrreducible()) ? result.push_back("A незвідний") : result.push_back("A звідний");
+            result.push_back(" ");
+            return result;
+        });
         break;}
     case 18:{ /**************************************************************************************************TODO**********/
         addNewLine("Порядок A = "+QString::number(0));

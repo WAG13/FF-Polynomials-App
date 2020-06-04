@@ -178,7 +178,7 @@ Polynom Polynom::multSimple(Polynom const &pol1, Polynom const &pol2) {
 
 /*1     operation *       */
 Polynom operator*(Polynom const &pol1, Polynom const &pol2) {
-    Polynom c = c.multPoly(pol1, pol2);
+    Polynom c = Polynom::multPoly(pol1, pol2);
     return c;
 }
 
@@ -301,7 +301,7 @@ Polynom Polynom::getWithOtherParameter(long long b) const {
 }
 
 /* #3 find roots of the polynomial*/
-std::vector<Polynom> Polynom::findRoots() {
+std::vector<Polynom> Polynom::findRoots() const {
 	long long rootsNumber = this->rootsNumber();
 
 	std::vector<Polynom> ans;
@@ -420,7 +420,7 @@ Polynom Polynom::multPolyforDivide(Polynom const &pol1, Polynom const &pol2) {
 
 /*1     operation * (number)      */
 Polynom operator*(Polynom const &p, long long const &number) {
-    Polynom c = c.multNumber(p, number);
+    Polynom c = Polynom::multNumber(p, number);
     return c;
 }
 
@@ -488,7 +488,7 @@ bool operator==(Polynom const &p1, Polynom const &p2) {
 /**/
 
 /*4     Number of roots       */
-long long Polynom::rootsNumber() {
+long long Polynom::rootsNumber() const {
 	long long pow = prime - 1;
 	Matrix AMatrix(pow, pow, prime);
     std::vector<long long> coeffs(pow, 0);
@@ -513,7 +513,7 @@ long long Polynom::rootsNumber() {
 	}
 }
 
-Polynom Polynom::gcd(const Polynom& other) {
+Polynom Polynom::gcd(const Polynom& other) const {
     Polynom* p1;
     Polynom* p2;
     if (other.getPolyPower() >= this->getPolyPower()) {
@@ -611,9 +611,9 @@ Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
 }
 
 /* 10 Factorization using Ri */
-std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
-    //std::cout << "Prime: " << prime << std::endl;
-    //std::cout << "Current: " << this->show() << std::endl;
+std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) const {
+    std::cout << "Prime: " << prime << std::endl;
+    std::cout << "Current: " << this->show() << std::endl;
 	if (n == 1) {
 		return std::vector<Polynom> { Polynom(*this) };
 	}
@@ -648,8 +648,8 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
 	do {
 		d++;
 		dPow = (dPow * prime) % n;
-        //std::cout << "d = " << d << std::endl;
-        //std::cout << dPow << std::endl;
+        std::cout << "d = " << d << std::endl;
+        std::cout << dPow << std::endl;
     } while (dPow != 1);
 
 	std::vector<Polynom> factors;
@@ -662,15 +662,15 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
 		factors.emplace_back(*this);
 		return factors;
 	}
-    //std::cout << "Factors count: " << factorsCount << "(max: " << maxCount << std::endl;
+    std::cout << "Factors count: " << factorsCount << "(max: " << maxCount << std::endl;
     if (maxCount > 0 && maxCount < factorsCount)
         factorsCount = maxCount;
-    //std::cout << "Factors power: " << factorPower << std::endl;
+    std::cout << "Factors power: " << factorPower << std::endl;
 
 	size_t i = 1;
 	while (factors.size() < factorsCount) {
-        //std::cout << "Trying R" << i << std::endl;
-        //std::cout << "Found " << factors.size() << " out of " << factorsCount << std::endl;
+        std::cout << "Trying R" << i << std::endl;
+        std::cout << "Found " << factors.size() << " out of " << factorsCount << std::endl;
 		Polynom riPolynomial = Polynom(prime, std::vector<long long>());
 		long long j = 1;
 
@@ -679,7 +679,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
 
 		long long mod = n / utils::gcd(n, i);
 		while ((long long)std::pow(prime, j) % mod != 1) {
-            //std::cout << "trying " << j << std::endl;
+            std::cout << "trying " << j << std::endl;
 			currentTerm->next = makeItem(i * (long long)std::pow(prime, j), 1);
 
 			currentTerm = currentTerm->next;
@@ -690,14 +690,14 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
 		bool factorized = false;
 		j = 0;
 		while (j < prime) {
-            //std::cout << "====\n";
-            //std::cout << polysToFactorize.front().show() << std::endl;
-            //std::cout << riPolynomial.show() << std::endl;
+            std::cout << "====\n";
+            std::cout << polysToFactorize.front().show() << std::endl;
+            std::cout << riPolynomial.show() << std::endl;
 
 			Polynom gcdRi = polysToFactorize.front().gcd(riPolynomial);
 
-            //std::cout << gcdRi.show() << std::endl;
-            //std::cout << "====\n";
+            std::cout << gcdRi.show() << std::endl;
+            std::cout << "====\n";
 
 			//check if Ri = 0 (mod Q)
             if (j == 0 && (gcdRi == riPolynomial || gcdRi == polysToFactorize.front())) {
@@ -709,10 +709,10 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
             if (gcdPower == factorPower) {
 				factorized = true;
 				gcdRi.normalization();
-                //std::cout << "New factor " << gcdRi.show() << std::endl;
+                std::cout << "New factor " << gcdRi.show() << std::endl;
 				factors.push_back(gcdRi);
 			} else if (gcdPower > 0 && gcdPower % factorPower == 0) {
-                //std::cout << "New poly to factorize" << std::endl;
+                std::cout << "New poly to factorize" << std::endl;
 				factorized = true;
 				polysToFactorize.push_back(gcdRi);
 			}
@@ -721,11 +721,11 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
 			j++;
 		}
 		if (factorized) {
-            //std::cout << "Facrorized!" << std::endl;
+            std::cout << "Facrorized!" << std::endl;
 			polysToFactorize.pop_front();
-            //std::cout << "Polys to factorize: " << polysToFactorize.size() << std::endl;
-            //std::cout << "Factors: " << factors.size() << std::endl;
-            //std::cout << "===========================" << std::endl;
+            std::cout << "Polys to factorize: " << polysToFactorize.size() << std::endl;
+            std::cout << "Factors: " << factors.size() << std::endl;
+            std::cout << "===========================" << std::endl;
 		}
 		i++;
 
@@ -796,7 +796,8 @@ Polynom Polynom::findIrreduciblePolynomial(long long prime, long long n)
 }
 
 /* 13 Irreducibility test */
-bool Polynom::isIrreducible(){
+bool Polynom::isIrreducible() const
+{
     long long prime = this->getPrime();
     Polynom odd(prime, {0,1});
     Polynom one(prime, {1, 0});

@@ -135,7 +135,7 @@ public:
         return pow;
     }
     // Creates new term (PolyTerm) with coefficient val
-    PolyTerm *makeItem(long long pow, long long val);
+    static PolyTerm *makeItem(long long pow, long long val);
     // Adding term to the polynom in non-descending order
     void addItem(PolyTerm *el);
 
@@ -174,7 +174,7 @@ public:
 
     /** #3      @author Karina Masol & Yuriy Momotenko     **/
     //Finding roots of the polynomial
-    std::vector<Polynom> findRoots();
+    std::vector<Polynom> findRoots() const;
     //bringing polynomial to the power
     Polynom toThePower(long long pow) const;
     //get instead of polynom f(x) - polynom f(x-b)
@@ -185,13 +185,13 @@ public:
     * @brief This function implements algorithm  for finding number of roots for polynomial
     *        in accordance with Konig-Rados theorem
     */
-    long long rootsNumber();
+    long long rootsNumber() const;
 
     /** #7      @author Nikita Pupov    **/
     /*! #7
 	* @brief This method calculates greatest common divisor of two polynoms
 	*/
-    Polynom gcd(const Polynom& other);
+    Polynom gcd(const Polynom& other) const;
 
     /* #9
     * @brief Equal operator
@@ -209,7 +209,7 @@ public:
      * @brief Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials
      * @param amount If maxCount > 0, finds "maxCount" factors at most, otherwise finds all factors.
      */
-    std::vector<Polynom> factorizeCyclotomicRi(size_t n, size_t maxCount = 0);
+    std::vector<Polynom> factorizeCyclotomicRi(size_t n, size_t maxCount = 0) const;
 
     /*! #12
      * @author Vladyslav Prokopchuk
@@ -236,7 +236,7 @@ public:
      * @brief Checks if the polynomial is irreducible
      * @return 1 - if irreducible, 0 - reducible
      */
-    bool isIrreducible();
+    bool isIrreducible() const;
 
     /*! @author Medynskyi Mykola
     * @brief Finds berlekamp matrix
@@ -254,23 +254,23 @@ protected:
     /*! #1
     * @brief Adding two polynomials in field
     */
-    Polynom addPoly(Polynom const &p1, Polynom const &p2);
+    static Polynom addPoly(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Difference of two polynomials in field
     */
-    Polynom diffPoly(Polynom const &p1, Polynom const &p2);
+    static Polynom diffPoly(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplication of two polynomials in field
     */
-    Polynom multPoly(Polynom const &p1, Polynom const &p2);
+    static Polynom multPoly(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplication of two polynomials in field with power=1
     */
-    Polynom multSimple(Polynom const &p1, Polynom const &p2);
+    static Polynom multSimple(Polynom const &p1, Polynom const &p2);
     /*! #1
     * @brief Multiplicates polynomial in field on integer
     */
-    Polynom multNumber(Polynom const &p, long long const &number);
+    static Polynom multNumber(Polynom const &p, long long const &number);
 
     /*! #6
 	* @brief Multiplication of two polynomials in field 

@@ -1,9 +1,12 @@
 #include "mainwindow.h"
 
+#include <QMetaType>
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
+    qRegisterMetaType<QVector<QString>>();
+
     QApplication a(argc, argv);
     MainWindow w;
     w.setWindowTitle("Algebra Polynom");

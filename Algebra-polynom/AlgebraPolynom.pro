@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,6 +19,7 @@ SOURCES += \
     Algebra-polynom/Matrix/Matrix.cpp \
     Algebra-polynom/Polynom/Polynom.cpp \
     Algebra-polynom/utils.cpp \
+    computationhandler.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -27,6 +28,7 @@ HEADERS += \
     Algebra-polynom/Polynom/GaloisField.h \
     Algebra-polynom/Polynom/Polynom.h \
     Algebra-polynom/utils.h \
+    computationhandler.hpp \
     mainwindow.h
 
 FORMS += \
