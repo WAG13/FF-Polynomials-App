@@ -143,13 +143,15 @@ std::vector<std::vector<long long>> Matrix::buildSolutionSpaceBasis() {
         long long non_converted_columns_passed = 0;
 
         for (long long i = 0, j = 0; i < _rows && j < _columns; i++, j++) {
-            if (converted_matrix.getElement(i, corresponding_column)) {
-                if (j == non_converted_columns[non_converted_columns_passed]) {
-                    non_converted_columns_passed++;
-                    i--;
-                }
-                else {
-                    basis[k][j] = _prime - converted_matrix.getElement(i, corresponding_column);
+            if (non_converted_columns_passed < kernel_dimension && j == non_converted_columns[non_converted_columns_passed]) {
+                non_converted_columns_passed++;
+                i--;
+            }
+            else {
+                if (converted_matrix.getElement(i, corresponding_column)) {
+                    if (converted_matrix.getElement(i, j)) {
+                        basis[k][j] = _prime - converted_matrix.getElement(i, corresponding_column);
+                    }
                 }
             }
         }

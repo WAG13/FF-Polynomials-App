@@ -436,6 +436,8 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
     Polynom temp_1 = p1;
     Polynom temp_2 = p2;
     int count = 0;
+    long long power2 = temp_2.getPolyPower();
+    long long key = temp_2.getTermKey(power2);
     while (temp_1.getPolyPower() >= temp_2.getPolyPower()) {
         if (temp_1.getPolyPower() == 0) {
             if (count >= 1) {
@@ -444,9 +446,9 @@ std::pair<Polynom, Polynom> Polynom::simple_division(Polynom const &p1, Polynom 
             count++;
         }
         Polynom multiply(p1.getPrime(), std::vector<long long>{0});
-        multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - temp_2.getPolyPower(),
+        multiply.addItem(multiply.makeItem(temp_1.getPolyPower() - power2,
                                            utils::division_for_numbers(temp_1.getTermKey(temp_1.getPolyPower()),
-                                                                       temp_2.getTermKey(temp_2.getPolyPower()),
+                                                                       key,
                                                                        p2.getPrime())));
         temp_2 = temp_2* multiply;
         temp_1 = temp_1 - temp_2;
@@ -832,29 +834,31 @@ Polynom Polynom::pthRoot(Polynom f) {
 std::vector<std::pair<Polynom, long long>> Polynom::squareFreeDecomposition() const {
     std::vector<std::pair<Polynom, long long>> result;
     Polynom polynom(*this);
-    Polynom one(prime, std::vector<long long>{1});
+
     long long s = 1;
     do {
         int j = 1;
         Polynom derivativePolynom = polynom.derivative();
         Polynom gcdPolynom = polynom.gcd(derivativePolynom);
+        gcdPolynom.normalization();
         Polynom g = polynom / gcdPolynom;
-        while (!(g == one)) {
+        while (g.getPolyPower() > 0) {
             polynom = polynom / g;
             Polynom h = polynom.gcd(g);
+            h.normalization();
             Polynom m = g / h;
-            if (!(m == one)) {
+            if (m.getPolyPower() > 0) {
                 std::pair<Polynom, long long> polynomAndPower = { m,j * s };
                 result.push_back(polynomAndPower);
             }
             g = h;
             j++;
         }
-        if (!(polynom == one)) {
+        if (polynom.getPolyPower() > 0) {
             polynom = polynom.pthRoot(polynom);
             s *= prime;
         }
-    } while (!(polynom == one));
+    } while (polynom.getPolyPower() > 0);
     return result;
 }
 
@@ -903,7 +907,7 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::berlekampAlgori
     }
     auto polynomial_basis = unmultiple_polynomial.getComparisonSystemSolutionBasis();
     if (polynomial_basis.size() == 1) {
-        return std::vector<std::pair<std::vector<Polynom>, long long>>{ { {*this}, 1} };
+        return std::vector<std::pair<std::vector<Polynom>, long long>>{ { { unmultiple_factors[0].first }, unmultiple_factors[0].second } };
     }
     else {
         return factorizeByBasisPolynomials(unmultiple_factors, polynomial_basis);
@@ -931,6 +935,7 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasi
                 if (result[i].first[j].getPolyPower() > 1) {
                     for (long long k = 0; k < prime; k++) {
                         temp = result[i].first[j].gcd(basis[basis_element_index] - Polynom{ prime, {k, 0} });
+                        temp.normalization();
                         if (temp.getPolyPower() > 0) {
                             replacement.push_back(temp);
                             current_num_of_factors++;
@@ -938,13 +943,14 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasi
                     }
                 }
 
-                if (!replacement.empty()) {
+                if (replacement.size() > 1) {
                     current_num_of_factors--;
                     result[i].first.insert(result[i].first.begin() + j, replacement.begin(), replacement.end());
                     j += replacement.size();
                     result[i].first.erase(result[i].first.begin() + j);
                     if (current_num_of_factors == total_num_of_factors) break;
                 }
+                if (replacement.size() == 1) current_num_of_factors--;
             }
 
             if (current_num_of_factors == total_num_of_factors) break;
@@ -955,21 +961,40 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasi
     return result;
 }
 
+std::vector<std::pair<Polynom, long long>> Polynom::sort_polynomials_by_power(std::vector<std::pair<std::vector<Polynom>, long long>> const& polynomials) const {
+    std::vector<std::pair<Polynom, long long>> result;
+
+    for (size_t i = 0; i < polynomials.size(); i++) {
+        for (size_t j = 0; j < polynomials[i].first.size(); j++) {
+            result.push_back({ polynomials[i].first[j], polynomials[i].second });
+        }
+    }
+
+    std::sort(result.begin(), result.end(), [](std::pair<Polynom, long long> const& left, std::pair<Polynom, long long> const& right) { return left.first.getPolyPower() < right.first.getPolyPower(); });
+    return result;
+}
+
 std::string Polynom::berlekampAlgorithm() const {
-    auto unmultipled_polynomial = squareFreeDecomposition();
-    auto result = berlekampAlgorithmMainCase(unmultipled_polynomial);
+    Polynom copy(*this);
+    copy.normalization();
+    auto unmultipled_polynomial = copy.squareFreeDecomposition();
+    auto result = copy.berlekampAlgorithmMainCase(unmultipled_polynomial);
+    auto sorted_result = sort_polynomials_by_power(result);
     std::string result_to_string;
 
-    for (size_t i = 0; i < result.size(); i++) {
-        long long power = result[i].second;
-        for (size_t j = 0; j < result[i].first.size(); j++) {
-            result_to_string.push_back('(');
-            result_to_string += result[i].first[j].show();
-            result_to_string.push_back(')');
-            if (power > 1) result_to_string += "^" + std::to_string(power);
-            if (j != result[i].first.size() - 1) result_to_string += " * ";
-        }
-        if (i != result.size() - 1) result_to_string += " * ";
+    long long main_coefficient = this->getTermKey(this->getPolyPower());
+    if (main_coefficient > 1) {
+        result_to_string = std::to_string(main_coefficient);
+        if (!result.empty()) result_to_string += " * ";
+    }
+
+    for (size_t i = 0; i < sorted_result.size(); i++) {
+        long long power = sorted_result[i].second;
+        result_to_string.push_back('(');
+        result_to_string += sorted_result[i].first.show();
+        result_to_string.push_back(')');
+        if (power > 1) result_to_string += "^" + std::to_string(power);
+        if (i != sorted_result.size() - 1) result_to_string += " * ";
     }
 
     return result_to_string;
