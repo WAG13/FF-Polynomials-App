@@ -303,6 +303,8 @@ protected:
     */
     std::vector<Polynom> getComparisonSystemSolutionBasis() const;
 
+    std::vector<std::pair<Polynom, long long>> sort_polynomials_by_power(std::vector<std::pair<std::vector<Polynom>, long long>> const& polynomials) const;
+
     /*! @author Pashchenko Dmytro
     * @brief factorizes unmultiple factors using basis polynomials (f = Ï(gcd(f, h - a)))
     * @return massive with pairs "polynomials, their multiplicity"
