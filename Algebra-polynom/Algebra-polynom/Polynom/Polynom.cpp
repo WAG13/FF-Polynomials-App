@@ -839,10 +839,12 @@ std::vector<std::pair<Polynom, long long>> Polynom::squareFreeDecomposition() co
         int j = 1;
         Polynom derivativePolynom = polynom.derivative();
         Polynom gcdPolynom = polynom.gcd(derivativePolynom);
+        gcdPolynom.normalization();
         Polynom g = polynom / gcdPolynom;
         while (g.getPolyPower() > 0) {
             polynom = polynom / g;
             Polynom h = polynom.gcd(g);
+            h.normalization();
             Polynom m = g / h;
             if (m.getPolyPower() > 0) {
                 std::pair<Polynom, long long> polynomAndPower = { m,j * s };
@@ -972,14 +974,17 @@ std::vector<std::pair<Polynom, long long>> Polynom::sort_polynomials_by_power(st
 }
 
 std::string Polynom::berlekampAlgorithm() const {
-    auto unmultipled_polynomial = squareFreeDecomposition();
-    auto result = berlekampAlgorithmMainCase(unmultipled_polynomial);
+    Polynom copy(*this);
+    copy.normalization();
+    auto unmultipled_polynomial = copy.squareFreeDecomposition();
+    auto result = copy.berlekampAlgorithmMainCase(unmultipled_polynomial);
     auto sorted_result = sort_polynomials_by_power(result);
     std::string result_to_string;
 
     long long main_coefficient = this->getTermKey(this->getPolyPower());
     if (main_coefficient > 1) {
-        result_to_string = std::to_string(main_coefficient) + " * ";
+        result_to_string = std::to_string(main_coefficient);
+        if (!result.empty()) result_to_string += " * ";
     }
 
     for (size_t i = 0; i < sorted_result.size(); i++) {
