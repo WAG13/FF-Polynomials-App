@@ -761,7 +761,7 @@ TEST_CASE("Testing Berlekamp factorization algorithm")
     }
 
     SUBCASE("Testing Berlekamp factorization") {
-        REQUIRE(polynom.berlekampAlgorithm() == "(1 + 1*x + 1*x^2) * (1 + 1*x + 1*x^4 + 1*x^5 + 1*x^6)");
+        REQUIRE(polynom.berlekampAlgorithmMultithreaded() == "(1 + 1*x + 1*x^2) * (1 + 1*x + 1*x^4 + 1*x^5 + 1*x^6)");
     }
 }
 

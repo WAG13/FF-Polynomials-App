@@ -9,6 +9,7 @@
 #include "../utils.h"
 #include <list>
 #include <stack>
+#include <thread>
 
 using std::cout;
 using std::cin;
@@ -1005,5 +1006,40 @@ std::string Polynom::berlekampAlgorithm() const {
 }
 
 std::string Polynom::berlekampAlgorithmMultithreaded() const {
-    return "a";
+    Polynom copy(*this);
+    copy.normalization();
+    auto unmultipled_polynomial = copy.squareFreeDecomposition();
+    
+    const unsigned long hardware_threads = std::thread::hardware_concurrency();
+
+    if (hardware_threads == 0) {
+        auto result = copy.berlekampAlgorithmMainCase(unmultipled_polynomial);
+        return printFactorsByMultiplicity(result);
+    }
+    
+    const size_t num_of_factors = unmultipled_polynomial.size();
+    unsigned long num_of_threads;
+    size_t factors_per_thread = 1;
+    if (hardware_threads < num_of_factors) {
+        factors_per_thread = num_of_factors / hardware_threads;
+        if (num_of_factors % hardware_threads) factors_per_thread++;
+        num_of_threads = hardware_threads;
+    }
+    else {
+        num_of_threads = num_of_factors;
+    }
+
+    std::vector<std::pair<std::vector<Polynom>, long long>> result;
+    size_t cur_pos = 0;
+    for (size_t i = 0; i < num_of_threads - 1; i++) {
+        auto temp = berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>>{ unmultipled_polynomial.begin() + cur_pos,
+            unmultipled_polynomial.begin() + cur_pos + factors_per_thread });
+        result.insert(result.end(), temp.begin(), temp.end());
+    }
+
+    auto temp = berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>>{ unmultipled_polynomial.begin() + cur_pos,
+        unmultipled_polynomial.end() });
+    result.insert(result.end(), temp.begin(), temp.end());
+
+    return printFactorsByMultiplicity(result);
 }
