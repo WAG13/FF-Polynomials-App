@@ -5,6 +5,7 @@
  */
 
 #include "Polynom.h"
+#include "Threads/JoiningThread.h"
 #include "../utils.h"
 #include <list>
 #include <stack>
@@ -960,12 +961,34 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasi
     return result;
 }
 
-std::vector<std::pair<Polynom, long long>> Polynom::sort_polynomials_by_power(std::vector<std::pair<std::vector<Polynom>, long long>> const& polynomials) const {
+std::string Polynom::printFactorsByMultiplicity(std::vector<std::pair<std::vector<Polynom>, long long>> const& factors) const {
+    auto sorted_factors = sortFactorsByPower(factors);
+    std::string result_to_string;
+
+    long long main_coefficient = this->getTermKey(this->getPolyPower());
+    if (main_coefficient > 1) {
+        result_to_string = std::to_string(main_coefficient);
+        if (!factors.empty()) result_to_string += " * ";
+    }
+
+    for (size_t i = 0; i < sorted_factors.size(); i++) {
+        long long power = sorted_factors[i].second;
+        result_to_string.push_back('(');
+        result_to_string += sorted_factors[i].first.show();
+        result_to_string.push_back(')');
+        if (power > 1) result_to_string += "^" + std::to_string(power);
+        if (i != sorted_factors.size() - 1) result_to_string += " * ";
+    }
+
+    return result_to_string;
+}
+
+std::vector<std::pair<Polynom, long long>> Polynom::sortFactorsByPower(std::vector<std::pair<std::vector<Polynom>, long long>> const& factors) const {
     std::vector<std::pair<Polynom, long long>> result;
 
-    for (size_t i = 0; i < polynomials.size(); i++) {
-        for (size_t j = 0; j < polynomials[i].first.size(); j++) {
-            result.push_back({ polynomials[i].first[j], polynomials[i].second });
+    for (size_t i = 0; i < factors.size(); i++) {
+        for (size_t j = 0; j < factors[i].first.size(); j++) {
+            result.push_back({ factors[i].first[j], factors[i].second });
         }
     }
 
@@ -978,23 +1001,9 @@ std::string Polynom::berlekampAlgorithm() const {
     copy.normalization();
     auto unmultipled_polynomial = copy.squareFreeDecomposition();
     auto result = copy.berlekampAlgorithmMainCase(unmultipled_polynomial);
-    auto sorted_result = sort_polynomials_by_power(result);
-    std::string result_to_string;
+    return printFactorsByMultiplicity(result);
+}
 
-    long long main_coefficient = this->getTermKey(this->getPolyPower());
-    if (main_coefficient > 1) {
-        result_to_string = std::to_string(main_coefficient);
-        if (!result.empty()) result_to_string += " * ";
-    }
-
-    for (size_t i = 0; i < sorted_result.size(); i++) {
-        long long power = sorted_result[i].second;
-        result_to_string.push_back('(');
-        result_to_string += sorted_result[i].first.show();
-        result_to_string.push_back(')');
-        if (power > 1) result_to_string += "^" + std::to_string(power);
-        if (i != sorted_result.size() - 1) result_to_string += " * ";
-    }
-
-    return result_to_string;
+std::string Polynom::berlekampAlgorithmMultithreaded() const {
+    return "a";
 }

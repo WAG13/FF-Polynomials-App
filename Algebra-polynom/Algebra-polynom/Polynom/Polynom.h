@@ -250,6 +250,12 @@ public:
     */
     std::string berlekampAlgorithm() const;
 
+    /*! @author Pashchenko Dmytro
+    * @brief factorizes polynomial by parallel Berlekamp algorithm
+    * @return string with factorized polinomial
+    */
+    std::string berlekampAlgorithmMultithreaded() const;
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field
@@ -303,7 +309,7 @@ protected:
     */
     std::vector<Polynom> getComparisonSystemSolutionBasis() const;
 
-    std::vector<std::pair<Polynom, long long>> sort_polynomials_by_power(std::vector<std::pair<std::vector<Polynom>, long long>> const& polynomials) const;
+    std::vector<std::pair<Polynom, long long>> sortFactorsByPower(std::vector<std::pair<std::vector<Polynom>, long long>> const& polynomials) const;
 
     /*! @author Pashchenko Dmytro
     * @brief factorizes unmultiple factors using basis polynomials (f = Ï(gcd(f, h - a)))
@@ -311,4 +317,6 @@ protected:
     */
     std::vector<std::pair<std::vector<Polynom>, long long>> factorizeByBasisPolynomials(std::vector<std::pair<Polynom, long long>> const &unmultiple_factors, 
         std::vector<Polynom> const &basis) const;
+
+    std::string printFactorsByMultiplicity(std::vector<std::pair<std::vector<Polynom>, long long>> const &factors) const;
 };
