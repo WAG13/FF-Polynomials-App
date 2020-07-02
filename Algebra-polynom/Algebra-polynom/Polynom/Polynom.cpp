@@ -7,7 +7,9 @@
 #include "Polynom.h"
 #include "Threads/JoiningThread.h"
 #include "../utils.h"
+#include <functional>
 #include <list>
+#include <mutex>
 #include <stack>
 #include <thread>
 
@@ -1012,7 +1014,7 @@ std::string Polynom::berlekampAlgorithmMultithreaded() const {
     
     const unsigned long hardware_threads = std::thread::hardware_concurrency();
 
-    if (hardware_threads == 0) {
+    if (hardware_threads == 0 || unmultipled_polynomial.size() == 1) {
         auto result = copy.berlekampAlgorithmMainCase(unmultipled_polynomial);
         return printFactorsByMultiplicity(result);
     }
@@ -1022,24 +1024,36 @@ std::string Polynom::berlekampAlgorithmMultithreaded() const {
     size_t factors_per_thread = 1;
     if (hardware_threads < num_of_factors) {
         factors_per_thread = num_of_factors / hardware_threads;
-        if (num_of_factors % hardware_threads) factors_per_thread++;
+        //if (num_of_factors % hardware_threads) factors_per_thread++;
         num_of_threads = hardware_threads;
     }
     else {
         num_of_threads = num_of_factors;
     }
 
+    std::vector<JoiningThread> threads(num_of_threads - 1);
+    std::mutex result_mutex;
     std::vector<std::pair<std::vector<Polynom>, long long>> result;
     size_t cur_pos = 0;
     for (size_t i = 0; i < num_of_threads - 1; i++) {
-        auto temp = berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>>{ unmultipled_polynomial.begin() + cur_pos,
-            unmultipled_polynomial.begin() + cur_pos + factors_per_thread });
-        result.insert(result.end(), temp.begin(), temp.end());
+        threads[i] = JoiningThread([&result, &result_mutex, cur_pos, factors_per_thread, this]
+        (std::vector<std::pair<Polynom, long long>> const &unmultipled_polynomial) 
+            {
+            auto temp = berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>>{ unmultipled_polynomial.begin() + cur_pos,
+                unmultipled_polynomial.begin() + cur_pos + factors_per_thread });
+            std::lock_guard<std::mutex> guard(result_mutex);
+            result.insert(result.end(), temp.begin(), temp.end());
+            }, 
+            std::cref(unmultipled_polynomial));
+        threads[i].join();
+        cur_pos += factors_per_thread;
     }
 
     auto temp = berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>>{ unmultipled_polynomial.begin() + cur_pos,
         unmultipled_polynomial.end() });
+    result_mutex.lock();
     result.insert(result.end(), temp.begin(), temp.end());
+    result_mutex.unlock();
 
     return printFactorsByMultiplicity(result);
 }

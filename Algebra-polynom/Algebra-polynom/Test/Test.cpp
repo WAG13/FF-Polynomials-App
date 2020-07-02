@@ -746,6 +746,7 @@ TEST_CASE("Testing polynomial field [5^3]")
         REQUIRE(field.derivative(a).show() == "3 + 2*x + 2*x^2");
     }
 }
+
 TEST_CASE("Testing Berlekamp factorization algorithm")
 {
     std::vector<std::vector<long long>> polyVector = {{0,1}, {3,1}, {4,1}, {6,1}, {8,1}};
@@ -761,7 +762,26 @@ TEST_CASE("Testing Berlekamp factorization algorithm")
     }
 
     SUBCASE("Testing Berlekamp factorization") {
-        REQUIRE(polynom.berlekampAlgorithmMultithreaded() == "(1 + 1*x + 1*x^2) * (1 + 1*x + 1*x^4 + 1*x^5 + 1*x^6)");
+        REQUIRE(polynom.berlekampAlgorithm() == "(1 + 1*x + 1*x^2) * (1 + 1*x + 1*x^4 + 1*x^5 + 1*x^6)");
+    }
+
+    polyVector = { {5,3}, {6,2}, {7,2}, {11,4}, {12,2}, {13,2}, {14,3}, {16,3}, {17,3}, {18,4}, {19,3},
+        {20,2}, {22,3}, {23,4} };
+    Polynom polynom2(5, polyVector);
+
+    SUBCASE("Testing Berlekamp factorization 2") {
+        REQUIRE(polynom2.berlekampAlgorithm() == "4 * (4 + 1*x) * (3 + 1*x)^2 * (2 + 1*x)^3 * (1*x)^5 * (3 + 2*x + 1*x^2)^2 * (3 + 3*x + 1*x^2)^4");
+    }
+}
+
+TEST_CASE("Testing parallel Berlekamp factorization algorithm")
+{
+    std::vector<std::vector<long long>> polyVector = { {5,3}, {6,2}, {7,2}, {11,4}, {12,2}, {13,2}, {14,3}, {16,3}, {17,3}, {18,4}, {19,3},
+        {20,2}, {22,3}, {23,4} };
+    Polynom polynom(5, polyVector);
+
+    SUBCASE("Testing Berlekamp factorization") {
+        REQUIRE(polynom.berlekampAlgorithmMultithreaded() == "4 * (4 + 1*x) * (3 + 1*x)^2 * (2 + 1*x)^3 * (1*x)^5 * (3 + 2*x + 1*x^2)^2 * (3 + 3*x + 1*x^2)^4");
     }
 }
 
