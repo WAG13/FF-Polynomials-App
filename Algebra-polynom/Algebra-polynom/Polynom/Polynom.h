@@ -256,6 +256,8 @@ public:
     */
     std::string berlekampAlgorithmMultithreaded() const;
 
+    static Polynom generateRandomPoly(long long _prime, long long power, bool zero_coefs_allowed);
+
 protected:
     /*! #1
     * @brief Adding two polynomials in field

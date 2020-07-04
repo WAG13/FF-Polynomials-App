@@ -949,7 +949,7 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasi
                 if (replacement.size() > 1) {
                     current_num_of_factors--;
                     result[i].first.insert(result[i].first.begin() + j, replacement.begin(), replacement.end());
-                    j += replacement.size();
+                    j += replacement.size() - 1;
                     result[i].first.erase(result[i].first.begin() + j);
                     if (current_num_of_factors == total_num_of_factors) break;
                 }
@@ -957,8 +957,9 @@ std::vector<std::pair<std::vector<Polynom>, long long>> Polynom::factorizeByBasi
             }
 
             if (current_num_of_factors == total_num_of_factors) break;
-            basis_element_index++;
         }
+
+        basis_element_index++;
     }
 
     return result;
@@ -1012,7 +1013,8 @@ std::string Polynom::berlekampAlgorithmMultithreaded() const {
     copy.normalization();
     auto unmultipled_polynomial = copy.squareFreeDecomposition();
     
-    const unsigned long hardware_threads = std::thread::hardware_concurrency();
+    //const unsigned long hardware_threads = std::thread::hardware_concurrency();
+    const unsigned long hardware_threads = 4;
 
     if (hardware_threads == 0 || unmultipled_polynomial.size() == 1) {
         auto result = copy.berlekampAlgorithmMainCase(unmultipled_polynomial);
@@ -1045,7 +1047,7 @@ std::string Polynom::berlekampAlgorithmMultithreaded() const {
             result.insert(result.end(), temp.begin(), temp.end());
             }, 
             std::cref(unmultipled_polynomial));
-        threads[i].join();
+        //threads[i].join();
         cur_pos += factors_per_thread;
     }
 
@@ -1056,4 +1058,12 @@ std::string Polynom::berlekampAlgorithmMultithreaded() const {
     result_mutex.unlock();
 
     return printFactorsByMultiplicity(result);
+}
+
+Polynom Polynom::generateRandomPoly(long long _prime, long long power, bool zero_coefs_allowed) {
+    std::vector<long long> keys(power + 1);
+    for (size_t i = 0; i < keys.size(); i++) {
+        keys[i] = zero_coefs_allowed ? utils::getRandomKey(0, _prime - 1) : utils::getRandomKey(1, _prime - 1);
+    }
+    return Polynom(_prime, keys);
 }

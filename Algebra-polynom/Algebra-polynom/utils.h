@@ -1,10 +1,11 @@
 #pragma once
 
 #include <math.h>
-#include <utility>
-#include <string>
-#include <vector>
+#include <random>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace utils {
 	/* 1 string to coeff*/
@@ -68,4 +69,6 @@ namespace utils {
 		}
 		return result;
 	}
+
+	int getRandomKey(int min, int max);
 }
