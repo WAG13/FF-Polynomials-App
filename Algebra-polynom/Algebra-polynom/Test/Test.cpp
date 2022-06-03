@@ -8,7 +8,7 @@
 
 TEST_CASE("Polynomial")
 {
-    SUBCASE("Creating polynom")
+    SUBCASE("Creating polynomial")
     {
         Polynom polynomial1(3, {{0, 1}, {2, 2}});
         REQUIRE(polynomial1.show() == "1 + 2*x^2");
@@ -17,12 +17,12 @@ TEST_CASE("Polynomial")
         Polynom polynomial2(3, "1 + 2*x", 'x');
         REQUIRE(polynomial2.show() == "1 + 2*x");
     }
-    SUBCASE("Creating empty polynom")
+    SUBCASE("Creating empty polynomial")
     {
         Polynom polynomial(3, {3, 6});
         REQUIRE(polynomial.getHead() == nullptr);
     }
-    SUBCASE("Creating copy of polynom")
+    SUBCASE("Creating copy of polynomial")
     {
         Polynom polynomial(3, {1, 2});
         Polynom copy = polynomial;
@@ -32,7 +32,7 @@ TEST_CASE("Polynomial")
         copy = copy + polynomial;
         REQUIRE(polynomial.show() != copy.show());
     }
-    SUBCASE("Power of polynom")
+    SUBCASE("Power of polynomial")
     {
         Polynom poly1(3, {1, 3, 3});
         REQUIRE(poly1.getPolyPower() == 0);
@@ -41,7 +41,7 @@ TEST_CASE("Polynomial")
         Polynom poly3(3, {1, 1, 1});
         REQUIRE(poly3.getPolyPower() == 2);
     }
-    SUBCASE("Adding polynoms in Z[3]")
+    SUBCASE("Adding polynomials over Z_3[X]")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2 = poly1 + poly1;
@@ -49,14 +49,14 @@ TEST_CASE("Polynomial")
         REQUIRE(poly2.show() == "2 + 1*x");
         REQUIRE((poly1 + poly2).show() == "0");
     }
-    SUBCASE("Substract polynoms in Z[3]")
+    SUBCASE("Substract polynomials over Z_3[X]")
     {
         Polynom poly1(3, {1, 2});
         Polynom poly2(3, {2, 2});
         REQUIRE((poly1 - poly1).show() == "0");
         REQUIRE((poly1 - poly2).show() == "2");
     }
-    SUBCASE("Multiplicate polynoms in Z[3]")
+    SUBCASE("Multiplicate polynoms in Z_3[X]")
     {
         Polynom poly1(3, {1, 2});
         REQUIRE(poly1.show() == "1 + 2*x");
@@ -76,7 +76,7 @@ TEST_CASE("Polynomial")
         REQUIRE(polynomial.show() == "0");
     }
 
-    SUBCASE("GCD polynoms") {
+    SUBCASE("GCD of polynomials") {
 		Polynom pol1(3, { 4,0,3,3,3,1 });
 		Polynom pol2(3, { 1,2,0,1,1 });
 
@@ -230,7 +230,7 @@ TEST_CASE("Normalization")
     }
 }
 
-TEST_CASE("Definition valua at a point")
+TEST_CASE("Value at a point")
 {
     SUBCASE("First example")
     {
@@ -296,7 +296,7 @@ TEST_CASE("Roots amount")
     }
 }
 
-TEST_CASE("Polynom to the power of test") {
+TEST_CASE("Raising polynomial to the power") {
     SUBCASE("number") {
         Polynom x(10000, std::vector<long long>{ 2 });
         x = x.toThePower(13);
@@ -687,7 +687,7 @@ TEST_CASE("Check if the polynomial is irreducible")
 }
 
 
-TEST_CASE("Testing polynomial field [3^2]")
+TEST_CASE("Testing Galois Field of polynomials over GF(3) defined by irreducible polynomial of power 2")
 {
     GaloisField field(3, 2);
     Polynom a(3, { 1, 2 });
@@ -717,7 +717,7 @@ TEST_CASE("Testing polynomial field [3^2]")
     }
 }
 
-TEST_CASE("Testing polynomial field [5^3]")
+TEST_CASE("Testing Galois Field of polynomials over GF(5) defined by irreducible polynomial of power 3")
 {
     GaloisField field(5, 3);
     Polynom a(5, { 2, 3, 1, 4, 0, 1 });

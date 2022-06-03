@@ -14,13 +14,13 @@
 #include "../Matrix/Matrix.h"
 
 /*!
-  * @brief class Polynom that describes polynomial
+  * @brief class Polynom that describes polynomial in a ring GF(p)[X]
   * @details 
-  * polynomials in field p (p - prime)
+  * polynomials over field GF(p) (p is prime)
   * coefficient             by (mod p)
-  * power of this polinom -         n
-  * Every object contains with terms (PolyTerm)
-  * Every structure "PolyTerm" have objects that contains fields "key" and "next"
+  * power of the polynomial -         n
+  * Every object consists of terms (PolyTerm)
+  * Every structure "PolyTerm" has fields "key" and "next"
   * key - coefficient of term
   * next - pointer to next object of structure "PolyTerm"
   */
@@ -28,12 +28,12 @@ class Polynom
 {
 private:
     long long prime; // p
-    // Structure that describes term of Polynom
+    // Structure that describes a single term of the polynomial
     struct PolyTerm
     {
-        long long key;  // Coefficient of terms of polynomial
-        long long pow;  // Power of term
-        PolyTerm *next; // Pointer to next term
+        long long key;  // Coefficient of the term
+        long long pow;  // Power of the term
+        PolyTerm *next; // Pointer to the next term
 
         /*destructor*/
         ~PolyTerm()
@@ -91,13 +91,13 @@ public:
         return nullptr;
     }
     long long getTermKey(long long pow) const
-    { //retuns coef of a term by its power
+    { //retuns coef of the term by its power
         PolyTerm *term = getTerm(pow);
         if (term)
             return term->key;
         return 0;
     }
-    // return power of a field
+    // returns power of the field
     long long getPrime() const { return prime; }
     void setHead(PolyTerm *_head) { head = _head; }
     void setPrime(long long _prime) { prime = _prime; }
@@ -116,8 +116,14 @@ public:
         tmp = nullptr;
     };
 
+    /*!
+     * @brief Returns string representation of the polynomial
+     */
     std::string show() const;
-    // return power of a polinomial
+
+    /*!
+     * @brief Returns power of the polynomial
+     */
     long long getPolyPower() const
     {
         long long pow = 0;
@@ -134,80 +140,114 @@ public:
         }
         return pow;
     }
+
     // Creates new term (PolyTerm) with coefficient val
     PolyTerm *makeItem(long long pow, long long val);
-    // Adding term to the polynom in non-descending order
+    // Adding term to the polynomial in non-descending order
     void addItem(PolyTerm *el);
 
-    /** #1      @author Daryna Bondarets    **/
     /*! #1
-    * @brief Adding two polynomials in field
-    */
+     * @author Daryna Bondarets
+     * @brief Adds polynomials over the field
+     */
     friend Polynom operator+(Polynom const &p1, Polynom const &p2);
+    
     /*! #1
-    * @brief Difference of two polynomials in field
-    */
+     * @author Daryna Bondarets
+     * @brief Finds difference of polynomials over the field
+     */
     friend Polynom operator-(Polynom const &p1, Polynom const &p2);
+    
     /*! #1
-    * @brief Multiplication of two polynomials in field
-    */
+     * @author Daryna Bondarets
+     * @brief Multiplies polynomials over the field
+     */
     friend Polynom operator*(Polynom const &p1, Polynom const &p2);
+    
     /*! #1
-    * @brief Multiplicates polynomial in field on integer
-    */
+     * @author Daryna Bondarets
+     * @brief Multiplies a polynomial on an integer constant over the field
+     */
     friend Polynom operator*(Polynom const &p, long long const &number);
     friend Polynom operator*(long long const &number, Polynom const &p);
-
-    /* #6
-	* @brief Divides polynomial in field
-	*/
+    
+    /*! #6
+     * @author Daryna Bondarets
+	 * @brief Divides polynomials over the field
+	 */
     friend Polynom operator/(Polynom const &p1, Polynom const &p2);
-    /* #6
-	* @brief Get rest from the divison of polinomials
-	*/
+    
+    /*! #6
+     * @author Daryna Bondarets
+	 * @brief Takes the remainder of a division of polynomials over the field
+	 */
     friend Polynom operator%(Polynom const &p1, Polynom const &p2);
-    /** #2      @author Darik Ivashyn    **/
-    //...
+    
+    /*! #2
+     * @author Darik Ivashyn
+	 * @brief Takes the derivative of the polynomial
+	 */
     Polynom derivative() const;
+    
+    /*! #2
+     * @author Darik Ivashyn
+	 * @brief Calculates the value of the polynomial at a given point
+	 */
     long long valueAtPoint(long long x) const;
+    
+    /*! #2
+     * @author Darik Ivashyn
+	 * @brief Normalization of the polynomial
+	 */
     void normalization();
 
-    /** #3      @author Karina Masol & Yuriy Momotenko     **/
-    //Finding roots of the polynomial
+    /*! #3
+     * @author Karina Masol & Yuriy Momotenko
+	 * @brief Finds roots of the polynomial
+	 */
     std::vector<Polynom> findRoots();
-    //bringing polynomial to the power
+    
+    /*! #3
+     * @author Karina Masol & Yuriy Momotenko
+	 * @brief Raises the polynomial to a given power
+	 */
     Polynom toThePower(long long pow) const;
-    //get instead of polynom f(x) - polynom f(x-b)
+    
+    /*! #3
+     * @author Karina Masol & Yuriy Momotenko
+	 * @brief Gets a polynomial of the form f(x-b)
+	 */
     Polynom getWithOtherParameter(long long b) const;
 
-    /** #4      @author Yana Skyrda    **/
     /*! #4
-    * @brief This function implements algorithm  for finding number of roots for polynomial
-    *        in accordance with Konig-Rados theorem
-    */
+     * @author Yana Skyrda 
+     * @brief Implements an algorithm for finding number of roots for polynomial
+     *        in accordance with Konig-Rados theorem
+     */
     long long rootsNumber();
 
-    /** #7      @author Nikita Pupov    **/
     /*! #7
-	* @brief This method calculates greatest common divisor of two polynoms
-	*/
+     * @author Nikita Pupov
+	 * @brief Calculates the greatest common divisor of two polynomials
+	 */
     Polynom gcd(const Polynom& other);
 
     /* #9
-    * @brief Equal operator
-    */
+     * @author Nikita Pupov
+     * @brief Equality operator
+     */
     friend bool operator==(Polynom const &p1, Polynom const &p2);
 
-    /** #9      @author Rostyslav Mochulskyi   **/
     /*! #9
-    * @brief This method calculates nth cyclotomic polynomial
-    */
+     * @author Rostyslav Mochulskyi
+     * @brief Calculates n-th cyclotomic polynomial
+     */
     static Polynom CyclotomicPolynomial(int prime, int n);
 
     /*! #10
      * @author Hryshchenko Yurii
      * @brief Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials
-     * @param amount If maxCount > 0, finds "maxCount" factors at most, otherwise finds all factors.
+     * @param amount If maxCount > 0, finds "maxCount" factors at most, otherwise finds all factors
      */
     std::vector<Polynom> factorizeCyclotomicRi(size_t n, size_t maxCount = 0);
 
@@ -238,77 +278,82 @@ public:
      */
     bool isIrreducible();
 
-    /*! @author Medynskyi Mykola
-    * @brief Finds berlekamp matrix
-    * @return berlekamp matrix
-    */
+    /*! @author Medynskyi Mykola, Pashchenko Dmytro
+     * @brief Finds Berlekamp matrix
+     * @return Berlekamp matrix
+     */
     Matrix buildBerlekampMatrix() const;
 
     /*! @author Medynskyi Mykola, Pashchenko Dmytro
-    * @brief factorizes polynomial by Berlekamp algorithm
-    * @return string with factorized polinomial
-    */
+     * @brief Factorizes the polynomial via Berlekamp algorithm
+     * @return String representation of the factorized polynomial
+     */
     std::string berlekampAlgorithm() const;
 
 protected:
-    /*! #1
-    * @brief Adding two polynomials in field
-    */
+    /* #1
+     * @brief Adds polynomials over the field
+     */
     Polynom addPoly(Polynom const &p1, Polynom const &p2);
-    /*! #1
-    * @brief Difference of two polynomials in field
-    */
+    
+    /* #1
+     * @brief Finds difference of polynomials over the field
+     */
     Polynom diffPoly(Polynom const &p1, Polynom const &p2);
-    /*! #1
-    * @brief Multiplication of two polynomials in field
-    */
+    
+    /* #1
+     * @brief Multiplies polynomials over the field
+     */
     Polynom multPoly(Polynom const &p1, Polynom const &p2);
-    /*! #1
-    * @brief Multiplication of two polynomials in field with power=1
-    */
+    
+    /* #1
+     * @brief Multiplies polynomials over the field with power=1
+     */
     Polynom multSimple(Polynom const &p1, Polynom const &p2);
-    /*! #1
-    * @brief Multiplicates polynomial in field on integer
-    */
+    
+    /* #1
+     * @brief Multiplies polynomial on an integer constant over the field
+     */
     Polynom multNumber(Polynom const &p, long long const &number);
 
-    /*! #6
-	* @brief Multiplication of two polynomials in field 
-	*/
+    /* #6
+	 * @brief Multiplies polynomials over the field 
+	 */
     Polynom multPolyforDivide(Polynom const &p1, Polynom const &p2);
+    
     /*! #6
-	* @brief Division
-	*/
+	 * @brief Divides polynomials over the field
+	 */
     std::pair<Polynom, Polynom> simple_division(Polynom const &p1, Polynom const &p2) const;
 
     /*! @author  Datsiuk Vitaliy, Medynskyi Mykola
-    * @brief Computes the square free decomposition of the given polynomial. Returns a
-    * list of pairs. The first element of the pair is a factor of the given
-    * polynomial, and the second, its multiplicity.
-    * @return vector of pairs<Polynom, int>
-    */
+     * @brief Computes the square free decomposition of the given polynomial
+     * list of pairs. The first element of the pair is a factor of the given
+     * polynomial, and the second, its multiplicity.
+     * @return std:vector of pairs<Polynom, int>
+     */
     std::vector<std::pair<Polynom, long long>> squareFreeDecomposition() const;
 
     /*! @author Medynskyi Mykola
-    * @brief Finds pth root of given polynom
-    * @return polynom
-    */
+     * @brief Finds pth root of a given polynomial
+     * @return Polynomial
+     */
     Polynom pthRoot(Polynom f);
 
     std::vector<std::pair<std::vector<Polynom>, long long>> berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>> const& unmultiple_factors) const;
 
     /*! @author Pashchenko Dmytro
-    * @brief builds polynomial basis of solution space of comparison system h^p = h (mod f)
-    * @return basis polynomials
-    */
+     * @brief Builds polynomial basis of solution space of comparison system h^p = h (mod f)
+     * @return Basis polynomials
+     */
     std::vector<Polynom> getComparisonSystemSolutionBasis() const;
 
     std::vector<std::pair<Polynom, long long>> sort_polynomials_by_power(std::vector<std::pair<std::vector<Polynom>, long long>> const& polynomials) const;
 
     /*! @author Pashchenko Dmytro
-    * @brief factorizes unmultiple factors using basis polynomials (f = Ï(gcd(f, h - a)))
-    * @return massive with pairs "polynomials, their multiplicity"
-    */
+     * @brief Factorizes unmultiple factors using basis polynomials (f = ï¿½(gcd(f, h - a)))
+     * @return std::vector of pairs "polynomials, their multiplicity"
+     */
     std::vector<std::pair<std::vector<Polynom>, long long>> factorizeByBasisPolynomials(std::vector<std::pair<Polynom, long long>> const &unmultiple_factors, 
         std::vector<Polynom> const &basis) const;
 };
