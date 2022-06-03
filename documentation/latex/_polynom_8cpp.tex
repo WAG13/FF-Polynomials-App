@@ -1,0 +1,94 @@
+\hypertarget{_polynom_8cpp}{}\doxysection{Polynom/\+Polynom.cpp File Reference}
+\label{_polynom_8cpp}\index{Polynom/Polynom.cpp@{Polynom/Polynom.cpp}}
+
+
+Implementation of class \mbox{\hyperlink{class_polynom}{Polynom}}.  
+
+
+{\ttfamily \#include \char`\"{}Polynom.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{_polynom_8cpp_a1a21bd3e10ee759daa28bc6a2d647ca6}{operator+}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&pol1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&pol2)
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{_polynom_8cpp_a7da2ec8ea25b9306d03eedcc948b53e1}{operator-\/}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&pol1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&pol2)
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{_polynom_8cpp_abe5e0496099f7441d875328ff3dd9c69}{operator$\ast$}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&pol1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&pol2)
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{_polynom_8cpp_ac03a30bd643a2d9bd59e9a54d72af204}{operator$\ast$}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p, long long const \&number)
+\item 
+\mbox{\Hypertarget{_polynom_8cpp_ae42a152cc64e75499afaa52256b3072a}\label{_polynom_8cpp_ae42a152cc64e75499afaa52256b3072a}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries operator$\ast$} (long long const \&number, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p)
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{_polynom_8cpp_aac4fe7aec1dcd51b70dee868df71ac94}{operator/}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{_polynom_8cpp_a4f28b17207e376e6ea1d175041ec704d}{operator\%}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\item 
+\mbox{\Hypertarget{_polynom_8cpp_a5930965b8a002ab96a46044488f3ce14}\label{_polynom_8cpp_a5930965b8a002ab96a46044488f3ce14}} 
+bool {\bfseries operator==} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of class \mbox{\hyperlink{class_polynom}{Polynom}}. 
+
+Functional of polynomial 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_polynom_8cpp_a4f28b17207e376e6ea1d175041ec704d}\label{_polynom_8cpp_a4f28b17207e376e6ea1d175041ec704d}} 
+\index{Polynom.cpp@{Polynom.cpp}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!Polynom.cpp@{Polynom.cpp}}
+\doxysubsubsection{\texorpdfstring{operator\%()}{operator\%()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator\% (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption})}
+
+\#6 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{_polynom_8cpp_ac03a30bd643a2d9bd59e9a54d72af204}\label{_polynom_8cpp_ac03a30bd643a2d9bd59e9a54d72af204}} 
+\index{Polynom.cpp@{Polynom.cpp}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Polynom.cpp@{Polynom.cpp}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator$\ast$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p,  }\item[{long long const \&}]{number }\end{DoxyParamCaption})}
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{_polynom_8cpp_abe5e0496099f7441d875328ff3dd9c69}\label{_polynom_8cpp_abe5e0496099f7441d875328ff3dd9c69}} 
+\index{Polynom.cpp@{Polynom.cpp}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Polynom.cpp@{Polynom.cpp}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator$\ast$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{pol1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{pol2 }\end{DoxyParamCaption})}
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{_polynom_8cpp_a1a21bd3e10ee759daa28bc6a2d647ca6}\label{_polynom_8cpp_a1a21bd3e10ee759daa28bc6a2d647ca6}} 
+\index{Polynom.cpp@{Polynom.cpp}!operator+@{operator+}}
+\index{operator+@{operator+}!Polynom.cpp@{Polynom.cpp}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{pol1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{pol2 }\end{DoxyParamCaption})}
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{_polynom_8cpp_a7da2ec8ea25b9306d03eedcc948b53e1}\label{_polynom_8cpp_a7da2ec8ea25b9306d03eedcc948b53e1}} 
+\index{Polynom.cpp@{Polynom.cpp}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Polynom.cpp@{Polynom.cpp}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator-\/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{pol1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{pol2 }\end{DoxyParamCaption})}
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{_polynom_8cpp_aac4fe7aec1dcd51b70dee868df71ac94}\label{_polynom_8cpp_aac4fe7aec1dcd51b70dee868df71ac94}} 
+\index{Polynom.cpp@{Polynom.cpp}!operator/@{operator/}}
+\index{operator/@{operator/}!Polynom.cpp@{Polynom.cpp}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption})}
+
+\#6 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}

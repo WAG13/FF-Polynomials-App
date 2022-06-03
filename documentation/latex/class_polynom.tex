@@ -1,0 +1,552 @@
+\hypertarget{class_polynom}{}\doxysection{Polynom Class Reference}
+\label{class_polynom}\index{Polynom@{Polynom}}
+
+
+class \mbox{\hyperlink{class_polynom}{Polynom}} that describes polynomial in a ring GF(p)\mbox{[}X\mbox{]}  
+
+
+
+
+{\ttfamily \#include $<$Polynom.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_polynom_a16512c1d9f829f9a06e76c4ad90568d6}\label{class_polynom_a16512c1d9f829f9a06e76c4ad90568d6}} 
+{\bfseries Polynom} (long long \+\_\+prime, std\+::vector$<$ long long $>$ keys)
+\item 
+\mbox{\Hypertarget{class_polynom_a0f03ba7f0c9edc428dd6a2de7a9c5bee}\label{class_polynom_a0f03ba7f0c9edc428dd6a2de7a9c5bee}} 
+{\bfseries Polynom} (long long \+\_\+prime, std\+::vector$<$ std\+::vector$<$ long long $>$ $>$ keys)
+\item 
+\mbox{\Hypertarget{class_polynom_a579e54abf131ed4ef3ae8db28ebbcd70}\label{class_polynom_a579e54abf131ed4ef3ae8db28ebbcd70}} 
+{\bfseries Polynom} (long long \+\_\+prime, std\+::string polynom, char X)
+\item 
+\mbox{\Hypertarget{class_polynom_aa21c1ac9b93da0f8ab70108ebaa7c59e}\label{class_polynom_aa21c1ac9b93da0f8ab70108ebaa7c59e}} 
+{\bfseries Polynom} (const \mbox{\hyperlink{class_polynom}{Polynom}} \&other)
+\item 
+\mbox{\Hypertarget{class_polynom_a365624c6a33ac8b41f31ff3928f8bc4a}\label{class_polynom_a365624c6a33ac8b41f31ff3928f8bc4a}} 
+{\bfseries Polynom} (\mbox{\hyperlink{class_polynom}{Polynom}} \&\&other) noexcept
+\item 
+\mbox{\Hypertarget{class_polynom_ae3bf0047209320ad17028c39451585c1}\label{class_polynom_ae3bf0047209320ad17028c39451585c1}} 
+Poly\+Term $\ast$ {\bfseries get\+Head} () const
+\item 
+\mbox{\Hypertarget{class_polynom_ac7119ee24f2cb1607898bc457c6f9913}\label{class_polynom_ac7119ee24f2cb1607898bc457c6f9913}} 
+Poly\+Term $\ast$ {\bfseries get\+Term} (long long pow) const
+\item 
+\mbox{\Hypertarget{class_polynom_a26bfe756714d07e4ceb34fd8278e3d7b}\label{class_polynom_a26bfe756714d07e4ceb34fd8278e3d7b}} 
+long long {\bfseries get\+Term\+Key} (long long pow) const
+\item 
+\mbox{\Hypertarget{class_polynom_a4e8b117fadd877c3ffc68c550ce5db33}\label{class_polynom_a4e8b117fadd877c3ffc68c550ce5db33}} 
+long long {\bfseries get\+Prime} () const
+\item 
+\mbox{\Hypertarget{class_polynom_a637f96813c0d43a0fa05b56689076ebb}\label{class_polynom_a637f96813c0d43a0fa05b56689076ebb}} 
+void {\bfseries set\+Head} (Poly\+Term $\ast$\+\_\+head)
+\item 
+\mbox{\Hypertarget{class_polynom_ac366a4bc78a52f4d22cde781dc305a4b}\label{class_polynom_ac366a4bc78a52f4d22cde781dc305a4b}} 
+void {\bfseries set\+Prime} (long long \+\_\+prime)
+\item 
+\mbox{\Hypertarget{class_polynom_a521c241d2b5309b9dcc7dc7853d8dcdc}\label{class_polynom_a521c241d2b5309b9dcc7dc7853d8dcdc}} 
+void {\bfseries operator=} (const \mbox{\hyperlink{class_polynom}{Polynom}} \&other)
+\item 
+\mbox{\Hypertarget{class_polynom_a60ea0da2e9f544a6a46856af404c849d}\label{class_polynom_a60ea0da2e9f544a6a46856af404c849d}} 
+std\+::string {\bfseries show} () const
+\begin{DoxyCompactList}\small\item\em Returns string representation of the polynomial. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynom_a95db01f9c9dd1ee8b2f2257de426f6fe}\label{class_polynom_a95db01f9c9dd1ee8b2f2257de426f6fe}} 
+long long {\bfseries get\+Poly\+Power} () const
+\begin{DoxyCompactList}\small\item\em Returns power of the polynomial. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynom_a028f0d9f988c9aabc8f75ffdaa10ccb5}\label{class_polynom_a028f0d9f988c9aabc8f75ffdaa10ccb5}} 
+Poly\+Term $\ast$ {\bfseries make\+Item} (long long pow, long long val)
+\item 
+\mbox{\Hypertarget{class_polynom_ad79c6a51edce7f09233620cf0fe5d580}\label{class_polynom_ad79c6a51edce7f09233620cf0fe5d580}} 
+void {\bfseries add\+Item} (Poly\+Term $\ast$el)
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a1bc0d9ca9f6d12fdf7107905bce3863a}{derivative}} () const
+\begin{DoxyCompactList}\small\item\em Takes the derivative of the polynomial. \end{DoxyCompactList}\item 
+long long \mbox{\hyperlink{class_polynom_a41887212561aa5eb5d12efc754614be5}{value\+At\+Point}} (long long x) const
+\begin{DoxyCompactList}\small\item\em Calculates the value of the polynomial at a given point. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_polynom_ad52d7f2bd55a5c9ec383fc5b8a9a3f0c}{normalization}} ()
+\begin{DoxyCompactList}\small\item\em Normalization of the polynomial. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ \mbox{\hyperlink{class_polynom_a82a9096c5ac399475da9ef6c8db4308e}{find\+Roots}} ()
+\begin{DoxyCompactList}\small\item\em Finds roots of the polynomial. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_affa8952f0ebc210447b236d68a966c97}{to\+The\+Power}} (long long pow) const
+\begin{DoxyCompactList}\small\item\em Raises the polynomial to a given power. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a5906613f3285233fbf85c369d702f7b8}{get\+With\+Other\+Parameter}} (long long b) const
+\begin{DoxyCompactList}\small\item\em Gets a polynomial of the form f(x-\/b) \end{DoxyCompactList}\item 
+long long \mbox{\hyperlink{class_polynom_ae3168e90ae04c1ae8ffa273bb7ffdab7}{roots\+Number}} ()
+\begin{DoxyCompactList}\small\item\em Implements an algorithm for finding number of roots for polynomial in accordance with Konig-\/\+Rados theorem. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_adef28314808b5a47921892d52f0942ad}{gcd}} (const \mbox{\hyperlink{class_polynom}{Polynom}} \&other)
+\begin{DoxyCompactList}\small\item\em Calculates the greatest common divisor of two polynomials. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ \mbox{\hyperlink{class_polynom_aa78756e6f2fd0b4dbb5c8d378b3cdbdf}{factorize\+Cyclotomic\+Ri}} (size\+\_\+t n, size\+\_\+t max\+Count=0)
+\begin{DoxyCompactList}\small\item\em Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_polynom_a7d6e66904cc292685832be9ff342aa92}{is\+Irreducible}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the polynomial is irreducible. \end{DoxyCompactList}\item 
+Matrix \mbox{\hyperlink{class_polynom_a69e3a79d16ab557304982ace2aefa6fd}{build\+Berlekamp\+Matrix}} () const
+\begin{DoxyCompactList}\small\item\em Finds Berlekamp matrix. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_polynom_ae41661dc15ccc567e5dda1cd49b6294d}{berlekamp\+Algorithm}} () const
+\begin{DoxyCompactList}\small\item\em Factorizes the polynomial via Berlekamp algorithm. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a07c4f22627262c33b16487d004ca2105}{Cyclotomic\+Polynomial}} (int prime, int n)
+\begin{DoxyCompactList}\small\item\em Calculates n-\/th cyclotomic polynomial. \end{DoxyCompactList}\item 
+static std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ \mbox{\hyperlink{class_polynom_a153e95daa4a4a37055b778d0ae3c7a97}{all\+Irreducible\+Polynomials}} (long long prime, long long n)
+\begin{DoxyCompactList}\small\item\em Finds all irreducible polynomials of degree n. \end{DoxyCompactList}\item 
+static std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ \mbox{\hyperlink{class_polynom_a3d51bf6b52a584dbc39eb1a6c6fe3743}{n\+Irreducible\+Polynomials}} (long long prime, long long n, int size)
+\begin{DoxyCompactList}\small\item\em Finds \char`\"{}size\char`\"{} irreducible polynomials of degree n. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a472bf0d92ac96b98becc207cd2f5a332}{find\+Irreducible\+Polynomial}} (long long prime, long long n)
+\begin{DoxyCompactList}\small\item\em Finds one irreducible polynomial of degree n. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_polynom_a33c7bd121c3661853bdd24c64e641ac0}\label{class_polynom_a33c7bd121c3661853bdd24c64e641ac0}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries add\+Poly} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\item 
+\mbox{\Hypertarget{class_polynom_a765c629fdab649b0aca70704e0dd301b}\label{class_polynom_a765c629fdab649b0aca70704e0dd301b}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries diff\+Poly} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\item 
+\mbox{\Hypertarget{class_polynom_aea1c7960d4fceed4025d68cb4d1473af}\label{class_polynom_aea1c7960d4fceed4025d68cb4d1473af}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries mult\+Poly} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\item 
+\mbox{\Hypertarget{class_polynom_a049867b79953143f7765e037aff904ab}\label{class_polynom_a049867b79953143f7765e037aff904ab}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries mult\+Simple} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\item 
+\mbox{\Hypertarget{class_polynom_a22a53e5d681cddee92608774a1d8f155}\label{class_polynom_a22a53e5d681cddee92608774a1d8f155}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries mult\+Number} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p, long long const \&number)
+\item 
+\mbox{\Hypertarget{class_polynom_ae461ac56af25b93529f280037ee0ce41}\label{class_polynom_ae461ac56af25b93529f280037ee0ce41}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries mult\+Polyfor\+Divide} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\item 
+std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, \mbox{\hyperlink{class_polynom}{Polynom}} $>$ \mbox{\hyperlink{class_polynom_a5f3f56bad53af919f9108d9439fb6a76}{simple\+\_\+division}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2) const
+\begin{DoxyCompactList}\small\item\em Divides polynomials over the field. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, long long $>$ $>$ \mbox{\hyperlink{class_polynom_aa963177446c4b4c9fda92a3275c22a9a}{square\+Free\+Decomposition}} () const
+\begin{DoxyCompactList}\small\item\em Computes the square free decomposition of the given polynomial list of pairs. The first element of the pair is a factor of the given polynomial, and the second, its multiplicity. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_abb2070db741f97d411a3178090e267cd}{pth\+Root}} (\mbox{\hyperlink{class_polynom}{Polynom}} f)
+\begin{DoxyCompactList}\small\item\em Finds pth root of a given polynomial. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynom_afda1019ce33761b51b19b2dc29a4684f}\label{class_polynom_afda1019ce33761b51b19b2dc29a4684f}} 
+std\+::vector$<$ std\+::pair$<$ std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$, long long $>$ $>$ {\bfseries berlekamp\+Algorithm\+Main\+Case} (std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, long long $>$ $>$ const \&unmultiple\+\_\+factors) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ \mbox{\hyperlink{class_polynom_a0371ceecd9fa4219ec7d3ff6dd5340d9}{get\+Comparison\+System\+Solution\+Basis}} () const
+\begin{DoxyCompactList}\small\item\em Builds polynomial basis of solution space of comparison system h$^\wedge$p = h (mod f) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynom_a9c3380920ec8bc17dab48406c4d36907}\label{class_polynom_a9c3380920ec8bc17dab48406c4d36907}} 
+std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, long long $>$ $>$ {\bfseries sort\+\_\+polynomials\+\_\+by\+\_\+power} (std\+::vector$<$ std\+::pair$<$ std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$, long long $>$ $>$ const \&polynomials) const
+\item 
+std\+::vector$<$ std\+::pair$<$ std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$, long long $>$ $>$ \mbox{\hyperlink{class_polynom_a6d992f320a563d39c308215b63551b7b}{factorize\+By\+Basis\+Polynomials}} (std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, long long $>$ $>$ const \&unmultiple\+\_\+factors, std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ const \&basis) const
+\begin{DoxyCompactList}\small\item\em Factorizes unmultiple factors using basis polynomials (f = {\ucr}(gcd(f, h -\/ a))) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a5c0a9bf66e7ad99ca2652b3aabb5d79a}{operator+}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\begin{DoxyCompactList}\small\item\em Adds polynomials over the field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a856ec556234c757ff4c6d2879355ebdd}{operator-\/}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\begin{DoxyCompactList}\small\item\em Finds difference of polynomials over the field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a23188d2078938ed5d1da22936db9c409}{operator$\ast$}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\begin{DoxyCompactList}\small\item\em Multiplies polynomials over the field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_ac03a30bd643a2d9bd59e9a54d72af204}{operator$\ast$}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p, long long const \&number)
+\begin{DoxyCompactList}\small\item\em Multiplies a polynomial on an integer constant over the field. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynom_ae42a152cc64e75499afaa52256b3072a}\label{class_polynom_ae42a152cc64e75499afaa52256b3072a}} 
+\mbox{\hyperlink{class_polynom}{Polynom}} {\bfseries operator$\ast$} (long long const \&number, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p)
+\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_aac4fe7aec1dcd51b70dee868df71ac94}{operator/}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\begin{DoxyCompactList}\small\item\em Divides polynomials over the field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a4f28b17207e376e6ea1d175041ec704d}{operator\%}} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\begin{DoxyCompactList}\small\item\em Takes the remainder of a division of polynomials over the field. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polynom_a5930965b8a002ab96a46044488f3ce14}\label{class_polynom_a5930965b8a002ab96a46044488f3ce14}} 
+bool {\bfseries operator==} (\mbox{\hyperlink{class_polynom}{Polynom}} const \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} const \&p2)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+class \mbox{\hyperlink{class_polynom}{Polynom}} that describes polynomial in a ring GF(p)\mbox{[}X\mbox{]} 
+
+polynomials over field GF(p) (p is prime) coefficient by (mod p) power of the polynomial -\/ n Every object consists of terms (Poly\+Term) Every structure \char`\"{}\+Poly\+Term\char`\"{} has fields \char`\"{}key\char`\"{} and \char`\"{}next\char`\"{} key -\/ coefficient of term next -\/ pointer to next object of structure \char`\"{}\+Poly\+Term\char`\"{} 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_polynom_a153e95daa4a4a37055b778d0ae3c7a97}\label{class_polynom_a153e95daa4a4a37055b778d0ae3c7a97}} 
+\index{Polynom@{Polynom}!allIrreduciblePolynomials@{allIrreduciblePolynomials}}
+\index{allIrreduciblePolynomials@{allIrreduciblePolynomials}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{allIrreduciblePolynomials()}{allIrreduciblePolynomials()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ Polynom\+::all\+Irreducible\+Polynomials (\begin{DoxyParamCaption}\item[{long long}]{prime,  }\item[{long long}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Finds all irreducible polynomials of degree n. 
+
+\#12 \begin{DoxyAuthor}{Author}
+Vladyslav Prokopchuk 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+Vector of all irreducible polynomials of degree n 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_ae41661dc15ccc567e5dda1cd49b6294d}\label{class_polynom_ae41661dc15ccc567e5dda1cd49b6294d}} 
+\index{Polynom@{Polynom}!berlekampAlgorithm@{berlekampAlgorithm}}
+\index{berlekampAlgorithm@{berlekampAlgorithm}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{berlekampAlgorithm()}{berlekampAlgorithm()}}
+{\footnotesize\ttfamily std\+::string Polynom\+::berlekamp\+Algorithm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Factorizes the polynomial via Berlekamp algorithm. 
+
+\begin{DoxyAuthor}{Author}
+Medynskyi Mykola, Pashchenko Dmytro 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+String representation of the factorized polynomial 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_a69e3a79d16ab557304982ace2aefa6fd}\label{class_polynom_a69e3a79d16ab557304982ace2aefa6fd}} 
+\index{Polynom@{Polynom}!buildBerlekampMatrix@{buildBerlekampMatrix}}
+\index{buildBerlekampMatrix@{buildBerlekampMatrix}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{buildBerlekampMatrix()}{buildBerlekampMatrix()}}
+{\footnotesize\ttfamily Matrix Polynom\+::build\+Berlekamp\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Finds Berlekamp matrix. 
+
+\begin{DoxyAuthor}{Author}
+Medynskyi Mykola, Pashchenko Dmytro 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+Berlekamp matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_a07c4f22627262c33b16487d004ca2105}\label{class_polynom_a07c4f22627262c33b16487d004ca2105}} 
+\index{Polynom@{Polynom}!CyclotomicPolynomial@{CyclotomicPolynomial}}
+\index{CyclotomicPolynomial@{CyclotomicPolynomial}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{CyclotomicPolynomial()}{CyclotomicPolynomial()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} Polynom\+::\+Cyclotomic\+Polynomial (\begin{DoxyParamCaption}\item[{int}]{prime,  }\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Calculates n-\/th cyclotomic polynomial. 
+
+\#9 \begin{DoxyAuthor}{Author}
+Rostyslav Mochulskyi 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a1bc0d9ca9f6d12fdf7107905bce3863a}\label{class_polynom_a1bc0d9ca9f6d12fdf7107905bce3863a}} 
+\index{Polynom@{Polynom}!derivative@{derivative}}
+\index{derivative@{derivative}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{derivative()}{derivative()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} Polynom\+::derivative (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Takes the derivative of the polynomial. 
+
+\#2 \begin{DoxyAuthor}{Author}
+Darik Ivashyn 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a6d992f320a563d39c308215b63551b7b}\label{class_polynom_a6d992f320a563d39c308215b63551b7b}} 
+\index{Polynom@{Polynom}!factorizeByBasisPolynomials@{factorizeByBasisPolynomials}}
+\index{factorizeByBasisPolynomials@{factorizeByBasisPolynomials}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{factorizeByBasisPolynomials()}{factorizeByBasisPolynomials()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$, long long $>$ $>$ Polynom\+::factorize\+By\+Basis\+Polynomials (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, long long $>$ $>$ const \&}]{unmultiple\+\_\+factors,  }\item[{std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ const \&}]{basis }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Factorizes unmultiple factors using basis polynomials (f = {\ucr}(gcd(f, h -\/ a))) 
+
+\begin{DoxyAuthor}{Author}
+Pashchenko Dmytro 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+std\+::vector of pairs \char`\"{}polynomials, their multiplicity\char`\"{} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_aa78756e6f2fd0b4dbb5c8d378b3cdbdf}\label{class_polynom_aa78756e6f2fd0b4dbb5c8d378b3cdbdf}} 
+\index{Polynom@{Polynom}!factorizeCyclotomicRi@{factorizeCyclotomicRi}}
+\index{factorizeCyclotomicRi@{factorizeCyclotomicRi}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{factorizeCyclotomicRi()}{factorizeCyclotomicRi()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ Polynom\+::factorize\+Cyclotomic\+Ri (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n,  }\item[{size\+\_\+t}]{max\+Count = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Gets irreducible factors of nth cyclomotic polynomial using Ri polynomials. 
+
+\#10 \begin{DoxyAuthor}{Author}
+Hryshchenko Yurii 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & If max\+Count \texorpdfstring{$>$}{>} 0, finds \char`\"{}max\+Count\char`\"{} factors at most, otherwise finds all factors \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_polynom_a472bf0d92ac96b98becc207cd2f5a332}\label{class_polynom_a472bf0d92ac96b98becc207cd2f5a332}} 
+\index{Polynom@{Polynom}!findIrreduciblePolynomial@{findIrreduciblePolynomial}}
+\index{findIrreduciblePolynomial@{findIrreduciblePolynomial}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{findIrreduciblePolynomial()}{findIrreduciblePolynomial()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} Polynom\+::find\+Irreducible\+Polynomial (\begin{DoxyParamCaption}\item[{long long}]{prime,  }\item[{long long}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Finds one irreducible polynomial of degree n. 
+
+\#12 \begin{DoxyAuthor}{Author}
+Vladyslav Prokopchuk 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+Irreducible polynomial of degree n 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_a82a9096c5ac399475da9ef6c8db4308e}\label{class_polynom_a82a9096c5ac399475da9ef6c8db4308e}} 
+\index{Polynom@{Polynom}!findRoots@{findRoots}}
+\index{findRoots@{findRoots}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{findRoots()}{findRoots()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ Polynom\+::find\+Roots (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Finds roots of the polynomial. 
+
+\#3 \begin{DoxyAuthor}{Author}
+Karina Masol \& Yuriy Momotenko 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_adef28314808b5a47921892d52f0942ad}\label{class_polynom_adef28314808b5a47921892d52f0942ad}} 
+\index{Polynom@{Polynom}!gcd@{gcd}}
+\index{gcd@{gcd}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{gcd()}{gcd()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} Polynom\+::gcd (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_polynom}{Polynom}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Calculates the greatest common divisor of two polynomials. 
+
+\#7 \begin{DoxyAuthor}{Author}
+Nikita Pupov 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a0371ceecd9fa4219ec7d3ff6dd5340d9}\label{class_polynom_a0371ceecd9fa4219ec7d3ff6dd5340d9}} 
+\index{Polynom@{Polynom}!getComparisonSystemSolutionBasis@{getComparisonSystemSolutionBasis}}
+\index{getComparisonSystemSolutionBasis@{getComparisonSystemSolutionBasis}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{getComparisonSystemSolutionBasis()}{getComparisonSystemSolutionBasis()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ Polynom\+::get\+Comparison\+System\+Solution\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Builds polynomial basis of solution space of comparison system h$^\wedge$p = h (mod f) 
+
+\begin{DoxyAuthor}{Author}
+Pashchenko Dmytro 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+Basis polynomials 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_a5906613f3285233fbf85c369d702f7b8}\label{class_polynom_a5906613f3285233fbf85c369d702f7b8}} 
+\index{Polynom@{Polynom}!getWithOtherParameter@{getWithOtherParameter}}
+\index{getWithOtherParameter@{getWithOtherParameter}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{getWithOtherParameter()}{getWithOtherParameter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} Polynom\+::get\+With\+Other\+Parameter (\begin{DoxyParamCaption}\item[{long long}]{b }\end{DoxyParamCaption}) const}
+
+
+
+Gets a polynomial of the form f(x-\/b) 
+
+\#3 \begin{DoxyAuthor}{Author}
+Karina Masol \& Yuriy Momotenko 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a7d6e66904cc292685832be9ff342aa92}\label{class_polynom_a7d6e66904cc292685832be9ff342aa92}} 
+\index{Polynom@{Polynom}!isIrreducible@{isIrreducible}}
+\index{isIrreducible@{isIrreducible}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{isIrreducible()}{isIrreducible()}}
+{\footnotesize\ttfamily bool Polynom\+::is\+Irreducible (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the polynomial is irreducible. 
+
+\#13 \begin{DoxyAuthor}{Author}
+Totskyi Alexander 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+1 -\/ if irreducible, 0 -\/ reducible 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_a3d51bf6b52a584dbc39eb1a6c6fe3743}\label{class_polynom_a3d51bf6b52a584dbc39eb1a6c6fe3743}} 
+\index{Polynom@{Polynom}!nIrreduciblePolynomials@{nIrreduciblePolynomials}}
+\index{nIrreduciblePolynomials@{nIrreduciblePolynomials}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{nIrreduciblePolynomials()}{nIrreduciblePolynomials()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_polynom}{Polynom}} $>$ Polynom\+::n\+Irreducible\+Polynomials (\begin{DoxyParamCaption}\item[{long long}]{prime,  }\item[{long long}]{n,  }\item[{int}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Finds \char`\"{}size\char`\"{} irreducible polynomials of degree n. 
+
+\#12 \begin{DoxyReturn}{Returns}
+Vector of all irreducible polynomials of degree n 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_ad52d7f2bd55a5c9ec383fc5b8a9a3f0c}\label{class_polynom_ad52d7f2bd55a5c9ec383fc5b8a9a3f0c}} 
+\index{Polynom@{Polynom}!normalization@{normalization}}
+\index{normalization@{normalization}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{normalization()}{normalization()}}
+{\footnotesize\ttfamily void Polynom\+::normalization (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Normalization of the polynomial. 
+
+\#2 \begin{DoxyAuthor}{Author}
+Darik Ivashyn 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_abb2070db741f97d411a3178090e267cd}\label{class_polynom_abb2070db741f97d411a3178090e267cd}} 
+\index{Polynom@{Polynom}!pthRoot@{pthRoot}}
+\index{pthRoot@{pthRoot}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{pthRoot()}{pthRoot()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} Polynom\+::pth\+Root (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}}}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Finds pth root of a given polynomial. 
+
+\begin{DoxyAuthor}{Author}
+Medynskyi Mykola 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+Polynomial 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_ae3168e90ae04c1ae8ffa273bb7ffdab7}\label{class_polynom_ae3168e90ae04c1ae8ffa273bb7ffdab7}} 
+\index{Polynom@{Polynom}!rootsNumber@{rootsNumber}}
+\index{rootsNumber@{rootsNumber}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{rootsNumber()}{rootsNumber()}}
+{\footnotesize\ttfamily long long Polynom\+::roots\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implements an algorithm for finding number of roots for polynomial in accordance with Konig-\/\+Rados theorem. 
+
+\#4 \begin{DoxyAuthor}{Author}
+Yana Skyrda 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a5f3f56bad53af919f9108d9439fb6a76}\label{class_polynom_a5f3f56bad53af919f9108d9439fb6a76}} 
+\index{Polynom@{Polynom}!simple\_division@{simple\_division}}
+\index{simple\_division@{simple\_division}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{simple\_division()}{simple\_division()}}
+{\footnotesize\ttfamily std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, \mbox{\hyperlink{class_polynom}{Polynom}} $>$ Polynom\+::simple\+\_\+division (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Divides polynomials over the field. 
+
+\#6 \mbox{\Hypertarget{class_polynom_aa963177446c4b4c9fda92a3275c22a9a}\label{class_polynom_aa963177446c4b4c9fda92a3275c22a9a}} 
+\index{Polynom@{Polynom}!squareFreeDecomposition@{squareFreeDecomposition}}
+\index{squareFreeDecomposition@{squareFreeDecomposition}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{squareFreeDecomposition()}{squareFreeDecomposition()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{class_polynom}{Polynom}}, long long $>$ $>$ Polynom\+::square\+Free\+Decomposition (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Computes the square free decomposition of the given polynomial list of pairs. The first element of the pair is a factor of the given polynomial, and the second, its multiplicity. 
+
+\begin{DoxyAuthor}{Author}
+Datsiuk Vitaliy, Medynskyi Mykola 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+std\+:vector of pairs$<$\+Polynom, int$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polynom_affa8952f0ebc210447b236d68a966c97}\label{class_polynom_affa8952f0ebc210447b236d68a966c97}} 
+\index{Polynom@{Polynom}!toThePower@{toThePower}}
+\index{toThePower@{toThePower}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{toThePower()}{toThePower()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} Polynom\+::to\+The\+Power (\begin{DoxyParamCaption}\item[{long long}]{pow }\end{DoxyParamCaption}) const}
+
+
+
+Raises the polynomial to a given power. 
+
+\#3 \begin{DoxyAuthor}{Author}
+Karina Masol \& Yuriy Momotenko 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a41887212561aa5eb5d12efc754614be5}\label{class_polynom_a41887212561aa5eb5d12efc754614be5}} 
+\index{Polynom@{Polynom}!valueAtPoint@{valueAtPoint}}
+\index{valueAtPoint@{valueAtPoint}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{valueAtPoint()}{valueAtPoint()}}
+{\footnotesize\ttfamily long long Polynom\+::value\+At\+Point (\begin{DoxyParamCaption}\item[{long long}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Calculates the value of the polynomial at a given point. 
+
+\#2 \begin{DoxyAuthor}{Author}
+Darik Ivashyn 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_polynom_a4f28b17207e376e6ea1d175041ec704d}\label{class_polynom_a4f28b17207e376e6ea1d175041ec704d}} 
+\index{Polynom@{Polynom}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{operator\%}{operator\%}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator\% (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Takes the remainder of a division of polynomials over the field. 
+
+\#6 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_ac03a30bd643a2d9bd59e9a54d72af204}\label{class_polynom_ac03a30bd643a2d9bd59e9a54d72af204}} 
+\index{Polynom@{Polynom}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$}{operator*}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator$\ast$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p,  }\item[{long long const \&}]{number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Multiplies a polynomial on an integer constant over the field. 
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a23188d2078938ed5d1da22936db9c409}\label{class_polynom_a23188d2078938ed5d1da22936db9c409}} 
+\index{Polynom@{Polynom}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$}{operator*}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator$\ast$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Multiplies polynomials over the field. 
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a5c0a9bf66e7ad99ca2652b3aabb5d79a}\label{class_polynom_a5c0a9bf66e7ad99ca2652b3aabb5d79a}} 
+\index{Polynom@{Polynom}!operator+@{operator+}}
+\index{operator+@{operator+}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{operator+}{operator+}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Adds polynomials over the field. 
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_a856ec556234c757ff4c6d2879355ebdd}\label{class_polynom_a856ec556234c757ff4c6d2879355ebdd}} 
+\index{Polynom@{Polynom}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{operator-\/}{operator-}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator-\/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Finds difference of polynomials over the field. 
+
+\#1 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_polynom_aac4fe7aec1dcd51b70dee868df71ac94}\label{class_polynom_aac4fe7aec1dcd51b70dee868df71ac94}} 
+\index{Polynom@{Polynom}!operator/@{operator/}}
+\index{operator/@{operator/}!Polynom@{Polynom}}
+\doxysubsubsection{\texorpdfstring{operator/}{operator/}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_polynom}{Polynom}} operator/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p1,  }\item[{\mbox{\hyperlink{class_polynom}{Polynom}} const \&}]{p2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Divides polynomials over the field. 
+
+\#6 \begin{DoxyAuthor}{Author}
+Daryna Bondarets 
+\end{DoxyAuthor}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Polynom/\mbox{\hyperlink{_polynom_8h}{Polynom.\+h}}\item 
+Polynom/\mbox{\hyperlink{_polynom_8cpp}{Polynom.\+cpp}}\end{DoxyCompactItemize}

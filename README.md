@@ -1,6 +1,13 @@
-# Algebra-polynom
+# FF-Polynomials-App
+## Tool for working with polynomials over a finite field and with polynomial Galois field defined by an irreducible polynomial.
 
-# Числення над полем поліномів у полі F\_(q^n)
+## Screenshots:
+
+<img src="screenshots/1.jpg">
+<img src="screenshots/2.jpg">
+<img src="screenshots/3.jpg">
+
+# Числення над полем поліномів у полі F\_(q)
 На вхід задається просте число q (можливо, довге) і показник n.
 
 1. Додавання, віднімання, множення двох многочленів.
@@ -48,9 +55,3 @@
 
 14. Знаходження порядку довільного многочлена
     @vetalmon20
-
-## Скріншоти:
-
-<img src="screenshots/1.jpg">
-<img src="screenshots/2.jpg">
-<img src="screenshots/3.jpg">

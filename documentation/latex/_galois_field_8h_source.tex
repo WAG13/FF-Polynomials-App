@@ -1,0 +1,104 @@
+\hypertarget{_galois_field_8h_source}{}\doxysection{Galois\+Field.\+h}
+\label{_galois_field_8h_source}\index{Polynom/GaloisField.h@{Polynom/GaloisField.h}}
+\mbox{\hyperlink{_galois_field_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_polynom_8h}{Polynom.h}}"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{class_galois_field}{GaloisField}} \{}
+\DoxyCodeLine{18 \textcolor{keyword}{private}:}
+\DoxyCodeLine{19     \textcolor{comment}{// irreducible polynomial that defines the field}}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_polynom}{Polynom}} irreducible;}
+\DoxyCodeLine{21     \textcolor{comment}{// prime number that defines field GF(p) of coeffcients}}
+\DoxyCodeLine{22     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} prime;}
+\DoxyCodeLine{23     \textcolor{comment}{// power of irreducible polynomial}}
+\DoxyCodeLine{24     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} degree;}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keyword}{public}:}
+\DoxyCodeLine{27     \mbox{\hyperlink{class_galois_field}{GaloisField}}() :prime(2), degree(2) \{}
+\DoxyCodeLine{28         irreducible = \mbox{\hyperlink{class_polynom_a472bf0d92ac96b98becc207cd2f5a332}{Polynom::findIrreduciblePolynomial}}(2, 2);}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30     }
+\DoxyCodeLine{31     \mbox{\hyperlink{class_galois_field}{GaloisField}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} prime, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} degree) :prime(prime), degree(degree)\{}
+\DoxyCodeLine{32         irreducible = \mbox{\hyperlink{class_polynom_a472bf0d92ac96b98becc207cd2f5a332}{Polynom::findIrreduciblePolynomial}}(prime, degree);}
+\DoxyCodeLine{33     \}}
+\DoxyCodeLine{34     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} getPrime()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} prime; \}}
+\DoxyCodeLine{35     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} getDegree()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} degree; \}}
+\DoxyCodeLine{36     \mbox{\hyperlink{class_polynom}{Polynom}} getIrreducible()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{37         \textcolor{keywordflow}{return} irreducible;}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     std::vector<Polynom> getNIrreducible(\textcolor{keywordtype}{int} n)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{41         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_polynom_a3d51bf6b52a584dbc39eb1a6c6fe3743}{Polynom::nIrreduciblePolynomials}}(prime, degree, n);}
+\DoxyCodeLine{42     \}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keywordtype}{void} setIrreducible(\textcolor{keywordtype}{int} n, \textcolor{keywordtype}{int} index) \{}
+\DoxyCodeLine{45         std::vector<Polynom> temp = getNIrreducible(n);}
+\DoxyCodeLine{46         irreducible = temp[index \% n];}
+\DoxyCodeLine{47     \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} setIrreducible(\mbox{\hyperlink{class_polynom}{Polynom}} p) \{}
+\DoxyCodeLine{50         irreducible = p;}
+\DoxyCodeLine{51         degree = p.\mbox{\hyperlink{class_polynom_a95db01f9c9dd1ee8b2f2257de426f6fe}{getPolyPower}}();}
+\DoxyCodeLine{52     \}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{57     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_a5afc48730ad6367589d6bd278bf7ecda}{add}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& left, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& right)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{58         \textcolor{keywordflow}{if} (left.getPrime() != right.getPrime() || }
+\DoxyCodeLine{59             left.getPrime() != irreducible.getPrime()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_polynom}{Polynom}}();}
+\DoxyCodeLine{60         \textcolor{keywordflow}{return} (left + right) \% irreducible;}
+\DoxyCodeLine{61     \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{66     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_a1d7f1b02fb7f3f1b50e0e5d38855c89a}{subtract}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& left, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& right)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{67         \textcolor{keywordflow}{if} (left.getPrime() != right.getPrime() || }
+\DoxyCodeLine{68             left.getPrime() != irreducible.getPrime()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_polynom}{Polynom}}();}
+\DoxyCodeLine{69         \textcolor{keywordflow}{return} (left -\/ right) \% irreducible;}
+\DoxyCodeLine{70     \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{75     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_ac23b003f38abf2ac1320f7654d0bcd28}{multiply}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& left, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& right)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{76         \textcolor{keywordflow}{if} (left.getPrime() != right.getPrime() || }
+\DoxyCodeLine{77             left.getPrime() != irreducible.getPrime()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_polynom}{Polynom}}();}
+\DoxyCodeLine{78         \textcolor{keywordflow}{return} (left * right) \% irreducible;}
+\DoxyCodeLine{79     \}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{84     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_a59bee844618e3dd0ac8293cf98d0f80d}{extendedEuclideanAlgorithm}}(\mbox{\hyperlink{class_polynom}{Polynom}} a, \mbox{\hyperlink{class_polynom}{Polynom}} b, \mbox{\hyperlink{class_polynom}{Polynom}} *x, \mbox{\hyperlink{class_polynom}{Polynom}} *y)\textcolor{keyword}{const }\{}
+\DoxyCodeLine{85         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} prime=a.getPrime();}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87         \textcolor{keywordflow}{if} (a == \mbox{\hyperlink{class_polynom}{Polynom}}(prime,std::vector<long long>\{0\}))}
+\DoxyCodeLine{88         \{}
+\DoxyCodeLine{89             *x = \mbox{\hyperlink{class_polynom}{Polynom}}(prime,std::vector<long long>\{0\});}
+\DoxyCodeLine{90             *y = \mbox{\hyperlink{class_polynom}{Polynom}}(prime,std::vector<long long>\{1\});}
+\DoxyCodeLine{91             \textcolor{keywordflow}{return} b;}
+\DoxyCodeLine{92         \}}
+\DoxyCodeLine{93         \mbox{\hyperlink{class_polynom}{Polynom}} x1, y1;}
+\DoxyCodeLine{94         \mbox{\hyperlink{class_polynom}{Polynom}} d = \mbox{\hyperlink{class_galois_field_a59bee844618e3dd0ac8293cf98d0f80d}{extendedEuclideanAlgorithm}}(b\%a, a, \&x1, \&y1);}
+\DoxyCodeLine{95         *x = y1 -\/ (b / a) * x1;}
+\DoxyCodeLine{96         *y = x1;}
+\DoxyCodeLine{97         \textcolor{keywordflow}{return} d;}
+\DoxyCodeLine{98     \}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{103     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_a8ce9e244ebdb0b4a27c2bb07b99e37f2}{getInverse}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& polynom)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{104         \mbox{\hyperlink{class_polynom}{Polynom}} x;}
+\DoxyCodeLine{105         \mbox{\hyperlink{class_polynom}{Polynom}} y;}
+\DoxyCodeLine{106         \mbox{\hyperlink{class_galois_field_a59bee844618e3dd0ac8293cf98d0f80d}{extendedEuclideanAlgorithm}}(polynom, irreducible, \&x, \&y);}
+\DoxyCodeLine{107         x = (x \% irreducible + irreducible) \% irreducible;}
+\DoxyCodeLine{108         \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{109     \}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{114     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_a126511d6af605f7c8d20989d39f9cc41}{divide}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& left, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& right)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{115         \textcolor{keywordflow}{if} (left.getPrime() != right.getPrime() || }
+\DoxyCodeLine{116             left.getPrime() != irreducible.getPrime()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_polynom}{Polynom}}();}
+\DoxyCodeLine{117         \textcolor{keywordflow}{return} (left * \mbox{\hyperlink{class_galois_field_a8ce9e244ebdb0b4a27c2bb07b99e37f2}{getInverse}}(right)) \% irreducible;}
+\DoxyCodeLine{118     \}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{123     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_a13608b9cfc02af26e20d2f034216b337}{mod}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& left, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& right)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{124         \textcolor{keywordflow}{if} (left.getPrime() != right.getPrime() ||}
+\DoxyCodeLine{125             left.getPrime() != irreducible.getPrime()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_polynom}{Polynom}}();}
+\DoxyCodeLine{126         \textcolor{keywordflow}{return} (left \% right) \% irreducible;}
+\DoxyCodeLine{127     \}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{132     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_galois_field_aeb19956120bc179978d87def7d0cc62a}{derivative}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const}\& polynom)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{133         \textcolor{keywordflow}{return} polynom.\mbox{\hyperlink{class_polynom_a1bc0d9ca9f6d12fdf7107905bce3863a}{derivative}}() \% irreducible;}
+\DoxyCodeLine{134     \}}
+\DoxyCodeLine{135 \};}
+
+\end{DoxyCode}

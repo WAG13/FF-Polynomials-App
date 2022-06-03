@@ -1,0 +1,229 @@
+\hypertarget{_polynom_8h_source}{}\doxysection{Polynom.\+h}
+\label{_polynom_8h_source}\index{Polynom/Polynom.h@{Polynom/Polynom.h}}
+\mbox{\hyperlink{_polynom_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}../Matrix/Matrix.h"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{27 \textcolor{keyword}{class }\mbox{\hyperlink{class_polynom}{Polynom}}}
+\DoxyCodeLine{28 \{}
+\DoxyCodeLine{29 \textcolor{keyword}{private}:}
+\DoxyCodeLine{30     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} prime; \textcolor{comment}{// p}}
+\DoxyCodeLine{31     \textcolor{comment}{// Structure that describes a single term of the polynomial}}
+\DoxyCodeLine{32     \textcolor{keyword}{struct }PolyTerm}
+\DoxyCodeLine{33     \{}
+\DoxyCodeLine{34         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} key;  \textcolor{comment}{// Coefficient of the term}}
+\DoxyCodeLine{35         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} pow;  \textcolor{comment}{// Power of the term}}
+\DoxyCodeLine{36         PolyTerm *next; \textcolor{comment}{// Pointer to the next term}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \textcolor{comment}{/*destructor*/}}
+\DoxyCodeLine{39         \string~PolyTerm()}
+\DoxyCodeLine{40         \{}
+\DoxyCodeLine{41             \textcolor{keywordflow}{if} (next)}
+\DoxyCodeLine{42                 \textcolor{keyword}{delete} next;}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44     \};}
+\DoxyCodeLine{45     PolyTerm *head; \textcolor{comment}{// Pointer to the first term of polynom}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{keyword}{public}:}
+\DoxyCodeLine{48     \textcolor{comment}{/*constructors*/}}
+\DoxyCodeLine{49     \mbox{\hyperlink{class_polynom}{Polynom}}();}
+\DoxyCodeLine{50     \mbox{\hyperlink{class_polynom}{Polynom}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \_prime, std::vector<long long> keys);              \textcolor{comment}{//for all terms}}
+\DoxyCodeLine{51     \mbox{\hyperlink{class_polynom}{Polynom}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \_prime, std::vector<std::vector<long long>> keys); \textcolor{comment}{//for some terms}}
+\DoxyCodeLine{52     \mbox{\hyperlink{class_polynom}{Polynom}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \_prime, std::string polynom, \textcolor{keywordtype}{char} X);}
+\DoxyCodeLine{53     \mbox{\hyperlink{class_polynom}{Polynom}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_polynom}{Polynom}} \&other)}
+\DoxyCodeLine{54     \{ \textcolor{comment}{// copy constructor}}
+\DoxyCodeLine{55         this-\/>prime = other.prime;}
+\DoxyCodeLine{56         head = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{57         PolyTerm *tmp = other.getHead();}
+\DoxyCodeLine{58         \textcolor{keywordflow}{while} (tmp)}
+\DoxyCodeLine{59         \{}
+\DoxyCodeLine{60             addItem(makeItem(tmp-\/>pow, tmp-\/>key));}
+\DoxyCodeLine{61             tmp = tmp-\/>next;}
+\DoxyCodeLine{62         \}}
+\DoxyCodeLine{63         tmp = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{64     \}}
+\DoxyCodeLine{65     \mbox{\hyperlink{class_polynom}{Polynom}}(\mbox{\hyperlink{class_polynom}{Polynom}} \&\&other) \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{66     \{ \textcolor{comment}{// move constructor}}
+\DoxyCodeLine{67         this-\/>prime = other.prime;}
+\DoxyCodeLine{68         this-\/>head = other.head;}
+\DoxyCodeLine{69         other.head = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{70     \}}
+\DoxyCodeLine{71     \textcolor{comment}{/*destructor*/}}
+\DoxyCodeLine{72     \mbox{\hyperlink{class_polynom}{\string~Polynom}}()}
+\DoxyCodeLine{73     \{}
+\DoxyCodeLine{74         \textcolor{keywordflow}{if} (head)}
+\DoxyCodeLine{75             \textcolor{keyword}{delete} head;}
+\DoxyCodeLine{76     \}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{comment}{/*Getters and Setters*/}}
+\DoxyCodeLine{79     PolyTerm *getHead()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} head; \}}
+\DoxyCodeLine{80     PolyTerm *getTerm(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} pow)\textcolor{keyword}{ const}}
+\DoxyCodeLine{81 \textcolor{keyword}{    }\{ \textcolor{comment}{//retuns term by its power}}
+\DoxyCodeLine{82         PolyTerm *tmp = head;}
+\DoxyCodeLine{83         \textcolor{keywordflow}{if} (head == \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{84             \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{85         \textcolor{keywordflow}{while} (tmp)}
+\DoxyCodeLine{86         \{}
+\DoxyCodeLine{87             \textcolor{keywordflow}{if} (tmp-\/>pow == pow)}
+\DoxyCodeLine{88                 \textcolor{keywordflow}{return} tmp;}
+\DoxyCodeLine{89             tmp = tmp-\/>next;}
+\DoxyCodeLine{90         \}}
+\DoxyCodeLine{91         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{92     \}}
+\DoxyCodeLine{93     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} getTermKey(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} pow)\textcolor{keyword}{ const}}
+\DoxyCodeLine{94 \textcolor{keyword}{    }\{ \textcolor{comment}{//retuns coef of the term by its power}}
+\DoxyCodeLine{95         PolyTerm *term = getTerm(pow);}
+\DoxyCodeLine{96         \textcolor{keywordflow}{if} (term)}
+\DoxyCodeLine{97             \textcolor{keywordflow}{return} term-\/>key;}
+\DoxyCodeLine{98         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{99     \}}
+\DoxyCodeLine{100     \textcolor{comment}{// returns power of the field}}
+\DoxyCodeLine{101     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} getPrime()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} prime; \}}
+\DoxyCodeLine{102     \textcolor{keywordtype}{void} setHead(PolyTerm *\_head) \{ head = \_head; \}}
+\DoxyCodeLine{103     \textcolor{keywordtype}{void} setPrime(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \_prime) \{ prime = \_prime; \}}
+\DoxyCodeLine{104     \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} \mbox{\hyperlink{class_polynom}{Polynom}} \&other)}
+\DoxyCodeLine{105     \{}
+\DoxyCodeLine{106         prime = other.getPrime();}
+\DoxyCodeLine{107         \textcolor{keywordflow}{if} (head)}
+\DoxyCodeLine{108             \textcolor{keyword}{delete} head;}
+\DoxyCodeLine{109         head = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{110         PolyTerm *tmp = other.getHead();}
+\DoxyCodeLine{111         \textcolor{keywordflow}{while} (tmp)}
+\DoxyCodeLine{112         \{}
+\DoxyCodeLine{113             addItem(makeItem(tmp-\/>pow, tmp-\/>key));}
+\DoxyCodeLine{114             tmp = tmp-\/>next;}
+\DoxyCodeLine{115         \}}
+\DoxyCodeLine{116         tmp = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{117     \};}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{122     std::string \mbox{\hyperlink{class_polynom_a60ea0da2e9f544a6a46856af404c849d}{show}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{127     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \mbox{\hyperlink{class_polynom_a95db01f9c9dd1ee8b2f2257de426f6fe}{getPolyPower}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{128 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{129         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} pow = 0;}
+\DoxyCodeLine{130         PolyTerm *tmp = head;}
+\DoxyCodeLine{131         \textcolor{keywordflow}{if} (head == \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{132             \textcolor{keywordflow}{return} pow;}
+\DoxyCodeLine{133         \textcolor{keywordflow}{while} (tmp)}
+\DoxyCodeLine{134         \{}
+\DoxyCodeLine{135             \textcolor{keywordflow}{if} (tmp-\/>pow > pow)}
+\DoxyCodeLine{136             \{}
+\DoxyCodeLine{137                 pow = tmp-\/>pow;}
+\DoxyCodeLine{138             \}}
+\DoxyCodeLine{139             tmp = tmp-\/>next;}
+\DoxyCodeLine{140         \}}
+\DoxyCodeLine{141         \textcolor{keywordflow}{return} pow;}
+\DoxyCodeLine{142     \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{comment}{// Creates new term (PolyTerm) with coefficient val}}
+\DoxyCodeLine{145     PolyTerm *makeItem(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} pow, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} val);}
+\DoxyCodeLine{146     \textcolor{comment}{// Adding term to the polynomial in non-\/descending order}}
+\DoxyCodeLine{147     \textcolor{keywordtype}{void} addItem(PolyTerm *el);}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{153     \textcolor{keyword}{friend} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a5c0a9bf66e7ad99ca2652b3aabb5d79a}{operator+}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{154     }
+\DoxyCodeLine{159     \textcolor{keyword}{friend} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a856ec556234c757ff4c6d2879355ebdd}{operator-\/}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{160     }
+\DoxyCodeLine{165     \textcolor{keyword}{friend} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a23188d2078938ed5d1da22936db9c409}{operator*}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{166     }
+\DoxyCodeLine{171     \textcolor{keyword}{friend} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a23188d2078938ed5d1da22936db9c409}{operator*}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keyword}{const} \&number);}
+\DoxyCodeLine{172     \textcolor{keyword}{friend} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a23188d2078938ed5d1da22936db9c409}{operator*}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keyword}{const} \&number, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p);}
+\DoxyCodeLine{173     }
+\DoxyCodeLine{178     \textcolor{keyword}{friend} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_aac4fe7aec1dcd51b70dee868df71ac94}{operator/}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{179     }
+\DoxyCodeLine{184     \textcolor{keyword}{friend} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a4f28b17207e376e6ea1d175041ec704d}{operator\%}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{185     }
+\DoxyCodeLine{190     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a1bc0d9ca9f6d12fdf7107905bce3863a}{derivative}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{191     }
+\DoxyCodeLine{196     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \mbox{\hyperlink{class_polynom_a41887212561aa5eb5d12efc754614be5}{valueAtPoint}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} x) \textcolor{keyword}{const};}
+\DoxyCodeLine{197     }
+\DoxyCodeLine{202     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_polynom_ad52d7f2bd55a5c9ec383fc5b8a9a3f0c}{normalization}}();}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{208     std::vector<Polynom> \mbox{\hyperlink{class_polynom_a82a9096c5ac399475da9ef6c8db4308e}{findRoots}}();}
+\DoxyCodeLine{209     }
+\DoxyCodeLine{214     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_affa8952f0ebc210447b236d68a966c97}{toThePower}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} pow) \textcolor{keyword}{const};}
+\DoxyCodeLine{215     }
+\DoxyCodeLine{220     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a5906613f3285233fbf85c369d702f7b8}{getWithOtherParameter}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} b) \textcolor{keyword}{const};}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{227     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \mbox{\hyperlink{class_polynom_ae3168e90ae04c1ae8ffa273bb7ffdab7}{rootsNumber}}();}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{233     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_adef28314808b5a47921892d52f0942ad}{gcd}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_polynom}{Polynom}}\& other);}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235     \textcolor{comment}{/* \#9}}
+\DoxyCodeLine{236 \textcolor{comment}{     * @author Nikita Pupov}}
+\DoxyCodeLine{237 \textcolor{comment}{     * @brief Equality operator}}
+\DoxyCodeLine{238 \textcolor{comment}{     */}}
+\DoxyCodeLine{239     \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator==(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{245     \textcolor{keyword}{static} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a07c4f22627262c33b16487d004ca2105}{CyclotomicPolynomial}}(\textcolor{keywordtype}{int} prime, \textcolor{keywordtype}{int} n);}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{252     std::vector<Polynom> \mbox{\hyperlink{class_polynom_aa78756e6f2fd0b4dbb5c8d378b3cdbdf}{factorizeCyclotomicRi}}(\textcolor{keywordtype}{size\_t} n, \textcolor{keywordtype}{size\_t} maxCount = 0);}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{259     \textcolor{keyword}{static} std::vector<Polynom> \mbox{\hyperlink{class_polynom_a153e95daa4a4a37055b778d0ae3c7a97}{allIrreduciblePolynomials}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} prime, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} n);}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{265     \textcolor{keyword}{static} std::vector<Polynom> \mbox{\hyperlink{class_polynom_a3d51bf6b52a584dbc39eb1a6c6fe3743}{nIrreduciblePolynomials}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} prime, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} n, \textcolor{keywordtype}{int} size);}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{272     \textcolor{keyword}{static} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a472bf0d92ac96b98becc207cd2f5a332}{findIrreduciblePolynomial}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} prime, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} n);}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{279     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_polynom_a7d6e66904cc292685832be9ff342aa92}{isIrreducible}}();}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{285     Matrix \mbox{\hyperlink{class_polynom_a69e3a79d16ab557304982ace2aefa6fd}{buildBerlekampMatrix}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{291     std::string \mbox{\hyperlink{class_polynom_ae41661dc15ccc567e5dda1cd49b6294d}{berlekampAlgorithm}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{294     \textcolor{comment}{/* \#1}}
+\DoxyCodeLine{295 \textcolor{comment}{     * @brief Adds polynomials over the field}}
+\DoxyCodeLine{296 \textcolor{comment}{     */}}
+\DoxyCodeLine{297     \mbox{\hyperlink{class_polynom}{Polynom}} addPoly(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{298     }
+\DoxyCodeLine{299     \textcolor{comment}{/* \#1}}
+\DoxyCodeLine{300 \textcolor{comment}{     * @brief Finds difference of polynomials over the field}}
+\DoxyCodeLine{301 \textcolor{comment}{     */}}
+\DoxyCodeLine{302     \mbox{\hyperlink{class_polynom}{Polynom}} diffPoly(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{303     }
+\DoxyCodeLine{304     \textcolor{comment}{/* \#1}}
+\DoxyCodeLine{305 \textcolor{comment}{     * @brief Multiplies polynomials over the field}}
+\DoxyCodeLine{306 \textcolor{comment}{     */}}
+\DoxyCodeLine{307     \mbox{\hyperlink{class_polynom}{Polynom}} multPoly(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{308     }
+\DoxyCodeLine{309     \textcolor{comment}{/* \#1}}
+\DoxyCodeLine{310 \textcolor{comment}{     * @brief Multiplies polynomials over the field with power=1}}
+\DoxyCodeLine{311 \textcolor{comment}{     */}}
+\DoxyCodeLine{312     \mbox{\hyperlink{class_polynom}{Polynom}} multSimple(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{313     }
+\DoxyCodeLine{314     \textcolor{comment}{/* \#1}}
+\DoxyCodeLine{315 \textcolor{comment}{     * @brief Multiplies polynomial on an integer constant over the field}}
+\DoxyCodeLine{316 \textcolor{comment}{     */}}
+\DoxyCodeLine{317     \mbox{\hyperlink{class_polynom}{Polynom}} multNumber(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keyword}{const} \&number);}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319     \textcolor{comment}{/* \#6}}
+\DoxyCodeLine{320 \textcolor{comment}{     * @brief Multiplies polynomials over the field }}
+\DoxyCodeLine{321 \textcolor{comment}{     */}}
+\DoxyCodeLine{322     \mbox{\hyperlink{class_polynom}{Polynom}} multPolyforDivide(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
+\DoxyCodeLine{323     }
+\DoxyCodeLine{327     std::pair<Polynom, Polynom> \mbox{\hyperlink{class_polynom_a5f3f56bad53af919f9108d9439fb6a76}{simple\_division}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2) \textcolor{keyword}{const};}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{335     std::vector<std::pair<Polynom, long long>> \mbox{\hyperlink{class_polynom_aa963177446c4b4c9fda92a3275c22a9a}{squareFreeDecomposition}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{341     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_abb2070db741f97d411a3178090e267cd}{pthRoot}}(\mbox{\hyperlink{class_polynom}{Polynom}} f);}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343     std::vector<std::pair<std::vector<Polynom>, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>> berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>> \textcolor{keyword}{const}\& unmultiple\_factors) \textcolor{keyword}{const};}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{349     std::vector<Polynom> \mbox{\hyperlink{class_polynom_a0371ceecd9fa4219ec7d3ff6dd5340d9}{getComparisonSystemSolutionBasis}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351     std::vector<std::pair<Polynom, long long>> sort\_polynomials\_by\_power(std::vector<std::pair<std::vector<Polynom>, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>> \textcolor{keyword}{const}\& polynomials) \textcolor{keyword}{const};}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{357     std::vector<std::pair<std::vector<Polynom>, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>> \mbox{\hyperlink{class_polynom_a6d992f320a563d39c308215b63551b7b}{factorizeByBasisPolynomials}}(std::vector<std::pair<Polynom, long long>> \textcolor{keyword}{const} \&unmultiple\_factors, }
+\DoxyCodeLine{358         std::vector<Polynom> \textcolor{keyword}{const} \&basis) \textcolor{keyword}{const};}
+\DoxyCodeLine{359 \};}
+
+\end{DoxyCode}
