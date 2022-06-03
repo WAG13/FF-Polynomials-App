@@ -548,7 +548,7 @@ Polynom Polynom::gcd(const Polynom& other) {
 }
 
 /*9 This method calculates nth Cyclotomic polynomial*/
-Polynom Polynom::CyclotomicPolynomial(int prime, int n) {
+Polynom Polynom::cyclotomicPolynomial(int prime, int n) {
     // if (n % prime == 0) return Polynom();
     int m = n / 2;
     std::vector<long long> keys{ 1 };
@@ -627,7 +627,7 @@ std::vector<Polynom> Polynom::factorizeCyclotomicRi(size_t n, size_t maxCount) {
 		while (newN % prime == 0)
 			newN /= prime;
 
-		Polynom newCyclotomic = Polynom::CyclotomicPolynomial(prime, newN);
+		Polynom newCyclotomic = Polynom::cyclotomicPolynomial(prime, newN);
 
 		std::vector<Polynom> factors = newCyclotomic.factorizeCyclotomicRi(newN);
 		size_t repeat = this->getPolyPower() / newCyclotomic.getPolyPower();
@@ -746,7 +746,7 @@ std::vector<Polynom> Polynom::allIrreduciblePolynomials(long long prime, long lo
     long long num = pow(prime, n) - 1;
     for (long long m = 1; m <= num; ++m) {
         if ((num % m) == 0) {
-            cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
+            cyclotomic = Polynom::cyclotomicPolynomial(prime, m);
             if (cyclotomic.getPolyPower() < n) continue;
             temp = cyclotomic.factorizeCyclotomicRi(m);
             for (auto& ir : temp) {
@@ -773,7 +773,7 @@ std::vector<Polynom> Polynom::nIrreduciblePolynomials(long long prime, long long
     long long num = pow(prime, n) - 1;
     for (long long m = 1; m <= num; ++m) {
         if ((num % m) == 0) {
-            cyclotomic = Polynom::CyclotomicPolynomial(prime, m);
+            cyclotomic = Polynom::cyclotomicPolynomial(prime, m);
             if (cyclotomic.getPolyPower() < n) continue;
 
             temp = cyclotomic.factorizeCyclotomicRi(m, size - result.size());

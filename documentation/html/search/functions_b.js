@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pthroot_0',['pthRoot',['../class_polynom.html#abb2070db741f97d411a3178090e267cd',1,'Polynom']]]
+  ['rootsnumber_0',['rootsNumber',['../class_polynom.html#ae3168e90ae04c1ae8ffa273bb7ffdab7',1,'Polynom']]]
 ];

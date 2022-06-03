@@ -242,7 +242,7 @@ public:
      * @author Rostyslav Mochulskyi
      * @brief Calculates n-th cyclotomic polynomial
      */
-    static Polynom CyclotomicPolynomial(int prime, int n);
+    static Polynom cyclotomicPolynomial(int prime, int n);
 
     /*! #10
      * @author Hryshchenko Yurii
@@ -321,12 +321,12 @@ protected:
 	 */
     Polynom multPolyforDivide(Polynom const &p1, Polynom const &p2);
     
-    /*! #6
+    /* #6
 	 * @brief Divides polynomials over the field
 	 */
     std::pair<Polynom, Polynom> simple_division(Polynom const &p1, Polynom const &p2) const;
 
-    /*! @author  Datsiuk Vitaliy, Medynskyi Mykola
+    /* @author  Datsiuk Vitaliy, Medynskyi Mykola
      * @brief Computes the square free decomposition of the given polynomial
      * list of pairs. The first element of the pair is a factor of the given
      * polynomial, and the second, its multiplicity.
@@ -334,7 +334,7 @@ protected:
      */
     std::vector<std::pair<Polynom, long long>> squareFreeDecomposition() const;
 
-    /*! @author Medynskyi Mykola
+    /* @author Medynskyi Mykola
      * @brief Finds pth root of a given polynomial
      * @return Polynomial
      */
@@ -342,7 +342,7 @@ protected:
 
     std::vector<std::pair<std::vector<Polynom>, long long>> berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>> const& unmultiple_factors) const;
 
-    /*! @author Pashchenko Dmytro
+    /* @author Pashchenko Dmytro
      * @brief Builds polynomial basis of solution space of comparison system h^p = h (mod f)
      * @return Basis polynomials
      */
@@ -350,7 +350,7 @@ protected:
 
     std::vector<std::pair<Polynom, long long>> sort_polynomials_by_power(std::vector<std::pair<std::vector<Polynom>, long long>> const& polynomials) const;
 
-    /*! @author Pashchenko Dmytro
+    /* @author Pashchenko Dmytro
      * @brief Factorizes unmultiple factors using basis polynomials (f = �(gcd(f, h - a)))
      * @return std::vector of pairs "polynomials, their multiplicity"
      */

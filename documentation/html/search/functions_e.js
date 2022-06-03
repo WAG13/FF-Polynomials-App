@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tothepower_0',['toThePower',['../class_polynom.html#affa8952f0ebc210447b236d68a966c97',1,'Polynom']]]
+  ['valueatpoint_0',['valueAtPoint',['../class_polynom.html#a41887212561aa5eb5d12efc754614be5',1,'Polynom']]]
 ];

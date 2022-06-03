@@ -1,0 +1,50 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Class Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Class List}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Class Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Galois\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Field Class Reference}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Detailed Description}{5}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Polynom Class Reference}{6}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Detailed Description}{7}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Member Function Documentation}{7}{subsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2.1}allIrreduciblePolynomials()}{7}{subsubsection.3.2.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2.2}berlekampAlgorithm()}{8}{subsubsection.3.2.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2.3}buildBerlekampMatrix()}{8}{subsubsection.3.2.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.2.4}cyclotomicPolynomial()}{8}{subsubsection.3.2.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.2.5}derivative()}{9}{subsubsection.3.2.2.5}%
+\contentsline {subsubsection}{\numberline {3.2.2.6}factorizeCyclotomicRi()}{9}{subsubsection.3.2.2.6}%
+\contentsline {subsubsection}{\numberline {3.2.2.7}findIrreduciblePolynomial()}{9}{subsubsection.3.2.2.7}%
+\contentsline {subsubsection}{\numberline {3.2.2.8}findRoots()}{10}{subsubsection.3.2.2.8}%
+\contentsline {subsubsection}{\numberline {3.2.2.9}gcd()}{10}{subsubsection.3.2.2.9}%
+\contentsline {subsubsection}{\numberline {3.2.2.10}getWithOtherParameter()}{10}{subsubsection.3.2.2.10}%
+\contentsline {subsubsection}{\numberline {3.2.2.11}isIrreducible()}{11}{subsubsection.3.2.2.11}%
+\contentsline {subsubsection}{\numberline {3.2.2.12}nIrreduciblePolynomials()}{11}{subsubsection.3.2.2.12}%
+\contentsline {subsubsection}{\numberline {3.2.2.13}normalization()}{11}{subsubsection.3.2.2.13}%
+\contentsline {subsubsection}{\numberline {3.2.2.14}rootsNumber()}{12}{subsubsection.3.2.2.14}%
+\contentsline {subsubsection}{\numberline {3.2.2.15}toThePower()}{12}{subsubsection.3.2.2.15}%
+\contentsline {subsubsection}{\numberline {3.2.2.16}valueAtPoint()}{12}{subsubsection.3.2.2.16}%
+\contentsline {subsection}{\numberline {3.2.3}Friends And Related Function Documentation}{12}{subsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.1}operator\%}{13}{subsubsection.3.2.3.1}%
+\contentsline {subsubsection}{\numberline {3.2.3.2}operator$\ast $\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{13}{subsubsection.3.2.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.3.3}operator$\ast $\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{13}{subsubsection.3.2.3.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.4}operator+}{14}{subsubsection.3.2.3.4}%
+\contentsline {subsubsection}{\numberline {3.2.3.5}operator-\/}{14}{subsubsection.3.2.3.5}%
+\contentsline {subsubsection}{\numberline {3.2.3.6}operator/}{14}{subsubsection.3.2.3.6}%
+\contentsline {chapter}{\numberline {4}File Documentation}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Algebra-\/polynom/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Polynom/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Galois\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Field.h File Reference}{15}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{15}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Galois\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Field.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Algebra-\/polynom/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Polynom/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Polynom.cpp File Reference}{16}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{17}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Function Documentation}{17}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}operator\%()}{17}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}operator$\ast $()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{17}{subsubsection.4.3.2.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.3}operator$\ast $()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{18}{subsubsection.4.3.2.3}%
+\contentsline {subsubsection}{\numberline {4.3.2.4}operator+()}{18}{subsubsection.4.3.2.4}%
+\contentsline {subsubsection}{\numberline {4.3.2.5}operator-\/()}{18}{subsubsection.4.3.2.5}%
+\contentsline {subsubsection}{\numberline {4.3.2.6}operator/()}{18}{subsubsection.4.3.2.6}%
+\contentsline {section}{\numberline {4.4}Algebra-\/polynom/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Polynom/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Polynom.h File Reference}{19}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{19}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.5}Polynom.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{19}{section.4.5}%

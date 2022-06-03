@@ -461,52 +461,52 @@ TEST_CASE("Cyclotomic polynomials")
     SUBCASE("n=1")
     {
         Polynom polynomial(131, {130, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 1) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 1) == polynomial);
     }
     SUBCASE("n=2")
     {
         Polynom polynomial(131, {1, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 2) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 2) == polynomial);
     }
     SUBCASE("n=3")
     {
         Polynom polynomial(131, {1, 1, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 3) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 3) == polynomial);
     }
     SUBCASE("n=4")
     {
         Polynom polynomial(131, {1, 0, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 4) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 4) == polynomial);
     }
     SUBCASE("n=5")
     {
         Polynom polynomial(131, {1, 1, 1, 1, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 5) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 5) == polynomial);
     }
     SUBCASE("n=6")
     {
         Polynom polynomial(131, {1, 130, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 6) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 6) == polynomial);
     }
     SUBCASE("n=7")
     {
         Polynom polynomial(131, {1, 1, 1, 1, 1, 1, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 7) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 7) == polynomial);
     }
     SUBCASE("n=8")
     {
         Polynom polynomial(131, {1, 0, 0, 0, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 8) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 8) == polynomial);
     }
     SUBCASE("n=9")
     {
         Polynom polynomial(131, {1, 0, 0, 1, 0, 0, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 9) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 9) == polynomial);
     }
     SUBCASE("n=10")
     {
         Polynom polynomial(131, {1, 130, 1, 130, 1});
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 10) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 10) == polynomial);
     }
     SUBCASE("n=105")
     {
@@ -540,12 +540,12 @@ TEST_CASE("Cyclotomic polynomials")
         keys[47] = 1;
         keys[48] = 1;
         Polynom polynomial(131, keys);
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 105) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 105) == polynomial);
     }
     SUBCASE("n=30")
     {
         Polynom polynomial(131, { 1, 1, 0 , 130, 130, 130, 0, 1, 1 });
-        REQUIRE(Polynom::CyclotomicPolynomial(131, 30) == polynomial);
+        REQUIRE(Polynom::cyclotomicPolynomial(131, 30) == polynomial);
     }
 }
 
@@ -555,7 +555,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 	{
 		int n = 5;
 		int q = 7;
-		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
+		Polynom cyclotomic = Polynom::cyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 		REQUIRE(factors.size() == 1);
 		REQUIRE(factors[0] == cyclotomic);
@@ -564,7 +564,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 	{
 		int n = 52;
 		int q = 3;
-		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
+		Polynom cyclotomic = Polynom::cyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 
 		Polynom product = Polynom(q, std::vector<long long>{ 1 });
@@ -578,10 +578,10 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 		int n = 45;
 		int newN = 5;
 		int q = 3;
-		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
+		Polynom cyclotomic = Polynom::cyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 
-		Polynom newCyclotomic = Polynom::CyclotomicPolynomial(q, newN);
+		Polynom newCyclotomic = Polynom::cyclotomicPolynomial(q, newN);
 		REQUIRE(factors.size() == 6);
 		for (auto factor : factors)
 			REQUIRE(factor == newCyclotomic);
@@ -590,7 +590,7 @@ TEST_CASE("Factorization of cyclotomic using Ri")
 	{
 		int n = 18;
 		int q = 7;
-		Polynom cyclotomic = Polynom::CyclotomicPolynomial(q, n);
+		Polynom cyclotomic = Polynom::cyclotomicPolynomial(q, n);
 		std::vector<Polynom> factors = cyclotomic.factorizeCyclotomicRi(n);
 
 		Polynom product = Polynom(q, std::vector<long long>{ 1 });

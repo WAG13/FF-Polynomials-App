@@ -1,5 +1,5 @@
 \hypertarget{_polynom_8h_source}{}\doxysection{Polynom.\+h}
-\label{_polynom_8h_source}\index{Polynom/Polynom.h@{Polynom/Polynom.h}}
+\label{_polynom_8h_source}\index{Algebra-\/polynom/Polynom/Polynom.h@{Algebra-\/polynom/Polynom/Polynom.h}}
 \mbox{\hyperlink{_polynom_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{1 }
@@ -163,7 +163,7 @@
 \DoxyCodeLine{238 \textcolor{comment}{     */}}
 \DoxyCodeLine{239     \textcolor{keyword}{friend} \textcolor{keywordtype}{bool} operator==(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
 \DoxyCodeLine{240 }
-\DoxyCodeLine{245     \textcolor{keyword}{static} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_a07c4f22627262c33b16487d004ca2105}{CyclotomicPolynomial}}(\textcolor{keywordtype}{int} prime, \textcolor{keywordtype}{int} n);}
+\DoxyCodeLine{245     \textcolor{keyword}{static} \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_ae66c7e6ce9930c7f1a3c15f619d472b3}{cyclotomicPolynomial}}(\textcolor{keywordtype}{int} prime, \textcolor{keywordtype}{int} n);}
 \DoxyCodeLine{246 }
 \DoxyCodeLine{252     std::vector<Polynom> \mbox{\hyperlink{class_polynom_aa78756e6f2fd0b4dbb5c8d378b3cdbdf}{factorizeCyclotomicRi}}(\textcolor{keywordtype}{size\_t} n, \textcolor{keywordtype}{size\_t} maxCount = 0);}
 \DoxyCodeLine{253 }
@@ -210,19 +210,40 @@
 \DoxyCodeLine{321 \textcolor{comment}{     */}}
 \DoxyCodeLine{322     \mbox{\hyperlink{class_polynom}{Polynom}} multPolyforDivide(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2);}
 \DoxyCodeLine{323     }
-\DoxyCodeLine{327     std::pair<Polynom, Polynom> \mbox{\hyperlink{class_polynom_a5f3f56bad53af919f9108d9439fb6a76}{simple\_division}}(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2) \textcolor{keyword}{const};}
+\DoxyCodeLine{324     \textcolor{comment}{/* \#6}}
+\DoxyCodeLine{325 \textcolor{comment}{     * @brief Divides polynomials over the field}}
+\DoxyCodeLine{326 \textcolor{comment}{     */}}
+\DoxyCodeLine{327     std::pair<Polynom, Polynom> simple\_division(\mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p1, \mbox{\hyperlink{class_polynom}{Polynom}} \textcolor{keyword}{const} \&p2) \textcolor{keyword}{const};}
 \DoxyCodeLine{328 }
-\DoxyCodeLine{335     std::vector<std::pair<Polynom, long long>> \mbox{\hyperlink{class_polynom_aa963177446c4b4c9fda92a3275c22a9a}{squareFreeDecomposition}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{329     \textcolor{comment}{/* @author  Datsiuk Vitaliy, Medynskyi Mykola}}
+\DoxyCodeLine{330 \textcolor{comment}{     * @brief Computes the square free decomposition of the given polynomial}}
+\DoxyCodeLine{331 \textcolor{comment}{     * list of pairs. The first element of the pair is a factor of the given}}
+\DoxyCodeLine{332 \textcolor{comment}{     * polynomial, and the second, its multiplicity.}}
+\DoxyCodeLine{333 \textcolor{comment}{     * @return std:vector of pairs<Polynom, int>}}
+\DoxyCodeLine{334 \textcolor{comment}{     */}}
+\DoxyCodeLine{335     std::vector<std::pair<Polynom, long long>> squareFreeDecomposition() \textcolor{keyword}{const};}
 \DoxyCodeLine{336 }
-\DoxyCodeLine{341     \mbox{\hyperlink{class_polynom}{Polynom}} \mbox{\hyperlink{class_polynom_abb2070db741f97d411a3178090e267cd}{pthRoot}}(\mbox{\hyperlink{class_polynom}{Polynom}} f);}
+\DoxyCodeLine{337     \textcolor{comment}{/* @author Medynskyi Mykola}}
+\DoxyCodeLine{338 \textcolor{comment}{     * @brief Finds pth root of a given polynomial}}
+\DoxyCodeLine{339 \textcolor{comment}{     * @return Polynomial}}
+\DoxyCodeLine{340 \textcolor{comment}{     */}}
+\DoxyCodeLine{341     \mbox{\hyperlink{class_polynom}{Polynom}} pthRoot(\mbox{\hyperlink{class_polynom}{Polynom}} f);}
 \DoxyCodeLine{342 }
 \DoxyCodeLine{343     std::vector<std::pair<std::vector<Polynom>, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>> berlekampAlgorithmMainCase(std::vector<std::pair<Polynom, long long>> \textcolor{keyword}{const}\& unmultiple\_factors) \textcolor{keyword}{const};}
 \DoxyCodeLine{344 }
-\DoxyCodeLine{349     std::vector<Polynom> \mbox{\hyperlink{class_polynom_a0371ceecd9fa4219ec7d3ff6dd5340d9}{getComparisonSystemSolutionBasis}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{345     \textcolor{comment}{/* @author Pashchenko Dmytro}}
+\DoxyCodeLine{346 \textcolor{comment}{     * @brief Builds polynomial basis of solution space of comparison system h\string^p = h (mod f)}}
+\DoxyCodeLine{347 \textcolor{comment}{     * @return Basis polynomials}}
+\DoxyCodeLine{348 \textcolor{comment}{     */}}
+\DoxyCodeLine{349     std::vector<Polynom> getComparisonSystemSolutionBasis() \textcolor{keyword}{const};}
 \DoxyCodeLine{350 }
 \DoxyCodeLine{351     std::vector<std::pair<Polynom, long long>> sort\_polynomials\_by\_power(std::vector<std::pair<std::vector<Polynom>, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>> \textcolor{keyword}{const}\& polynomials) \textcolor{keyword}{const};}
 \DoxyCodeLine{352 }
-\DoxyCodeLine{357     std::vector<std::pair<std::vector<Polynom>, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>> \mbox{\hyperlink{class_polynom_a6d992f320a563d39c308215b63551b7b}{factorizeByBasisPolynomials}}(std::vector<std::pair<Polynom, long long>> \textcolor{keyword}{const} \&unmultiple\_factors, }
+\DoxyCodeLine{353     \textcolor{comment}{/* @author Pashchenko Dmytro}}
+\DoxyCodeLine{354 \textcolor{comment}{     * @brief Factorizes unmultiple factors using basis polynomials (f = {\ucr}(gcd(f, h -\/ a)))}}
+\DoxyCodeLine{355 \textcolor{comment}{     * @return std::vector of pairs "{}polynomials, their multiplicity"{}}}
+\DoxyCodeLine{356 \textcolor{comment}{     */}}
+\DoxyCodeLine{357     std::vector<std::pair<std::vector<Polynom>, \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>> factorizeByBasisPolynomials(std::vector<std::pair<Polynom, long long>> \textcolor{keyword}{const} \&unmultiple\_factors, }
 \DoxyCodeLine{358         std::vector<Polynom> \textcolor{keyword}{const} \&basis) \textcolor{keyword}{const};}
 \DoxyCodeLine{359 \};}
 

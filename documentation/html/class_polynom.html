@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>FF-Polynomials-App: Polynom Class Reference</title>
+<title>Algebra Polynom: Polynom Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon.ico"/></td>
   <td id="projectalign">
-   <div id="projectname">FF-Polynomials-App
+   <div id="projectname">Algebra Polynom
    </div>
    <div id="projectbrief">Tool for working with polynomials over a finite field and with polynomial Galois field defined by an irreducible polynomial.</div>
   </td>
@@ -65,10 +65,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_polynom-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Polynom Class Reference</div></div>
@@ -82,42 +80,6 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a16512c1d9f829f9a06e76c4ad90568d6"><td class="memItemLeft" align="right" valign="top"><a id="a16512c1d9f829f9a06e76c4ad90568d6" name="a16512c1d9f829f9a06e76c4ad90568d6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Polynom</b> (long long _prime, std::vector&lt; long long &gt; keys)</td></tr>
-<tr class="separator:a16512c1d9f829f9a06e76c4ad90568d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f03ba7f0c9edc428dd6a2de7a9c5bee"><td class="memItemLeft" align="right" valign="top"><a id="a0f03ba7f0c9edc428dd6a2de7a9c5bee" name="a0f03ba7f0c9edc428dd6a2de7a9c5bee"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Polynom</b> (long long _prime, std::vector&lt; std::vector&lt; long long &gt; &gt; keys)</td></tr>
-<tr class="separator:a0f03ba7f0c9edc428dd6a2de7a9c5bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a579e54abf131ed4ef3ae8db28ebbcd70"><td class="memItemLeft" align="right" valign="top"><a id="a579e54abf131ed4ef3ae8db28ebbcd70" name="a579e54abf131ed4ef3ae8db28ebbcd70"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Polynom</b> (long long _prime, std::string polynom, char X)</td></tr>
-<tr class="separator:a579e54abf131ed4ef3ae8db28ebbcd70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa21c1ac9b93da0f8ab70108ebaa7c59e"><td class="memItemLeft" align="right" valign="top"><a id="aa21c1ac9b93da0f8ab70108ebaa7c59e" name="aa21c1ac9b93da0f8ab70108ebaa7c59e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Polynom</b> (const <a class="el" href="class_polynom.html">Polynom</a> &amp;other)</td></tr>
-<tr class="separator:aa21c1ac9b93da0f8ab70108ebaa7c59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a365624c6a33ac8b41f31ff3928f8bc4a"><td class="memItemLeft" align="right" valign="top"><a id="a365624c6a33ac8b41f31ff3928f8bc4a" name="a365624c6a33ac8b41f31ff3928f8bc4a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Polynom</b> (<a class="el" href="class_polynom.html">Polynom</a> &amp;&amp;other) noexcept</td></tr>
-<tr class="separator:a365624c6a33ac8b41f31ff3928f8bc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3bf0047209320ad17028c39451585c1"><td class="memItemLeft" align="right" valign="top"><a id="ae3bf0047209320ad17028c39451585c1" name="ae3bf0047209320ad17028c39451585c1"></a>
-PolyTerm *&#160;</td><td class="memItemRight" valign="bottom"><b>getHead</b> () const</td></tr>
-<tr class="separator:ae3bf0047209320ad17028c39451585c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7119ee24f2cb1607898bc457c6f9913"><td class="memItemLeft" align="right" valign="top"><a id="ac7119ee24f2cb1607898bc457c6f9913" name="ac7119ee24f2cb1607898bc457c6f9913"></a>
-PolyTerm *&#160;</td><td class="memItemRight" valign="bottom"><b>getTerm</b> (long long pow) const</td></tr>
-<tr class="separator:ac7119ee24f2cb1607898bc457c6f9913"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26bfe756714d07e4ceb34fd8278e3d7b"><td class="memItemLeft" align="right" valign="top"><a id="a26bfe756714d07e4ceb34fd8278e3d7b" name="a26bfe756714d07e4ceb34fd8278e3d7b"></a>
-long long&#160;</td><td class="memItemRight" valign="bottom"><b>getTermKey</b> (long long pow) const</td></tr>
-<tr class="separator:a26bfe756714d07e4ceb34fd8278e3d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e8b117fadd877c3ffc68c550ce5db33"><td class="memItemLeft" align="right" valign="top"><a id="a4e8b117fadd877c3ffc68c550ce5db33" name="a4e8b117fadd877c3ffc68c550ce5db33"></a>
-long long&#160;</td><td class="memItemRight" valign="bottom"><b>getPrime</b> () const</td></tr>
-<tr class="separator:a4e8b117fadd877c3ffc68c550ce5db33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a637f96813c0d43a0fa05b56689076ebb"><td class="memItemLeft" align="right" valign="top"><a id="a637f96813c0d43a0fa05b56689076ebb" name="a637f96813c0d43a0fa05b56689076ebb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setHead</b> (PolyTerm *_head)</td></tr>
-<tr class="separator:a637f96813c0d43a0fa05b56689076ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac366a4bc78a52f4d22cde781dc305a4b"><td class="memItemLeft" align="right" valign="top"><a id="ac366a4bc78a52f4d22cde781dc305a4b" name="ac366a4bc78a52f4d22cde781dc305a4b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPrime</b> (long long _prime)</td></tr>
-<tr class="separator:ac366a4bc78a52f4d22cde781dc305a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a521c241d2b5309b9dcc7dc7853d8dcdc"><td class="memItemLeft" align="right" valign="top"><a id="a521c241d2b5309b9dcc7dc7853d8dcdc" name="a521c241d2b5309b9dcc7dc7853d8dcdc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_polynom.html">Polynom</a> &amp;other)</td></tr>
-<tr class="separator:a521c241d2b5309b9dcc7dc7853d8dcdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60ea0da2e9f544a6a46856af404c849d"><td class="memItemLeft" align="right" valign="top"><a id="a60ea0da2e9f544a6a46856af404c849d" name="a60ea0da2e9f544a6a46856af404c849d"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>show</b> () const</td></tr>
 <tr class="memdesc:a60ea0da2e9f544a6a46856af404c849d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns string representation of the polynomial. <br /></td></tr>
@@ -126,12 +88,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>show</b> () co
 long long&#160;</td><td class="memItemRight" valign="bottom"><b>getPolyPower</b> () const</td></tr>
 <tr class="memdesc:a95db01f9c9dd1ee8b2f2257de426f6fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns power of the polynomial. <br /></td></tr>
 <tr class="separator:a95db01f9c9dd1ee8b2f2257de426f6fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a028f0d9f988c9aabc8f75ffdaa10ccb5"><td class="memItemLeft" align="right" valign="top"><a id="a028f0d9f988c9aabc8f75ffdaa10ccb5" name="a028f0d9f988c9aabc8f75ffdaa10ccb5"></a>
-PolyTerm *&#160;</td><td class="memItemRight" valign="bottom"><b>makeItem</b> (long long pow, long long val)</td></tr>
-<tr class="separator:a028f0d9f988c9aabc8f75ffdaa10ccb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad79c6a51edce7f09233620cf0fe5d580"><td class="memItemLeft" align="right" valign="top"><a id="ad79c6a51edce7f09233620cf0fe5d580" name="ad79c6a51edce7f09233620cf0fe5d580"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addItem</b> (PolyTerm *el)</td></tr>
-<tr class="separator:ad79c6a51edce7f09233620cf0fe5d580"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bc0d9ca9f6d12fdf7107905bce3863a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a1bc0d9ca9f6d12fdf7107905bce3863a">derivative</a> () const</td></tr>
 <tr class="memdesc:a1bc0d9ca9f6d12fdf7107905bce3863a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes the derivative of the polynomial.  <a href="class_polynom.html#a1bc0d9ca9f6d12fdf7107905bce3863a">More...</a><br /></td></tr>
 <tr class="separator:a1bc0d9ca9f6d12fdf7107905bce3863a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,9 +127,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>addItem</b> (PolyTerm
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a07c4f22627262c33b16487d004ca2105"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a07c4f22627262c33b16487d004ca2105">CyclotomicPolynomial</a> (int prime, int n)</td></tr>
-<tr class="memdesc:a07c4f22627262c33b16487d004ca2105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates n-th cyclotomic polynomial.  <a href="class_polynom.html#a07c4f22627262c33b16487d004ca2105">More...</a><br /></td></tr>
-<tr class="separator:a07c4f22627262c33b16487d004ca2105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae66c7e6ce9930c7f1a3c15f619d472b3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#ae66c7e6ce9930c7f1a3c15f619d472b3">cyclotomicPolynomial</a> (int prime, int n)</td></tr>
+<tr class="memdesc:ae66c7e6ce9930c7f1a3c15f619d472b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates n-th cyclotomic polynomial.  <a href="class_polynom.html#ae66c7e6ce9930c7f1a3c15f619d472b3">More...</a><br /></td></tr>
+<tr class="separator:ae66c7e6ce9930c7f1a3c15f619d472b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a153e95daa4a4a37055b778d0ae3c7a97"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a153e95daa4a4a37055b778d0ae3c7a97">allIrreduciblePolynomials</a> (long long prime, long long n)</td></tr>
 <tr class="memdesc:a153e95daa4a4a37055b778d0ae3c7a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds all irreducible polynomials of degree n.  <a href="class_polynom.html#a153e95daa4a4a37055b778d0ae3c7a97">More...</a><br /></td></tr>
 <tr class="separator:a153e95daa4a4a37055b778d0ae3c7a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,48 +139,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a472bf0d92ac96b98becc207cd2f5a332"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a472bf0d92ac96b98becc207cd2f5a332">findIrreduciblePolynomial</a> (long long prime, long long n)</td></tr>
 <tr class="memdesc:a472bf0d92ac96b98becc207cd2f5a332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds one irreducible polynomial of degree n.  <a href="class_polynom.html#a472bf0d92ac96b98becc207cd2f5a332">More...</a><br /></td></tr>
 <tr class="separator:a472bf0d92ac96b98becc207cd2f5a332"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a33c7bd121c3661853bdd24c64e641ac0"><td class="memItemLeft" align="right" valign="top"><a id="a33c7bd121c3661853bdd24c64e641ac0" name="a33c7bd121c3661853bdd24c64e641ac0"></a>
-<a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><b>addPoly</b> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
-<tr class="separator:a33c7bd121c3661853bdd24c64e641ac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a765c629fdab649b0aca70704e0dd301b"><td class="memItemLeft" align="right" valign="top"><a id="a765c629fdab649b0aca70704e0dd301b" name="a765c629fdab649b0aca70704e0dd301b"></a>
-<a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><b>diffPoly</b> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
-<tr class="separator:a765c629fdab649b0aca70704e0dd301b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea1c7960d4fceed4025d68cb4d1473af"><td class="memItemLeft" align="right" valign="top"><a id="aea1c7960d4fceed4025d68cb4d1473af" name="aea1c7960d4fceed4025d68cb4d1473af"></a>
-<a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><b>multPoly</b> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
-<tr class="separator:aea1c7960d4fceed4025d68cb4d1473af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a049867b79953143f7765e037aff904ab"><td class="memItemLeft" align="right" valign="top"><a id="a049867b79953143f7765e037aff904ab" name="a049867b79953143f7765e037aff904ab"></a>
-<a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><b>multSimple</b> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
-<tr class="separator:a049867b79953143f7765e037aff904ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22a53e5d681cddee92608774a1d8f155"><td class="memItemLeft" align="right" valign="top"><a id="a22a53e5d681cddee92608774a1d8f155" name="a22a53e5d681cddee92608774a1d8f155"></a>
-<a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><b>multNumber</b> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p, long long const &amp;number)</td></tr>
-<tr class="separator:a22a53e5d681cddee92608774a1d8f155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae461ac56af25b93529f280037ee0ce41"><td class="memItemLeft" align="right" valign="top"><a id="ae461ac56af25b93529f280037ee0ce41" name="ae461ac56af25b93529f280037ee0ce41"></a>
-<a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><b>multPolyforDivide</b> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
-<tr class="separator:ae461ac56af25b93529f280037ee0ce41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f3f56bad53af919f9108d9439fb6a76"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, <a class="el" href="class_polynom.html">Polynom</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a5f3f56bad53af919f9108d9439fb6a76">simple_division</a> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2) const</td></tr>
-<tr class="memdesc:a5f3f56bad53af919f9108d9439fb6a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Divides polynomials over the field.  <a href="class_polynom.html#a5f3f56bad53af919f9108d9439fb6a76">More...</a><br /></td></tr>
-<tr class="separator:a5f3f56bad53af919f9108d9439fb6a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa963177446c4b4c9fda92a3275c22a9a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, long long &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#aa963177446c4b4c9fda92a3275c22a9a">squareFreeDecomposition</a> () const</td></tr>
-<tr class="memdesc:aa963177446c4b4c9fda92a3275c22a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the square free decomposition of the given polynomial list of pairs. The first element of the pair is a factor of the given polynomial, and the second, its multiplicity.  <a href="class_polynom.html#aa963177446c4b4c9fda92a3275c22a9a">More...</a><br /></td></tr>
-<tr class="separator:aa963177446c4b4c9fda92a3275c22a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb2070db741f97d411a3178090e267cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#abb2070db741f97d411a3178090e267cd">pthRoot</a> (<a class="el" href="class_polynom.html">Polynom</a> f)</td></tr>
-<tr class="memdesc:abb2070db741f97d411a3178090e267cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds pth root of a given polynomial.  <a href="class_polynom.html#abb2070db741f97d411a3178090e267cd">More...</a><br /></td></tr>
-<tr class="separator:abb2070db741f97d411a3178090e267cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afda1019ce33761b51b19b2dc29a4684f"><td class="memItemLeft" align="right" valign="top"><a id="afda1019ce33761b51b19b2dc29a4684f" name="afda1019ce33761b51b19b2dc29a4684f"></a>
-std::vector&lt; std::pair&lt; std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt;, long long &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>berlekampAlgorithmMainCase</b> (std::vector&lt; std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, long long &gt; &gt; const &amp;unmultiple_factors) const</td></tr>
-<tr class="separator:afda1019ce33761b51b19b2dc29a4684f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0371ceecd9fa4219ec7d3ff6dd5340d9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a0371ceecd9fa4219ec7d3ff6dd5340d9">getComparisonSystemSolutionBasis</a> () const</td></tr>
-<tr class="memdesc:a0371ceecd9fa4219ec7d3ff6dd5340d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds polynomial basis of solution space of comparison system h^p = h (mod f)  <a href="class_polynom.html#a0371ceecd9fa4219ec7d3ff6dd5340d9">More...</a><br /></td></tr>
-<tr class="separator:a0371ceecd9fa4219ec7d3ff6dd5340d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c3380920ec8bc17dab48406c4d36907"><td class="memItemLeft" align="right" valign="top"><a id="a9c3380920ec8bc17dab48406c4d36907" name="a9c3380920ec8bc17dab48406c4d36907"></a>
-std::vector&lt; std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, long long &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_polynomials_by_power</b> (std::vector&lt; std::pair&lt; std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt;, long long &gt; &gt; const &amp;polynomials) const</td></tr>
-<tr class="separator:a9c3380920ec8bc17dab48406c4d36907"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d992f320a563d39c308215b63551b7b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt;, long long &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a6d992f320a563d39c308215b63551b7b">factorizeByBasisPolynomials</a> (std::vector&lt; std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, long long &gt; &gt; const &amp;unmultiple_factors, std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt; const &amp;basis) const</td></tr>
-<tr class="memdesc:a6d992f320a563d39c308215b63551b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factorizes unmultiple factors using basis polynomials (f = �(gcd(f, h - a)))  <a href="class_polynom.html#a6d992f320a563d39c308215b63551b7b">More...</a><br /></td></tr>
-<tr class="separator:a6d992f320a563d39c308215b63551b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -240,18 +154,12 @@ Friends</h2></td></tr>
 <tr class="memitem:ac03a30bd643a2d9bd59e9a54d72af204"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#ac03a30bd643a2d9bd59e9a54d72af204">operator*</a> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p, long long const &amp;number)</td></tr>
 <tr class="memdesc:ac03a30bd643a2d9bd59e9a54d72af204"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies a polynomial on an integer constant over the field.  <a href="class_polynom.html#ac03a30bd643a2d9bd59e9a54d72af204">More...</a><br /></td></tr>
 <tr class="separator:ac03a30bd643a2d9bd59e9a54d72af204"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae42a152cc64e75499afaa52256b3072a"><td class="memItemLeft" align="right" valign="top"><a id="ae42a152cc64e75499afaa52256b3072a" name="ae42a152cc64e75499afaa52256b3072a"></a>
-<a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (long long const &amp;number, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p)</td></tr>
-<tr class="separator:ae42a152cc64e75499afaa52256b3072a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac4fe7aec1dcd51b70dee868df71ac94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#aac4fe7aec1dcd51b70dee868df71ac94">operator/</a> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
 <tr class="memdesc:aac4fe7aec1dcd51b70dee868df71ac94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Divides polynomials over the field.  <a href="class_polynom.html#aac4fe7aec1dcd51b70dee868df71ac94">More...</a><br /></td></tr>
 <tr class="separator:aac4fe7aec1dcd51b70dee868df71ac94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f28b17207e376e6ea1d175041ec704d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_polynom.html">Polynom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_polynom.html#a4f28b17207e376e6ea1d175041ec704d">operator%</a> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
 <tr class="memdesc:a4f28b17207e376e6ea1d175041ec704d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes the remainder of a division of polynomials over the field.  <a href="class_polynom.html#a4f28b17207e376e6ea1d175041ec704d">More...</a><br /></td></tr>
 <tr class="separator:a4f28b17207e376e6ea1d175041ec704d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5930965b8a002ab96a46044488f3ce14"><td class="memItemLeft" align="right" valign="top"><a id="a5930965b8a002ab96a46044488f3ce14" name="a5930965b8a002ab96a46044488f3ce14"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="class_polynom.html">Polynom</a> const &amp;p1, <a class="el" href="class_polynom.html">Polynom</a> const &amp;p2)</td></tr>
-<tr class="separator:a5930965b8a002ab96a46044488f3ce14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >class <a class="el" href="class_polynom.html" title="class Polynom that describes polynomial in a ring GF(p)[X]">Polynom</a> that describes polynomial in a ring GF(p)[X] </p>
@@ -339,8 +247,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a cl
 
 </div>
 </div>
-<a id="a07c4f22627262c33b16487d004ca2105" name="a07c4f22627262c33b16487d004ca2105"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07c4f22627262c33b16487d004ca2105">&#9670;&nbsp;</a></span>CyclotomicPolynomial()</h2>
+<a id="ae66c7e6ce9930c7f1a3c15f619d472b3" name="ae66c7e6ce9930c7f1a3c15f619d472b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66c7e6ce9930c7f1a3c15f619d472b3">&#9670;&nbsp;</a></span>cyclotomicPolynomial()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,7 +257,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a cl
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_polynom.html">Polynom</a> Polynom::CyclotomicPolynomial </td>
+          <td class="memname"><a class="el" href="class_polynom.html">Polynom</a> Polynom::cyclotomicPolynomial </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>prime</em>, </td>
@@ -395,46 +303,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a cl
 
 <p>Takes the derivative of the polynomial. </p>
 <p >#2 </p><dl class="section author"><dt>Author</dt><dd>Darik Ivashyn </dd></dl>
-
-</div>
-</div>
-<a id="a6d992f320a563d39c308215b63551b7b" name="a6d992f320a563d39c308215b63551b7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d992f320a563d39c308215b63551b7b">&#9670;&nbsp;</a></span>factorizeByBasisPolynomials()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; std::pair&lt; std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt;, long long &gt; &gt; Polynom::factorizeByBasisPolynomials </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, long long &gt; &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>unmultiple_factors</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>basis</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Factorizes unmultiple factors using basis polynomials (f = �(gcd(f, h - a))) </p>
-<dl class="section author"><dt>Author</dt><dd>Pashchenko Dmytro </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>std::vector of pairs "polynomials, their multiplicity" </dd></dl>
 
 </div>
 </div>
@@ -556,35 +424,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a cl
 
 </div>
 </div>
-<a id="a0371ceecd9fa4219ec7d3ff6dd5340d9" name="a0371ceecd9fa4219ec7d3ff6dd5340d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0371ceecd9fa4219ec7d3ff6dd5340d9">&#9670;&nbsp;</a></span>getComparisonSystemSolutionBasis()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; <a class="el" href="class_polynom.html">Polynom</a> &gt; Polynom::getComparisonSystemSolutionBasis </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Builds polynomial basis of solution space of comparison system h^p = h (mod f) </p>
-<dl class="section author"><dt>Author</dt><dd>Pashchenko Dmytro </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Basis polynomials </dd></dl>
-
-</div>
-</div>
 <a id="a5906613f3285233fbf85c369d702f7b8" name="a5906613f3285233fbf85c369d702f7b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5906613f3285233fbf85c369d702f7b8">&#9670;&nbsp;</a></span>getWithOtherParameter()</h2>
 
@@ -692,36 +531,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a cl
 
 </div>
 </div>
-<a id="abb2070db741f97d411a3178090e267cd" name="abb2070db741f97d411a3178090e267cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb2070db741f97d411a3178090e267cd">&#9670;&nbsp;</a></span>pthRoot()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_polynom.html">Polynom</a> Polynom::pthRoot </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_polynom.html">Polynom</a>&#160;</td>
-          <td class="paramname"><em>f</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Finds pth root of a given polynomial. </p>
-<dl class="section author"><dt>Author</dt><dd>Medynskyi Mykola </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Polynomial </dd></dl>
-
-</div>
-</div>
 <a id="ae3168e90ae04c1ae8ffa273bb7ffdab7" name="ae3168e90ae04c1ae8ffa273bb7ffdab7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae3168e90ae04c1ae8ffa273bb7ffdab7">&#9670;&nbsp;</a></span>rootsNumber()</h2>
 
@@ -739,74 +548,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a cl
 
 <p>Implements an algorithm for finding number of roots for polynomial in accordance with Konig-Rados theorem. </p>
 <p >#4 </p><dl class="section author"><dt>Author</dt><dd>Yana Skyrda </dd></dl>
-
-</div>
-</div>
-<a id="a5f3f56bad53af919f9108d9439fb6a76" name="a5f3f56bad53af919f9108d9439fb6a76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f3f56bad53af919f9108d9439fb6a76">&#9670;&nbsp;</a></span>simple_division()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, <a class="el" href="class_polynom.html">Polynom</a> &gt; Polynom::simple_division </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_polynom.html">Polynom</a> const &amp;&#160;</td>
-          <td class="paramname"><em>p1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_polynom.html">Polynom</a> const &amp;&#160;</td>
-          <td class="paramname"><em>p2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Divides polynomials over the field. </p>
-<p >#6 </p>
-
-</div>
-</div>
-<a id="aa963177446c4b4c9fda92a3275c22a9a" name="aa963177446c4b4c9fda92a3275c22a9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa963177446c4b4c9fda92a3275c22a9a">&#9670;&nbsp;</a></span>squareFreeDecomposition()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; std::pair&lt; <a class="el" href="class_polynom.html">Polynom</a>, long long &gt; &gt; Polynom::squareFreeDecomposition </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Computes the square free decomposition of the given polynomial list of pairs. The first element of the pair is a factor of the given polynomial, and the second, its multiplicity. </p>
-<dl class="section author"><dt>Author</dt><dd>Datsiuk Vitaliy, Medynskyi Mykola </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>std:vector of pairs&lt;Polynom, int&gt; </dd></dl>
 
 </div>
 </div>
@@ -1088,8 +829,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a cl
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Polynom/<a class="el" href="_polynom_8h_source.html">Polynom.h</a></li>
-<li>Polynom/<a class="el" href="_polynom_8cpp.html">Polynom.cpp</a></li>
+<li>Algebra-polynom/Polynom/<a class="el" href="_polynom_8h_source.html">Polynom.h</a></li>
+<li>Algebra-polynom/Polynom/<a class="el" href="_polynom_8cpp.html">Polynom.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
