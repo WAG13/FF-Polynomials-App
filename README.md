@@ -1,8 +1,8 @@
 # Algebra Polynom
 ## Tool for working with polynomials over a finite field 
-## (provided polynomial Galois field support, i.e. working with polynomials in a finite field defined by an irreducible polynomial)
+### (provided polynomial Galois field support, i.e. working with polynomials in a finite field defined by an irreducible polynomial)
 
-## Documentation: <a href="documentation/html/index.html">click here</a>.
+## Documentation: <a href="https://htmlpreview.github.io/?https://github.com/WAG13/FF-Polynomials-App/tree/master/documentation/html/index.html">click here</a>.
 
 ## Screenshots:
 
