@@ -1,5 +1,8 @@
-# FF-Polynomials-App
-## Tool for working with polynomials over a finite field and with polynomial Galois field defined by an irreducible polynomial.
+# Algebra Polynom
+## Tool for working with polynomials over a finite field 
+## (provided polynomial Galois field support, i.e. working with polynomials in a finite field defined by an irreducible polynomial)
+
+## Documentation: <a href="documentation/html/index.html">click here</a>.
 
 ## Screenshots:
 
